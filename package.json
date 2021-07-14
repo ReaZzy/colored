@@ -22,9 +22,26 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+<<<<<<< HEAD
     "start": "nx serve",
     "build": "nx build",
     "test": "nx test"
+=======
+    "prebuild": "rimraf dist",
+    "build": "nest build",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "start": "nest start",
+    "start:docker": "cross-env POSTGRES_HOST=postgres nest start",
+    "start:dev": "nest start --watch",
+    "start:debug": "nest start --debug --watch",
+    "start:prod": "node dist/main",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:e2e": "jest --config ./test/jest-e2e.json"
+>>>>>>> e6b895a... feat🔨: add docker 🐋
   },
   "private": true,
   "dependencies": {
@@ -70,11 +87,14 @@
     "@nestjs/passport": "^8.0.0",
     "@nestjs/platform-express": "^7.6.15",
     "@nestjs/typeorm": "^8.0.1",
+<<<<<<< HEAD
     "apollo-server-express": "^3.5.0",
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
     "cookie-parser": "^1.4.5",
+=======
+>>>>>>> e6b895a... feat🔨: add docker 🐋
     "cross-env": "^7.0.3",
     "dotenv": "^10.0.0",
     "graphql": "^15.7.2",

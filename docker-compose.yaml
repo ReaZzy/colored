@@ -1,0 +1,43 @@
+version: '3.8'
+services:
+  node:
+    container_name: node
+    env_file:
+      - .env
+    build: ./
+    restart: always
+    depends_on:
+      - postgres
+    ports:
+      - ${PORT}:${PORT}
+    environment:
+      PORT: ${PORT}
+    volumes:
+      - ./src:/usr/app/src
+      - node_modules:/usr/node/app/node_modules
+      - ./logs:/home/node/app/logs
+    networks:
+      - my-network
+  postgres:
+    container_name: database
+    env_file:
+      - .env
+    image: library/postgres:alpine3.13
+    restart: always
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+    volumes:
+      - dbdata:/data/db
+    hostname: postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    networks:
+      - my-network
+networks:
+  my-network:
+    driver: bridge
+volumes:
+  dbdata:
+  node_modules:
