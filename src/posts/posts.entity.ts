@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Length } from 'class-validator';
+import { Users } from '../users/users.entity';
 
 @Entity('Posts')
 export default class Posts {
@@ -14,6 +15,8 @@ export default class Posts {
   @Length(3, 2500)
   content: string;
 
-  @Column('int', { default: 0 })
-  likes: 0;
+  @OneToMany(() => Users, (user) => user.login, {
+    eager: true,
+  })
+  likes: Users[];
 }

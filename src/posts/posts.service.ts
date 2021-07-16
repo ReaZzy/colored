@@ -23,13 +23,11 @@ export class PostsService {
 
   async like(postId: PostIdDto): Promise<Posts> {
     const post = await this.postsRepository.findOne(postId);
-    post.likes += 1;
     return this.postsRepository.save(post);
   }
 
   async unLike(postId: PostIdDto): Promise<Posts> {
     const post = await this.postsRepository.findOne(postId);
-    post.likes -= 1;
     return this.postsRepository.save(post);
   }
 }

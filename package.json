@@ -82,7 +82,10 @@
     "@nestjs/common": "^7.6.15",
     "@nestjs/config": "^1.0.0",
     "@nestjs/core": "^7.6.15",
+<<<<<<< HEAD
     "@nestjs/graphql": "^9.1.1",
+=======
+>>>>>>> c55ba73... feat🔨: add auth.service 🔒
     "@nestjs/jwt": "^8.0.0",
     "@nestjs/passport": "^8.0.0",
     "@nestjs/platform-express": "^7.6.15",
@@ -103,9 +106,12 @@
 >>>>>>> 0992303... feat🔨: add users.entity.ts 🧑
     "cross-env": "^7.0.3",
     "dotenv": "^10.0.0",
+<<<<<<< HEAD
     "graphql": "^15.7.2",
     "graphql-subscriptions": "^2.0.0",
     "graphql-upload": "^12.0.0",
+=======
+>>>>>>> c55ba73... feat🔨: add auth.service 🔒
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
@@ -157,9 +163,14 @@
 =======
 >>>>>>> 0992303... feat🔨: add users.entity.ts 🧑
     "@types/express": "^4.17.11",
+<<<<<<< HEAD
     "@types/graphql-upload": "^8.0.7",
     "@types/multer": "^1.4.7",
     "@types/passport": "^1.0.7",
+=======
+    "@types/jest": "^26.0.22",
+    "@types/node": "^14.14.36",
+>>>>>>> c55ba73... feat🔨: add auth.service 🔒
     "@types/passport-jwt": "^3.0.6",
     "@types/passport-local": "^1.0.34",
     "@types/supertest": "^2.0.10",
