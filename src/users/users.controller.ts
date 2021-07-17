@@ -3,16 +3,17 @@ import {
   Controller,
   Get,
   HttpStatus,
-  Param,
   Post,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { UsersService } from './users.service';
 import { Users } from './users.entity';
-import { UsersDataDto } from './dto/users-data.dto';
 import { UserFindDto } from './dto/user-find.dto';
+import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 
+@UseGuards(JwtAuthGuard)
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
@@ -20,11 +21,6 @@ export class UsersController {
   @Get()
   async getAll(): Promise<Users[]> {
     return this.usersService.getAll();
-  }
-
-  @Post()
-  async create(@Body() usersData: UsersDataDto): Promise<Users> {
-    return this.usersService.create(usersData);
   }
 
   @Post('/user')

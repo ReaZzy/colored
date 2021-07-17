@@ -9,10 +9,7 @@ import connectionOptions from './ormconfig';
 @Module({
   imports: [
     TypeOrmModule.forRoot(connectionOptions),
-    ConfigModule.forRoot({
-      envFilePath: '.env',
-      isGlobal: true,
-    }),
+    ConfigModule.forRoot(),
     PostsModule,
     UsersModule,
     AuthModule,

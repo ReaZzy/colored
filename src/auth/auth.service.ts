@@ -1,13 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { Users } from '../users/users.entity';
 import { UsersService } from '../users/users.service';
-import { UserFindDto } from '../users/dto/user-find.dto';
 import { compare } from 'bcryptjs';
 import { UserValidateDto } from '../users/dto/user-validate.dto';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly jwtService: JwtService,
+  ) {}
 
   async validate({
     find,
@@ -15,7 +18,16 @@ export class AuthService {
   }: UserValidateDto): Promise<Users | undefined> {
     const user = await this.usersService.getUser(find);
     if (user && (await compare(password, user.password))) {
-      return user;
+      const { password, ...userData } = user;
+      return userData as Users;
     }
+  }
+
+  async login(user: Users): Promise<{ access_token: string }> {
+    const candidate = await this.usersService.getUser(user.email);
+    const payload = { id: candidate.id, login: candidate.login };
+    return {
+      access_token: this.jwtService.sign(payload),
+    };
   }
 }

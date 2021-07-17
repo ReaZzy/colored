@@ -1,17 +1,27 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
+import { Request } from 'express';
 import { AuthService } from './auth.service';
-import { Response } from 'express';
+import { LocalAuthGuard } from '../guards/local-auth.guard';
 import { Users } from '../users/users.entity';
-import { UserValidateDto } from '../users/dto/user-validate.dto';
+import { UsersDataDto } from '../users/dto/users-data.dto';
+import { UsersService } from '../users/users.service';
+export { Request } from 'express';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authRepository: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly usersService: UsersService,
+  ) {}
 
-  @Post()
-  async validate(
-    @Body() validateData: UserValidateDto,
-  ): Promise<Users | undefined> {
-    return this.authRepository.validate(validateData);
+  @UseGuards(LocalAuthGuard)
+  @Post('/login')
+  async login(@Req() req: Request) {
+    return this.authService.login(req.user as Users);
+  }
+
+  @Post('/register')
+  async create(@Body() usersData: UsersDataDto): Promise<Users> {
+    return this.usersService.create(usersData);
   }
 }
