@@ -4,10 +4,12 @@ import {
   BeforeUpdate,
   Column,
   Entity,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { IsEmail, Length } from 'class-validator';
 import { hash } from 'bcryptjs';
+import Posts from '../posts/posts.entity';
 
 @Entity('Users')
 export class Users extends BaseEntity {
@@ -25,6 +27,10 @@ export class Users extends BaseEntity {
   @Column('varchar', { select: false })
   password: string;
 
+  @ManyToOne(() => Posts, (post) => post.likes, {
+    onDelete: 'CASCADE',
+  })
+  likes: Posts[];
   @BeforeInsert()
   @BeforeUpdate()
   async hashPassword() {

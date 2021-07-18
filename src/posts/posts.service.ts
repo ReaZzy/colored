@@ -4,6 +4,7 @@ import Posts from './posts.entity';
 import { Repository } from 'typeorm';
 import { PostDataDto } from './dto/post-data.dto';
 import { PostIdDto } from './dto/post-id.dto';
+import { Users } from '../users/users.entity';
 
 @Injectable()
 export class PostsService {
@@ -21,12 +22,13 @@ export class PostsService {
     return this.postsRepository.save(post);
   }
 
-  async like(postId: PostIdDto): Promise<Posts> {
+  async like(postId: PostIdDto, userId: Users): Promise<Posts> {
     const post = await this.postsRepository.findOne(postId);
+    post.likes.push(userId);
     return this.postsRepository.save(post);
   }
 
-  async unLike(postId: PostIdDto): Promise<Posts> {
+  async unLike(postId: PostIdDto, userId: any): Promise<Posts> {
     const post = await this.postsRepository.findOne(postId);
     return this.postsRepository.save(post);
   }

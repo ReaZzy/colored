@@ -15,8 +15,9 @@ export default class Posts {
   @Length(3, 2500)
   content: string;
 
-  @OneToMany(() => Users, (user) => user.login, {
+  @OneToMany(() => Users, (user) => user.likes, {
     eager: true,
+    onDelete: 'CASCADE',
   })
   likes: Users[];
 }
