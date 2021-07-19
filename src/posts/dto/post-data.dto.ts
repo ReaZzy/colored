@@ -10,4 +10,6 @@ export class PostDataDto {
   @Length(3, 2500)
   @IsDefined()
   readonly content: string;
+
+  userId: string;
 }

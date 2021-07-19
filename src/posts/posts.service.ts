@@ -23,7 +23,12 @@ export class PostsService {
   }
 
   async like(postId: PostIdDto, userId: Users): Promise<Posts> {
-    const post = await this.postsRepository.findOne(postId);
+    const post = await this.postsRepository.findOne({
+      where: {
+        id: postId.id,
+      },
+      relations: ['likes'],
+    });
     post.likes.push(userId);
     return this.postsRepository.save(post);
   }

@@ -1,4 +1,10 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToMany,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Length } from 'class-validator';
 import { Users } from '../users/users.entity';
 
@@ -15,9 +21,16 @@ export default class Posts {
   @Length(3, 2500)
   content: string;
 
-  @OneToMany(() => Users, (user) => user.likes, {
-    eager: true,
+  @ManyToOne(() => Users, (user) => user.posts, {
     onDelete: 'CASCADE',
   })
-  likes: Users[];
+  user!: Users[];
+
+  @ManyToMany(() => Users, (user) => user.likes, {
+    onDelete: 'CASCADE',
+  })
+  likes!: Users[];
+
+  @Column()
+  userId: string;
 }

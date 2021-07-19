@@ -4,7 +4,9 @@ import {
   BeforeUpdate,
   Column,
   Entity,
-  ManyToOne,
+  JoinTable,
+  ManyToMany,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { IsEmail, Length } from 'class-validator';
@@ -27,10 +29,18 @@ export class Users extends BaseEntity {
   @Column('varchar', { select: false })
   password: string;
 
-  @ManyToOne(() => Posts, (post) => post.likes, {
+  @OneToMany(() => Posts, (post) => post.user, {
+    onDelete: 'CASCADE',
+    eager: true,
+  })
+  posts: Posts[];
+
+  @ManyToMany(() => Posts, (post) => post.likes, {
     onDelete: 'CASCADE',
   })
+  @JoinTable()
   likes: Posts[];
+
   @BeforeInsert()
   @BeforeUpdate()
   async hashPassword() {

@@ -15,7 +15,6 @@ import Posts from './posts.entity';
 import { PostDataDto } from './dto/post-data.dto';
 import { PostIdDto } from './dto/post-id.dto';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
-import { Users } from '../users/users.entity';
 
 @UseGuards(JwtAuthGuard)
 @Controller('posts')
@@ -28,13 +27,17 @@ export class PostsController {
   }
 
   @Post()
-  async create(@Body() postsData: PostDataDto): Promise<Posts> {
+  async create(
+    @Body() postsData: PostDataDto,
+    @Req() req: Request,
+  ): Promise<Posts> {
+    postsData.userId = req.user.id;
     return this.postsService.create(postsData);
   }
 
   @Put('like/:id')
   async like(@Param() postId: PostIdDto, @Req() req: Request): Promise<Posts> {
-    return this.postsService.like(postId, req.user as Users);
+    return this.postsService.like(postId, req.user);
   }
 
   @Delete('like/:id')
@@ -42,6 +45,6 @@ export class PostsController {
     @Param() postId: PostIdDto,
     @Req() req: Request,
   ): Promise<Posts> {
-    return this.postsService.unLike(postId, req.user as Users);
+    return this.postsService.unLike(postId, req.user);
   }
 }
