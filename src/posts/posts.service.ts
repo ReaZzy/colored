@@ -16,10 +16,10 @@ export class PostsService {
 
   async getAll(page?: PostPageDto): Promise<{ posts: Posts[]; total: number }> {
     const take = 2;
-    const skip = ((page.page || 1) - 1) * take;
+    const skip = (page.page - 1) * take;
     const [result, total] = await this.postsRepository.findAndCount({
       take: take,
-      skip: skip,
+      skip: skip || 0,
       relations: ['likes'],
     });
     return {

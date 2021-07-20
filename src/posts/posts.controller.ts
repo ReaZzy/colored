@@ -34,9 +34,10 @@ export class PostsController {
     if (posts.posts.length > 0) {
       return res.status(HttpStatus.OK).send(posts);
     }
-    return res
-      .status(HttpStatus.NOT_FOUND)
-      .send({ message: [`Can\`t get posts on page ${page.page}`] });
+    return res.status(HttpStatus.NOT_FOUND).send({
+      posts: [],
+      message: [`Can\`t get posts on page ${page.page || 0}`],
+    });
   }
 
   @Post()
