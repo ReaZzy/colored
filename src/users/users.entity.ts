@@ -38,7 +38,9 @@ export class Users extends BaseEntity {
   @ManyToMany(() => Posts, (post) => post.likes, {
     onDelete: 'CASCADE',
   })
-  @JoinTable()
+  @JoinTable({
+    name: 'likes',
+  })
   likes: Posts[];
 
   @BeforeInsert()

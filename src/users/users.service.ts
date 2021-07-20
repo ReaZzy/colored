@@ -12,7 +12,9 @@ export class UsersService {
   ) {}
 
   async getAll(): Promise<Users[]> {
-    return this.usersRepository.find();
+    return this.usersRepository.find({
+      relations: ['likes'],
+    });
   }
 
   async getUser(loginOrEamil: string): Promise<Users | undefined> {

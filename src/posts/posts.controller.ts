@@ -3,18 +3,22 @@ import {
   Controller,
   Delete,
   Get,
+  HttpStatus,
   Param,
   Post,
   Put,
+  Query,
   Req,
+  Res,
   UseGuards,
 } from '@nestjs/common';
-import { Request } from 'express';
+import { Request, Response } from 'express';
 import { PostsService } from './posts.service';
 import Posts from './posts.entity';
 import { PostDataDto } from './dto/post-data.dto';
 import { PostIdDto } from './dto/post-id.dto';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
+import { PostPageDto } from './dto/post-page.dto';
 
 @UseGuards(JwtAuthGuard)
 @Controller('posts')
@@ -22,8 +26,17 @@ export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
   @Get()
-  async getAll(): Promise<Posts[]> {
-    return this.postsService.getAll();
+  async getAll(
+    @Res() res: Response,
+    @Query() page: PostPageDto,
+  ): Promise<Response> {
+    const posts = await this.postsService.getAll(page);
+    if (posts.posts.length > 0) {
+      return res.status(HttpStatus.OK).send(posts);
+    }
+    return res
+      .status(HttpStatus.NOT_FOUND)
+      .send({ message: [`Can\`t get posts on page ${page.page}`] });
   }
 
   @Post()

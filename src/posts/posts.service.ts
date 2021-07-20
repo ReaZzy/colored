@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { PostDataDto } from './dto/post-data.dto';
 import { PostIdDto } from './dto/post-id.dto';
 import { Users } from '../users/users.entity';
+import { PostPageDto } from './dto/post-page.dto';
 
 @Injectable()
 export class PostsService {
@@ -13,8 +14,18 @@ export class PostsService {
     private readonly postsRepository: Repository<Posts>,
   ) {}
 
-  async getAll(): Promise<Posts[]> {
-    return this.postsRepository.find();
+  async getAll(page?: PostPageDto): Promise<{ posts: Posts[]; total: number }> {
+    const take = 2;
+    const skip = ((page.page || 1) - 1) * take;
+    const [result, total] = await this.postsRepository.findAndCount({
+      take: take,
+      skip: skip,
+      relations: ['likes'],
+    });
+    return {
+      posts: result,
+      total,
+    };
   }
 
   async create(postData: PostDataDto): Promise<Posts> {
@@ -33,8 +44,11 @@ export class PostsService {
     return this.postsRepository.save(post);
   }
 
-  async unLike(postId: PostIdDto, userId: any): Promise<Posts> {
-    const post = await this.postsRepository.findOne(postId);
+  async unLike(postId: PostIdDto, userId: Users): Promise<Posts> {
+    const post = await this.postsRepository.findOne(postId, {
+      relations: ['likes'],
+    });
+    post.likes = post.likes.filter((user) => user.id !== userId.id);
     return this.postsRepository.save(post);
   }
 }
