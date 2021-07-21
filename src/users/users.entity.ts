@@ -12,6 +12,7 @@ import {
 import { IsEmail, Length } from 'class-validator';
 import { hash } from 'bcryptjs';
 import Posts from '../posts/posts.entity';
+import { CommentDataDto } from '../posts/dto/comment-data.dto';
 
 @Entity('Users')
 export class Users extends BaseEntity {
@@ -42,6 +43,14 @@ export class Users extends BaseEntity {
     name: 'likes',
   })
   likes: Posts[];
+
+  @ManyToMany(() => Posts, (post) => post.comments, {
+    onDelete: 'CASCADE',
+  })
+  @JoinTable({
+    name: 'comments',
+  })
+  comments: CommentDataDto[];
 
   @BeforeInsert()
   @BeforeUpdate()

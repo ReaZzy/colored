@@ -7,6 +7,7 @@ import {
 } from 'typeorm';
 import { Length } from 'class-validator';
 import { Users } from '../users/users.entity';
+import { CommentDataDto } from './dto/comment-data.dto';
 
 @Entity('Posts')
 export default class Posts {
@@ -30,6 +31,11 @@ export default class Posts {
     onDelete: 'CASCADE',
   })
   likes!: Users[];
+
+  @ManyToMany(() => Users, (user) => user.comments, {
+    onDelete: 'CASCADE',
+  })
+  comments!: CommentDataDto[];
 
   @Column()
   userId: string;

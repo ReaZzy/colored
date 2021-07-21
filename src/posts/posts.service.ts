@@ -6,6 +6,7 @@ import { PostDataDto } from './dto/post-data.dto';
 import { PostIdDto } from './dto/post-id.dto';
 import { Users } from '../users/users.entity';
 import { PostPageDto } from './dto/post-page.dto';
+import { CommentDataDto } from './dto/comment-data.dto';
 
 @Injectable()
 export class PostsService {
@@ -20,7 +21,7 @@ export class PostsService {
     const [result, total] = await this.postsRepository.findAndCount({
       take: take,
       skip: skip || 0,
-      relations: ['likes'],
+      relations: ['likes', 'comments'],
     });
     return {
       posts: result,
@@ -49,6 +50,17 @@ export class PostsService {
       relations: ['likes'],
     });
     post.likes = post.likes.filter((user) => user.id !== userId.id);
+    return this.postsRepository.save(post);
+  }
+
+  async comment(
+    postId: PostIdDto,
+    commentData: CommentDataDto,
+  ): Promise<Posts> {
+    const post = await this.postsRepository.findOne(postId, {
+      relations: ['comments'],
+    });
+    post.comments.push(commentData);
     return this.postsRepository.save(post);
   }
 }
