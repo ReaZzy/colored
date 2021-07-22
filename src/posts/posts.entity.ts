@@ -3,11 +3,12 @@ import {
   Entity,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Length } from 'class-validator';
 import { Users } from '../users/users.entity';
-import { CommentDataDto } from './dto/comment-data.dto';
+import { Comments } from '../comments/comments.entity';
 
 @Entity('Posts')
 export default class Posts {
@@ -32,10 +33,11 @@ export default class Posts {
   })
   likes!: Users[];
 
-  @ManyToMany(() => Users, (user) => user.comments, {
+  @OneToMany(() => Comments, (comment) => comment.post, {
     onDelete: 'CASCADE',
+    eager: true,
   })
-  comments!: CommentDataDto[];
+  comments: Comments[];
 
   @Column()
   userId: string;

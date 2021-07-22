@@ -19,7 +19,6 @@ import { PostDataDto } from './dto/post-data.dto';
 import { PostIdDto } from './dto/post-id.dto';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { PostPageDto } from './dto/post-page.dto';
-import { CommentDataDto } from './dto/comment-data.dto';
 
 @UseGuards(JwtAuthGuard)
 @Controller('posts')
@@ -61,14 +60,5 @@ export class PostsController {
     @Req() req: Request,
   ): Promise<Posts> {
     return this.postsService.unLike(postId, req.user);
-  }
-
-  @Post('comment/:id')
-  async comment(
-    @Body() commendData: CommentDataDto,
-    @Param() postId: PostIdDto,
-    @Req() req: Request,
-  ): Promise<Posts> {
-    return this.postsService.comment(postId, commendData);
   }
 }
