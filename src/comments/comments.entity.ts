@@ -25,6 +25,11 @@ export class Comments extends BaseEntity {
   })
   user!: Users;
 
+  @ManyToOne(() => Comments, (comment) => comment.id, {
+    onDelete: 'CASCADE',
+  })
+  replies!: Comments;
+
   @Column()
   userId: string;
 
@@ -37,14 +42,6 @@ export class Comments extends BaseEntity {
   @Column('varchar')
   content: string;
 
-  @OneToMany(() => Comments, (comment) => comment.id, {
-    onDelete: 'CASCADE',
-  })
-  replies: Comments[];
-
-  @ManyToOne(() => Comments, (comment) => comment.id, {
-    onDelete: 'SET NULL',
-    nullable: true,
-  })
-  repliedTo: Comments;
+  @Column({ nullable: true })
+  repliesId: string;
 }

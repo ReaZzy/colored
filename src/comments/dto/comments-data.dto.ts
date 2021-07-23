@@ -1,5 +1,4 @@
 import { IsDefined, IsOptional, IsString, Length } from 'class-validator';
-import { Comments } from '../comments.entity';
 
 export class CommentsDataDto {
   @IsDefined()
@@ -8,7 +7,7 @@ export class CommentsDataDto {
   content: string;
 
   @IsOptional()
-  repliedTo: Comments;
+  repliesId: string;
 
   postId: string;
 

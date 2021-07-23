@@ -12,7 +12,9 @@ export class CommentsService {
   ) {}
 
   async getAll(): Promise<Comments[]> {
-    return this.commentsRepository.find();
+    return this.commentsRepository.find({
+      relations: ['replies'],
+    });
   }
 
   async create(commentData: CommentsDataDto): Promise<Comments> {
