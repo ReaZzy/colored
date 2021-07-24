@@ -28,7 +28,12 @@ export class Comments extends BaseEntity {
   @ManyToOne(() => Comments, (comment) => comment.id, {
     onDelete: 'CASCADE',
   })
-  replies!: Comments;
+  comments!: Comments;
+
+  @OneToMany(() => Comments, (comment) => comment.comments, {
+    onDelete: 'CASCADE',
+  })
+  replies: Comments[];
 
   @Column()
   userId: string;
@@ -43,5 +48,5 @@ export class Comments extends BaseEntity {
   content: string;
 
   @Column({ nullable: true })
-  repliesId: string;
+  commentsId: string;
 }

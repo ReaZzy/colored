@@ -7,7 +7,7 @@ export class CommentsDataDto {
   content: string;
 
   @IsOptional()
-  repliesId: string;
+  repliedTo: string;
 
   postId: string;
 

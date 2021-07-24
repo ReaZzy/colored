@@ -17,11 +17,15 @@ export class PostsService {
   async getAll(page?: PostPageDto): Promise<{ posts: Posts[]; total: number }> {
     const take = 2;
     const skip = (page.page - 1) * take;
-    const [result, total] = await this.postsRepository.findAndCount({
-      take: take,
-      skip: skip || 0,
-      relations: ['likes', 'comments'],
-    });
+    const [result, total] = await this.postsRepository
+      .createQueryBuilder('posts')
+      .leftJoin('posts.user', 'user')
+      .leftJoin('posts.likes', 'likes')
+      .skip(skip || 0)
+      .take(take)
+      .select(['posts.id', 'likes', 'user'])
+      .getManyAndCount();
+
     return {
       posts: result,
       total,
