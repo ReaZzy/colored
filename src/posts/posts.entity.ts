@@ -1,6 +1,7 @@
 import {
   Column,
   Entity,
+  JoinTable,
   ManyToMany,
   ManyToOne,
   OneToMany,
@@ -31,11 +32,13 @@ export default class Posts {
   @ManyToMany(() => Users, (user) => user.likes, {
     onDelete: 'CASCADE',
   })
+  @JoinTable({
+    name: 'likes',
+  })
   likes!: Users[];
 
   @OneToMany(() => Comments, (comment) => comment.post, {
     onDelete: 'CASCADE',
-    eager: true,
   })
   comments: Comments[];
 

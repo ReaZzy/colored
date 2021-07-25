@@ -4,7 +4,6 @@ import {
   BeforeUpdate,
   Column,
   Entity,
-  JoinTable,
   ManyToMany,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -37,9 +36,6 @@ export class Users extends BaseEntity {
 
   @ManyToMany(() => Posts, (post) => post.likes, {
     onDelete: 'CASCADE',
-  })
-  @JoinTable({
-    name: 'likes',
   })
   likes: Posts[];
 

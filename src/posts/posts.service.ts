@@ -21,9 +21,9 @@ export class PostsService {
       .createQueryBuilder('posts')
       .leftJoin('posts.user', 'user')
       .leftJoin('posts.likes', 'likes')
+      .select(['posts', 'likes.login', 'likes.id'])
       .skip(skip || 0)
       .take(take)
-      .select(['posts.id', 'likes', 'user'])
       .getManyAndCount();
 
     return {
@@ -44,7 +44,7 @@ export class PostsService {
       },
       relations: ['likes'],
     });
-    post.likes.push(userId);
+    await post.likes.push(userId);
     return this.postsRepository.save(post);
   }
 
