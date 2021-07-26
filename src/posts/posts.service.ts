@@ -19,11 +19,26 @@ export class PostsService {
     const skip = (page.page - 1) * take;
     const [result, total] = await this.postsRepository
       .createQueryBuilder('posts')
+      .leftJoin('posts.comments', 'comments')
       .leftJoin('posts.user', 'user')
       .leftJoin('posts.likes', 'likes')
-      .select(['posts', 'likes.login', 'likes.id'])
-      .skip(skip || 0)
+      .leftJoin('comments.replies', 'replies')
+      .leftJoin('comments.user', 'commentUser')
+      .leftJoin('replies.user', 'replyUser')
+      .where('comments.commentsId IS NULL')
       .take(take)
+      .skip(skip || 0)
+      .select([
+        'posts.id',
+        'likes',
+        'comments.id',
+        'comments.content',
+        'replies.id',
+        'replies.content',
+        'replyUser',
+        'commentUser',
+        'user',
+      ])
       .getManyAndCount();
 
     return {
@@ -44,7 +59,7 @@ export class PostsService {
       },
       relations: ['likes'],
     });
-    await post.likes.push(userId);
+    post.likes.push(userId);
     return this.postsRepository.save(post);
   }
 
