@@ -29,7 +29,7 @@ export default class Posts {
   })
   user!: Users[];
 
-  @ManyToMany(() => Users, (user) => user.likes, {
+  @ManyToMany(() => Users, (user) => user.login, {
     onDelete: 'CASCADE',
   })
   @JoinTable({

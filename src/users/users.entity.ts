@@ -34,11 +34,6 @@ export class Users extends BaseEntity {
   })
   posts: Posts[];
 
-  @ManyToMany(() => Posts, (post) => post.likes, {
-    onDelete: 'CASCADE',
-  })
-  likes: Posts[];
-
   @BeforeInsert()
   @BeforeUpdate()
   async hashPassword() {
