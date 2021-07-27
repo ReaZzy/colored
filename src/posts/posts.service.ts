@@ -29,7 +29,7 @@ export class PostsService {
       .take(take)
       .skip(skip || 0)
       .select([
-        'posts.id',
+        'posts',
         'likes',
         'comments.id',
         'comments.content',

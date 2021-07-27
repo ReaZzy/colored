@@ -42,6 +42,6 @@ export default class Posts {
   })
   comments: Comments[];
 
-  @Column()
+  @Column({ select: false })
   userId: string;
 }
