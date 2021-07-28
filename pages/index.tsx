@@ -1,21 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import axios from 'axios';
 import { IPosts } from '../types/IPosts.types';
+import { GetStaticPropsContext } from 'next';
 
-const Index = () => {
-  const [posts, setPosts] = useState<IPosts[]>([]);
+interface IProps {
+  posts: IPosts[];
+}
 
-  useEffect(() => {
-    axios
-      .get('http://localhost:4000/posts', {
-        headers: {
-          Authorization:
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQyNzFjNTAxLTExMzQtNDliNy1hODMzLTdmZGMzN2UwZWY1ZSIsImxvZ2luIjoiUmVhWnp5RkFLRTEiLCJpYXQiOjE2Mjc0MTI5ODYsImV4cCI6MTYyNzQ5OTM4Nn0.mwASSi5tQJ0NyjifuZf_tRetXn-GHhJDA8B0CJdZfzM',
-        },
-      })
-      .then((res) => setPosts(res.data.posts));
-  }, []);
+const Index = ({ posts }: IProps) => {
   return (
     <div>
       Hello Next!
@@ -25,7 +18,7 @@ const Index = () => {
       {posts.map((post, index) => (
         <div key={index}>
           {post.user.login}
-          <Link href={`/posts/${post.id}`}>
+          <Link href={`/post/${post.id}`}>
             <a>{post.title}</a>
           </Link>
           <div>
@@ -40,6 +33,20 @@ const Index = () => {
       ))}
     </div>
   );
+};
+
+export const getStaticProps = async (ctx: GetStaticPropsContext) => {
+  const res = await axios.get('http://localhost:4000/posts', {
+    headers: {
+      Authorization:
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdmZjA1Yjc0LThhZTQtNDlkNS1iN2E3LTA3YzhmYTZkZjdiYyIsImxvZ2luIjoiUmVhWnp5RkFLRTEiLCJpYXQiOjE2Mjc1MDAyOTQsImV4cCI6MTYyNzU4NjY5NH0.8r1UWbjtWHL-CRy2LuP0vp1fRSY68NhXjlOVfkgKdCY',
+    },
+  });
+  return {
+    props: {
+      posts: [...res.data.posts],
+    },
+  };
 };
 
 export default Index;
