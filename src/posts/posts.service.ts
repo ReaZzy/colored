@@ -63,6 +63,15 @@ export class PostsService {
     return this.postsRepository.save(post);
   }
 
+  async getById(postId: PostIdDto): Promise<Posts | undefined> {
+    return this.postsRepository.findOneOrFail({
+      where: {
+        id: postId.id,
+      },
+      relations: ['user', 'likes'],
+    });
+  }
+
   async unLike(postId: PostIdDto, userId: Users): Promise<Posts> {
     const post = await this.postsRepository.findOne(postId, {
       relations: ['likes'],

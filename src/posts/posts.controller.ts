@@ -40,6 +40,20 @@ export class PostsController {
     });
   }
 
+  @Get(':id')
+  async getById(
+    @Req() req: Request,
+    @Res() res: Response,
+    @Param() postId: PostIdDto,
+  ): Promise<Response> {
+    const post = await this.postsService.getById(postId);
+    if (!post)
+      return res
+        .status(HttpStatus.NOT_FOUND)
+        .send({ message: 'Post not found' });
+    return res.status(HttpStatus.OK).send(post);
+  }
+
   @Post()
   async create(
     @Body() postsData: PostDataDto,
