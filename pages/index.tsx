@@ -15,7 +15,7 @@ const Index = ({ posts }: IProps) => {
       <Link href={'/hello'}>
         <a>Hello</a>
       </Link>
-      {posts.map((post, index) => (
+      {posts?.map((post, index) => (
         <div key={index}>
           {post.user.login}
           <Link href={`/post/${post.id}`}>
@@ -36,10 +36,11 @@ const Index = ({ posts }: IProps) => {
 };
 
 export const getStaticProps = async (ctx: GetStaticPropsContext) => {
+  const token =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdmZjA1Yjc0LThhZTQtNDlkNS1iN2E3LTA3YzhmYTZkZjdiYyIsImxvZ2luIjoiUmVhWnp5RkFLRTEiLCJpYXQiOjE2Mjc2NzQzNDAsImV4cCI6MTYyNzc2MDc0MH0.EoW6zafXHvhVKrAbGXmEfYYnHFkDkGV6ZElvXhRPPMY';
   const res = await axios.get('http://localhost:4000/posts', {
     headers: {
-      Authorization:
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdmZjA1Yjc0LThhZTQtNDlkNS1iN2E3LTA3YzhmYTZkZjdiYyIsImxvZ2luIjoiUmVhWnp5RkFLRTEiLCJpYXQiOjE2Mjc1MDAyOTQsImV4cCI6MTYyNzU4NjY5NH0.8r1UWbjtWHL-CRy2LuP0vp1fRSY68NhXjlOVfkgKdCY',
+      Authorization: `Bearer ${token}`,
     },
   });
   return {
