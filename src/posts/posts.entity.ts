@@ -17,10 +17,6 @@ export default class Posts {
   id: string;
 
   @Column('varchar')
-  @Length(3, 150)
-  title: string;
-
-  @Column('varchar')
   @Length(3, 2500)
   content: string;
 
