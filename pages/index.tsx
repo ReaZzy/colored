@@ -1,40 +1,26 @@
-import React, { useState } from 'react';
-import Link from 'next/link';
+import React from 'react';
 import axios from 'axios';
 import { IPosts } from '../types/IPosts.types';
 import { GetStaticPropsContext } from 'next';
 import dynamic from 'next/dynamic';
 
 const Post = dynamic(() => import('../componets/post/Post'));
+const Navbar = dynamic(() => import('../componets/navbar/Navbar'));
 
 interface IProps {
   posts: IPosts[];
 }
 
 const Index = ({ posts }: IProps) => {
-  const [text, setText] = useState<string>('');
-  const handleClick = () => {
-    const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdmZjA1Yjc0LThhZTQtNDlkNS1iN2E3LTA3YzhmYTZkZjdiYyIsImxvZ2luIjoiUmVhWnp5RkFLRTEiLCJpYXQiOjE2Mjc2NzQzNDAsImV4cCI6MTYyNzc2MDc0MH0.EoW6zafXHvhVKrAbGXmEfYYnHFkDkGV6ZElvXhRPPMY';
-    axios.post(
-      'http://localhost:4000/posts',
-      { content: text },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
-    );
-  };
   return (
     <div>
-      Hello Next!
-      <textarea value={text} onChange={(e) => setText(e.target.value)} />
-      <button onClick={() => handleClick()}>POST</button>
-      <Link href={'/hello'}>
-        <a>Hello</a>
-      </Link>
-      <div>
+      <Navbar />
+      <div
+        style={{
+          width: '60%',
+          margin: '0 auto',
+        }}
+      >
         {posts?.map((post) => (
           <Post key={post.id} post={post} />
         ))}
@@ -46,7 +32,7 @@ const Index = ({ posts }: IProps) => {
 export const getServerSideProps = async (ctx: GetStaticPropsContext) => {
   const token =
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdmZjA1Yjc0LThhZTQtNDlkNS1iN2E3LTA3YzhmYTZkZjdiYyIsImxvZ2luIjoiUmVhWnp5RkFLRTEiLCJpYXQiOjE2Mjc2NzQzNDAsImV4cCI6MTYyNzc2MDc0MH0.EoW6zafXHvhVKrAbGXmEfYYnHFkDkGV6ZElvXhRPPMY';
-  const res = await axios.get('http://localhost:4000/posts?page=7', {
+  const res = await axios.get('http://localhost:4000/posts?page=1', {
     headers: {
       Authorization: `Bearer ${token}`,
     },

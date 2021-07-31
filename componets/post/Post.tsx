@@ -1,5 +1,6 @@
 import React from 'react';
 import { IPosts } from '../../types/IPosts.types';
+import s from './post.module.css';
 
 interface IProps {
   post: IPosts;
@@ -7,16 +8,17 @@ interface IProps {
 
 const Post: React.FC<IProps> = ({ post }) => {
   return (
-    <div>
+    <div className={s.post}>
       <div>
-        <div>
+        <div className={s.owner}>
           <img
             src={
-              'https://lh3.googleusercontent.com/proxy/PQnczxJk9X514Y4qjdqKMPIIUBwbjdBgBCjGoyMuB8dptAx4SXqtVK-YHjrTjVfc6XOc6Hp6zmyh1q8RtJ2mZzE_bm_xm94aUzcPB_8YEzwc'
+              'https://miro.medium.com/max/1200/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg'
             }
             alt={`${post.user.login}`}
+            className={s.owner__photo}
           />
-          <div>{post.user.login}</div>
+          <div className={s.owner__login}>{post.user.login}</div>
         </div>
 
         <div>
