@@ -1,0 +1,30 @@
+.whatsNew {
+  margin-top: 10px;
+  background: #e0d9f4;
+  border-radius: 10px;
+  padding: 7px;
+}
+
+.whatsNew__row {
+  display: flex;
+  gap: 10px;
+}
+.whatsNew__textarea::-webkit-input-placeholder {
+}
+.whatsNew__textarea {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 3px 10px;
+  background: #ffffff;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+}
+.whatsNew__img {
+  -webkit-box-shadow: 0px 0px 5px 3px rgba(183, 183, 183, 0.2);
+  box-shadow: 0px 0px 5px 3px rgba(183, 183, 183, 0.2);
+  object-fit: cover;
+  height: 33px;
+  width: 33px;
+  border-radius: 100%;
+}
