@@ -1,2 +1,10 @@
 .content {
+  padding: 0 10px;
+}
+
+.center_block,
+.center_block__posts {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }

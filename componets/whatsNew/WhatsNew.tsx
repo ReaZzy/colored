@@ -1,6 +1,7 @@
 import React from 'react';
 import s from './whatsNew.module.css';
 import { IoIosArrowDropright } from '@react-icons/all-files/io/IoIosArrowDropright';
+import TextareaAutosize from 'react-textarea-autosize';
 
 interface IProps {}
 const WhatsNew: React.FC<IProps> = () => {
@@ -13,11 +14,12 @@ const WhatsNew: React.FC<IProps> = () => {
           }
           className={s.whatsNew__img}
         />
-        <textarea
+        <TextareaAutosize
+          autoFocus
           className={s.whatsNew__textarea}
           placeholder={"What's new, Emma"}
         />
-        <button>
+        <button className={s.whatsNew__button}>
           <IoIosArrowDropright />
         </button>
       </div>

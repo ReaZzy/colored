@@ -15,7 +15,7 @@ interface IProps {
 
 const Index = ({ posts }: IProps) => {
   return (
-    <div style={{ width: '100%' }}>
+    <div>
       <Navbar />
       <div className={s.content}>
         <div className={s.center_block}>
@@ -35,7 +35,7 @@ const Index = ({ posts }: IProps) => {
 
 export const getServerSideProps = async (ctx: GetStaticPropsContext) => {
   const token =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdmZjA1Yjc0LThhZTQtNDlkNS1iN2E3LTA3YzhmYTZkZjdiYyIsImxvZ2luIjoiUmVhWnp5RkFLRTEiLCJpYXQiOjE2Mjc4MTExMjEsImV4cCI6MTYyNzg5NzUyMX0.nHBozbog8s8lcbn1HGnurQvAERwg6Sn9gFAYdI09R2s';
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdmZjA1Yjc0LThhZTQtNDlkNS1iN2E3LTA3YzhmYTZkZjdiYyIsImxvZ2luIjoiUmVhWnp5RkFLRTEiLCJpYXQiOjE2Mjc5MzAzNjMsImV4cCI6MTYyODAxNjc2M30.DoQrl9BPl2_7tEkrWL1EdjKu8V5ouenUX6NJeDTmCAQ';
   const res = await axios.get('http://localhost:4000/posts?page=1', {
     headers: {
       Authorization: `Bearer ${token}`,

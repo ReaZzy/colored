@@ -1,24 +1,23 @@
 .post {
-    background: #ffffff;
-    border-radius: 10px;
-    overflow: hidden;
-    padding: 10px;
-    margin: 10px;
-    -webkit-box-shadow: 0px 0px 5px 3px rgba(183,183,183,0.2);
-    box-shadow: 0px 0px 5px 3px rgba(183,183,183,0.2);
+  background: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 10px;
+  -webkit-box-shadow: 0px 0px 5px 3px rgba(183, 183, 183, 0.2);
+  box-shadow: 0px 0px 5px 3px rgba(183, 183, 183, 0.2);
 }
 .owner {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .owner__photo {
-    width: 3.5em;
-    height: 3.5em;
-    object-fit: cover;
-    padding: .5em;
-    border-radius: 100%;
+  width: 3.5em;
+  height: 3.5em;
+  object-fit: cover;
+  padding: 0.5em;
+  border-radius: 100%;
 }
 .owner__login {
-    font-size: 18px;
+  font-size: 18px;
 }
