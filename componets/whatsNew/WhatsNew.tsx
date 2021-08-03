@@ -2,26 +2,46 @@ import React from 'react';
 import s from './whatsNew.module.css';
 import { IoIosArrowDropright } from '@react-icons/all-files/io/IoIosArrowDropright';
 import TextareaAutosize from 'react-textarea-autosize';
+import { BiImageAdd } from '@react-icons/all-files/bi/BiImageAdd';
+import { AiOutlineGif } from '@react-icons/all-files/ai/AiOutlineGif';
+import { HiOutlineEmojiHappy } from '@react-icons/all-files/hi/HiOutlineEmojiHappy';
+import { BiColorFill } from '@react-icons/all-files/bi/BiColorFill';
 
 interface IProps {}
 const WhatsNew: React.FC<IProps> = () => {
   return (
     <div className={s.whatsNew}>
-      <div className={s.whatsNew__row}>
-        <img
-          src={
-            'https://images.unsplash.com/photo-1544465544-1b71aee9dfa3?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fHBob3RvfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80'
-          }
-          className={s.whatsNew__img}
-        />
-        <TextareaAutosize
-          autoFocus
-          className={s.whatsNew__textarea}
-          placeholder={"What's new, Emma"}
-        />
-        <button className={s.whatsNew__button}>
-          <IoIosArrowDropright />
-        </button>
+      <div>
+        <div className={s.whatsNew__row}>
+          <img
+            src={
+              'https://images.unsplash.com/photo-1544465544-1b71aee9dfa3?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fHBob3RvfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80'
+            }
+            className={s.whatsNew__img}
+          />
+          <TextareaAutosize
+            autoFocus
+            className={s.whatsNew__textarea}
+            placeholder={"What's new, Emma"}
+          />
+          <button className={s.whatsNew__button}>
+            <IoIosArrowDropright />
+          </button>
+        </div>
+        <div className={`${s.whatsNew_addContent} shadow`}>
+          <button className={s.addContent__item}>
+            <AiOutlineGif />
+          </button>
+          <button className={s.addContent__item}>
+            <BiImageAdd />
+          </button>
+          <button className={s.addContent__item}>
+            <HiOutlineEmojiHappy />
+          </button>
+          <button className={s.addContent__item}>
+            <BiColorFill />
+          </button>
+        </div>
       </div>
     </div>
   );

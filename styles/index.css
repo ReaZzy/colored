@@ -12,3 +12,15 @@ body {
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
 }
+
+button {
+  background-color: transparent;
+  outline: none;
+  cursor: pointer;
+  border: none;
+}
+
+.shadow {
+  -webkit-box-shadow: 0 0 5px 3px rgba(183, 183, 183, 0.2);
+  box-shadow: 0 0 5px 3px rgba(183, 183, 183, 0.2);
+}
