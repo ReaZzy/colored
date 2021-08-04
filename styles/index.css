@@ -1,4 +1,12 @@
+* {
+  box-sizing: border-box;
+  font-family: Poppins, sans-serif;
+}
 body {
+  min-height: 100vh;
+  scroll-behavior: smooth;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
   background: #fafafa;
   box-sizing: border-box;
   overflow-x: hidden;
@@ -6,11 +14,6 @@ body {
   font-size: 16px;
   padding: 0;
   margin: 0;
-}
-
-* {
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
 }
 
 button {

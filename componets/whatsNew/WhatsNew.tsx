@@ -6,6 +6,7 @@ import { BiImageAdd } from '@react-icons/all-files/bi/BiImageAdd';
 import { AiOutlineGif } from '@react-icons/all-files/ai/AiOutlineGif';
 import { HiOutlineEmojiHappy } from '@react-icons/all-files/hi/HiOutlineEmojiHappy';
 import { BiColorFill } from '@react-icons/all-files/bi/BiColorFill';
+import ColoredButton from '../coloredButton/ColoredButton';
 
 interface IProps {}
 const WhatsNew: React.FC<IProps> = () => {
@@ -24,23 +25,27 @@ const WhatsNew: React.FC<IProps> = () => {
             className={s.whatsNew__textarea}
             placeholder={"What's new, Emma"}
           />
-          <button className={s.whatsNew__button}>
+          <ColoredButton
+            className={s.whatsNew__button}
+            height={'40px'}
+            width={'40px'}
+          >
             <IoIosArrowDropright />
-          </button>
+          </ColoredButton>
         </div>
         <div className={`${s.whatsNew_addContent} shadow`}>
-          <button className={s.addContent__item}>
+          <ColoredButton height={'20px'} width={'20px'}>
             <AiOutlineGif />
-          </button>
-          <button className={s.addContent__item}>
+          </ColoredButton>
+          <ColoredButton height={'20px'} width={'20px'}>
             <BiImageAdd />
-          </button>
-          <button className={s.addContent__item}>
+          </ColoredButton>
+          <ColoredButton height={'20px'} width={'20px'}>
             <HiOutlineEmojiHappy />
-          </button>
-          <button className={s.addContent__item}>
+          </ColoredButton>
+          <ColoredButton height={'20px'} width={'20px'}>
             <BiColorFill />
-          </button>
+          </ColoredButton>
         </div>
       </div>
     </div>
