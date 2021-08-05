@@ -9,15 +9,50 @@
 .owner {
   display: flex;
   align-items: center;
+  margin-bottom: 5px;
 }
 
 .owner__photo {
-  width: 3.5em;
-  height: 3.5em;
+  z-index: 1;
+  margin-left: 4px;
+  width: 40px;
+  height: 40px;
   object-fit: cover;
-  padding: 0.5em;
+  margin-right: 10px;
   border-radius: 100%;
 }
 .owner__login {
-  font-size: 18px;
+  font-weight: bold;
+  font-size: 14px;
+}
+.postDate {
+  font-weight: normal;
+  font-size: 11px;
+}
+
+.post__actions {
+  padding: 12px 16px 12px 12px;
+  gap: 8px;
+
+  margin-top: -6px;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  border-radius: 10px 0 10px 0;
+  flex-grow: 0;
+  max-height: 80px;
+}
+
+.post__main {
+  background-color: #ff9bd7;
+  border-radius: 20px;
+  display: flex;
+  color: white;
+  flex-grow: 1;
+}
+
+.post__content {
+  min-height: 120px;
+  max-height: 350px;
+  padding: 7px;
 }
