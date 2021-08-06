@@ -1,5 +1,6 @@
 import {
   Column,
+  CreateDateColumn,
   Entity,
   JoinTable,
   ManyToMany,
@@ -15,6 +16,9 @@ import { Comments } from '../comments/comments.entity';
 export default class Posts {
   @PrimaryGeneratedColumn('uuid')
   id: string;
+
+  @CreateDateColumn()
+  createdDate: Date;
 
   @Column('varchar')
   @Length(3, 2500)

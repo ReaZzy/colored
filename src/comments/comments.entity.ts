@@ -5,6 +5,7 @@ import {
   PrimaryGeneratedColumn,
   Column,
   OneToMany,
+  CreateDateColumn,
 } from 'typeorm';
 import Posts from '../posts/posts.entity';
 import { Users } from '../users/users.entity';
@@ -14,6 +15,9 @@ import { IsDefined, IsString, Length } from 'class-validator';
 export class Comments extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
+
+  @CreateDateColumn()
+  createdDate: Date;
 
   @ManyToOne(() => Posts, (post) => post.id, {
     onDelete: 'CASCADE',

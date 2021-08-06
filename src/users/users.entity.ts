@@ -3,6 +3,7 @@ import {
   BeforeInsert,
   BeforeUpdate,
   Column,
+  CreateDateColumn,
   Entity,
   ManyToMany,
   OneToMany,
@@ -16,6 +17,9 @@ import Posts from '../posts/posts.entity';
 export class Users extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
+
+  @CreateDateColumn()
+  createdDate: Date;
 
   @Column({ unique: true })
   @IsEmail()
