@@ -35,7 +35,7 @@ const Index = ({ posts }: IProps) => {
 
 export const getServerSideProps = async (ctx: GetStaticPropsContext) => {
   const token =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdmZjA1Yjc0LThhZTQtNDlkNS1iN2E3LTA3YzhmYTZkZjdiYyIsImxvZ2luIjoiUmVhWnp5RkFLRTEiLCJpYXQiOjE2MjgzNTQzMTQsImV4cCI6MTYyODQ0MDcxNH0.E1EXfZT8tN76zdjKvVfMgywFaHuJM_CIX_rQvpvK27g';
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdmZjA1Yjc0LThhZTQtNDlkNS1iN2E3LTA3YzhmYTZkZjdiYyIsImxvZ2luIjoiUmVhWnp5RkFLRTEiLCJpYXQiOjE2Mjg0NDk0MTgsImV4cCI6MTYyODUzNTgxOH0.DGyo4nv0YGQ6rWq-9retR-0n3VoV4Oj5kVC7HcJZ1as';
   const res = await axios.get('http://localhost:4000/posts?page=1', {
     headers: {
       Authorization: `Bearer ${token}`,

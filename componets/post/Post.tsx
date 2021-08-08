@@ -4,7 +4,6 @@ import s from './post.module.css';
 import ColoredButton from '../coloredButton/ColoredButton';
 import { IoMdHeartEmpty } from '@react-icons/all-files/io/IoMdHeartEmpty';
 import { GoComment } from '@react-icons/all-files/go/GoComment';
-import { PostBgSvg } from '../../assets/svg/postBg';
 
 interface IProps {
   post: IPosts;
@@ -19,7 +18,6 @@ const Post: React.FC<IProps> = ({ post }) => {
             src={
               'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeGZMvntM86MXW_ddi6psTHg9z0hAB4LVA_w&usqp=CAU'
             }
-            m
             alt={`${post.user.login}`}
             className={`shadow ${s.owner__photo}`}
           />
@@ -48,7 +46,7 @@ const Post: React.FC<IProps> = ({ post }) => {
           </ColoredButton>
         </div>
         <div className={s.post__content}>
-          <PostBgSvg color={'red'} />
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, saepe!
         </div>
       </div>
       <div>
