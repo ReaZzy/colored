@@ -29,24 +29,33 @@ const Post: React.FC<IProps> = ({ post }) => {
       </div>
 
       <div className={s.post__main}>
-        <div className={s.post__actions}>
-          <ColoredButton
-            className={s.whatsNew__button}
-            height={'25px'}
-            width={'25px'}
-          >
-            <IoMdHeartEmpty />
-          </ColoredButton>
-          <ColoredButton
-            className={s.whatsNew__button}
-            height={'25px'}
-            width={'25px'}
-          >
-            <GoComment />
-          </ColoredButton>
+        <div>
+          <div className={s.post__actions}>
+            <ColoredButton
+              className={s.whatsNew__button}
+              height={'25px'}
+              width={'25px'}
+            >
+              <IoMdHeartEmpty />
+            </ColoredButton>
+            <ColoredButton
+              className={s.whatsNew__button}
+              height={'25px'}
+              width={'25px'}
+            >
+              <GoComment />
+            </ColoredButton>
+          </div>
+          <div
+            className={s.actions_bc}
+            style={{ backgroundColor: '#ff9bd7' }}
+          />
         </div>
-        <div className={s.post__content}>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, saepe!
+
+        <div className={s.post__content} style={{ backgroundColor: '#ff9bd7' }}>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus
+          aliquam aspernatur autem id iusto placeat quod sit vero. Dolor ipsa
+          itaque maxime rerum saepe tempora!
         </div>
       </div>
       <div>
