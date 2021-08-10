@@ -8,7 +8,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Length } from 'class-validator';
+import { Length, Matches } from 'class-validator';
 import { Users } from '../users/users.entity';
 import { Comments } from '../comments/comments.entity';
 
@@ -20,6 +20,11 @@ export default class Posts {
   @CreateDateColumn()
   createdDate: Date;
 
+  @Matches(/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/gi, {
+    message: 'invalid color',
+  })
+  @Column('varchar')
+  color: string;
   @Column('varchar')
   @Length(3, 2500)
   content: string;
