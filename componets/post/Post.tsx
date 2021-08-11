@@ -1,15 +1,20 @@
 import React from 'react';
 import { IPosts } from '../../types/IPosts.types';
 import s from './post.module.css';
+import Color from 'color';
 import ColoredButton from '../coloredButton/ColoredButton';
 import { IoMdHeartEmpty } from '@react-icons/all-files/io/IoMdHeartEmpty';
 import { GoComment } from '@react-icons/all-files/go/GoComment';
+import Link from 'next/link';
 
 interface IProps {
   post: IPosts;
 }
 
 const Post: React.FC<IProps> = ({ post }) => {
+  const color = Color(post.color);
+  const fontColor = color.isDark() ? '#fff' : '#000';
+
   return (
     <div className={s.post}>
       <div>
@@ -23,7 +28,7 @@ const Post: React.FC<IProps> = ({ post }) => {
           />
           <div className={s.owner__login}>
             <div>{post.user.login}</div>
-            <div className={s.postDate}>05.08.2021</div>
+            <div className={s.postDate}>{post.createdDate}</div>
           </div>
         </div>
       </div>
@@ -38,24 +43,29 @@ const Post: React.FC<IProps> = ({ post }) => {
             >
               <IoMdHeartEmpty />
             </ColoredButton>
-            <ColoredButton
-              className={s.whatsNew__button}
-              height={'25px'}
-              width={'25px'}
-            >
-              <GoComment />
-            </ColoredButton>
+            <Link href={`post/${post.id}`}>
+              <a>
+                <ColoredButton
+                  className={s.whatsNew__button}
+                  height={'25px'}
+                  width={'25px'}
+                >
+                  <GoComment />
+                </ColoredButton>
+              </a>
+            </Link>
           </div>
           <div
             className={s.actions_bc}
-            style={{ backgroundColor: '#ff9bd7' }}
+            style={{ backgroundColor: `${color}`, color: `${fontColor}` }}
           />
         </div>
 
-        <div className={s.post__content} style={{ backgroundColor: '#ff9bd7' }}>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus
-          aliquam aspernatur autem id iusto placeat quod sit vero. Dolor ipsa
-          itaque maxime rerum saepe tempora!
+        <div
+          className={s.post__content}
+          style={{ backgroundColor: `${color}`, color: `${fontColor}` }}
+        >
+          {post.content}
         </div>
       </div>
       <div>
