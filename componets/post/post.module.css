@@ -34,6 +34,7 @@
   position: relative;
   overflow: hidden;
   max-height: 200px;
+  border-radius: 10px;
 }
 .actions_bc,
 .post__content {

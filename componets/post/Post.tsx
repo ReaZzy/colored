@@ -71,8 +71,17 @@ const Post: React.FC<IProps> = ({ post }) => {
       <div>
         {post.comments.map((comment) => (
           <div key={comment.id}>
-            {comment.user.login}
+            <span style={{ marginRight: '5px', color: `${color}` }}>
+              {comment.user.login}
+            </span>
             {comment.content}
+            <div>
+              {comment.replies.map((reply) => (
+                <div key={reply.id} style={{ marginLeft: '5px' }}>
+                  {reply.content}
+                </div>
+              ))}
+            </div>
           </div>
         ))}
       </div>
