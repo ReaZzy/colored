@@ -36,20 +36,12 @@ const Post: React.FC<IProps> = ({ post }) => {
       <div className={s.post__main}>
         <div>
           <div className={s.post__actions}>
-            <ColoredButton
-              className={s.whatsNew__button}
-              height={'25px'}
-              width={'25px'}
-            >
+            <ColoredButton height={'25px'} width={'25px'}>
               <IoMdHeartEmpty />
             </ColoredButton>
-            <Link href={`post/${post.id}`}>
+            <Link href={`/post/${post.id}`}>
               <a>
-                <ColoredButton
-                  className={s.whatsNew__button}
-                  height={'25px'}
-                  width={'25px'}
-                >
+                <ColoredButton height={'25px'} width={'25px'}>
                   <GoComment />
                 </ColoredButton>
               </a>

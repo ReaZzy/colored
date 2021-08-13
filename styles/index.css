@@ -2,6 +2,19 @@
   box-sizing: border-box;
   font-family: Poppins, sans-serif;
 }
+input[type='color'] {
+  opacity: 0;
+  z-index: 1;
+  cursor: pointer;
+  display: block;
+  border: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
 a {
   outline: none;
   color: black;

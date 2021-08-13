@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import s from './whatsNew.module.css';
 import { IoIosArrowDropright } from '@react-icons/all-files/io/IoIosArrowDropright';
 import TextareaAutosize from 'react-textarea-autosize';
@@ -7,11 +7,35 @@ import { AiOutlineGif } from '@react-icons/all-files/ai/AiOutlineGif';
 import { HiOutlineEmojiHappy } from '@react-icons/all-files/hi/HiOutlineEmojiHappy';
 import { BiColorFill } from '@react-icons/all-files/bi/BiColorFill';
 import ColoredButton from '../coloredButton/ColoredButton';
+import { DebounceInput } from 'react-debounce-input';
+import axios from 'axios';
 
 interface IProps {}
 const WhatsNew: React.FC<IProps> = () => {
+  const [text, setText] = useState('');
+  const [color, setColor] = useState('#ffffff');
+  const handleChangeColor = (e: ChangeEvent<HTMLInputElement>) => {
+    setColor(e.target.value);
+  };
+  const handleChangeText = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setText(e.target.value);
+  };
+  const handlePost = async () => {
+    const token =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU4NGIzMDRiLTgwODAtNGYwYi1iYWQ1LWUwNzBhNmIwOWM0NiIsImxvZ2luIjoiUmVhWnp5RkFLRTEiLCJpYXQiOjE2Mjg4ODAxODcsImV4cCI6MTYyODk2NjU4N30.xHclHaOWo2UbzSDSTqbLvxGrWUefBx4OenxzGoS0d28';
+    const res = await axios.post(
+      'http://localhost:4000/posts',
+      { content: text, color },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    setText('');
+  };
   return (
-    <div className={s.whatsNew}>
+    <div className={s.whatsNew} style={{ backgroundColor: color }}>
       <div>
         <div className={s.whatsNew__row}>
           <img
@@ -20,18 +44,23 @@ const WhatsNew: React.FC<IProps> = () => {
             }
             className={s.whatsNew__img}
           />
-          <TextareaAutosize
-            autoFocus
-            className={s.whatsNew__textarea}
-            placeholder={"What's new, Emma"}
-          />
-          <ColoredButton
-            className={s.whatsNew__button}
-            height={'40px'}
-            width={'40px'}
-          >
-            <IoIosArrowDropright />
-          </ColoredButton>
+          <div className={s.whatsNew__text}>
+            <TextareaAutosize
+              autoFocus
+              className={s.whatsNew__textarea}
+              placeholder={"What's new, Emma"}
+              value={text}
+              onChange={(e) => handleChangeText(e)}
+            />
+            <ColoredButton
+              className={s.whatsNew__button}
+              height={'40px'}
+              width={'40px'}
+              onClick={() => handlePost()}
+            >
+              <IoIosArrowDropright />
+            </ColoredButton>
+          </div>
         </div>
         <div className={`${s.whatsNew_addContent} shadow`}>
           <ColoredButton height={'20px'} width={'20px'}>
@@ -43,8 +72,17 @@ const WhatsNew: React.FC<IProps> = () => {
           <ColoredButton height={'20px'} width={'20px'}>
             <HiOutlineEmojiHappy />
           </ColoredButton>
+
           <ColoredButton height={'20px'} width={'20px'}>
-            <BiColorFill />
+            <>
+              <BiColorFill />
+              <DebounceInput
+                type={'color'}
+                debounceTimeout={50}
+                value={color}
+                onChange={(e) => handleChangeColor(e)}
+              />
+            </>
           </ColoredButton>
         </div>
       </div>

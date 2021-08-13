@@ -12,7 +12,7 @@
 
 .whatsNew__textarea {
   flex-grow: 1;
-  padding: 10px;
+  padding: 10px 40px 10px 10px;
   overflow: hidden;
   outline: none;
   min-height: 40px;
@@ -22,7 +22,7 @@
   -webkit-box-shadow: 0 0 5px 3px rgba(183, 183, 183, 0.2);
   box-shadow: 0 0 5px 3px rgba(183, 183, 183, 0.2);
   border: none;
-  border-radius: 10px 0 0 10px;
+  border-radius: 10px;
 }
 .whatsNew__img {
   flex-grow: 0;
@@ -33,12 +33,15 @@
   width: 40px;
   border-radius: 100%;
 }
-.whatsNew__button {
-  margin-left: -11px;
-  border-bottom-right-radius: 100%;
-  border-top-right-radius: 100%;
-  background-color: #ffffff;
+.whatsNew__text {
   padding: 0;
+  align-items: center;
+  flex-grow: 1;
+  display: flex;
+}
+.whatsNew__button {
+  padding: 0;
+  margin-left: -40px;
 }
 .whatsNew__button svg {
   width: 100%;
