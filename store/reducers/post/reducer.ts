@@ -9,7 +9,7 @@ type InitialStateType = typeof initialState;
 export const postReducer = (
   state: InitialStateType = initialState,
   action: PostActionTypes,
-) => {
+): InitialStateType => {
   switch (action.type) {
     case 'post/SET_POST': {
       return { ...state, posts: [...state.posts, action.payload] };
@@ -18,6 +18,6 @@ export const postReducer = (
       return { ...state, posts: [...action.payload] };
     }
     default:
-      return state;
+      return { ...state };
   }
 };

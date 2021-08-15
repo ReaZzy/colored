@@ -1,23 +1,19 @@
-import React, { useEffect } from 'react';
-import axios from 'axios';
-import { IPosts } from '../types/IPosts.types';
-import { GetStaticPropsContext } from 'next';
+import React from 'react';
+import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import s from './index.module.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { setPosts } from '../store/reducers/post/actions';
+import { wrapper } from '../store/store';
 import { RootState } from '../store/reducers/rootReducer';
-import { initializeStore } from '../store/store';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+import { setPosts } from '../store/reducers/post/actions';
 
 const Post = dynamic(() => import('../componets/post/Post'));
 const Navbar = dynamic(() => import('../componets/navbar/Navbar'));
 const WhatsNew = dynamic(() => import('../componets/whatsNew/WhatsNew'));
 
-interface IProps {
-  posts: IPosts[];
-}
-
-const Index = ({ posts }: IProps) => {
+const Index: NextPage<RootState> = () => {
+  const posts = useSelector((state: RootState) => state.post.posts);
   return (
     <div>
       <Navbar />
@@ -37,20 +33,18 @@ const Index = ({ posts }: IProps) => {
   );
 };
 
-export const getServerSideProps = async (ctx: GetStaticPropsContext) => {
-  const token =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU4NGIzMDRiLTgwODAtNGYwYi1iYWQ1LWUwNzBhNmIwOWM0NiIsImxvZ2luIjoiUmVhWnp5RkFLRTEiLCJpYXQiOjE2Mjg5NjcyNTIsImV4cCI6MTYyOTA1MzY1Mn0.Ec7VD7Zyygz42jxoC9C4l5j24kRUwZexIze2acynMXE';
-  const res = await axios.get('http://localhost:4000/posts?page=1', {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  return {
-    props: {
-      posts: [...res.data.posts],
-    },
-  };
-};
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) => async () => {
+    const token =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU4NGIzMDRiLTgwODAtNGYwYi1iYWQ1LWUwNzBhNmIwOWM0NiIsImxvZ2luIjoiUmVhWnp5RkFLRTEiLCJpYXQiOjE2MjkwNTQ0ODYsImV4cCI6MTYyOTE0MDg4Nn0.C4jwO2gJ91QqAabo6_1vkhBXFPjWTHkNk4PE1Qj0S-8';
+    const res = await axios.get('http://localhost:4000/posts?page=1', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    await store.dispatch(setPosts(res.data.posts));
+    return '' as any;
+  },
+);
 
 export default Index;

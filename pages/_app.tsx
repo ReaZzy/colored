@@ -1,13 +1,9 @@
 import React from 'react';
 import '../styles/index.css';
-import { Provider } from 'react-redux';
-import { useStore } from '../store/store';
+import { wrapper } from '../store/store';
+import { AppProps } from 'next/app';
 
-export default function App({ Component, pageProps }: any) {
-  const store = useStore(pageProps.initialReduxState);
-  return (
-    <Provider store={store}>
-      <Component {...pageProps} />
-    </Provider>
-  );
-}
+const App: React.FC<AppProps> = ({ Component, pageProps }) => {
+  return <Component {...pageProps} />;
+};
+export default wrapper.withRedux(App);
