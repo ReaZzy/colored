@@ -15,7 +15,7 @@ export class PostsService {
   ) {}
 
   async getAll(page?: PostPageDto): Promise<{ posts: Posts[]; total: number }> {
-    const take = 2;
+    const take = 10;
     const skip = (page.page - 1) * take;
     const [result, total] = await this.postsRepository
       .createQueryBuilder('posts')
@@ -49,7 +49,15 @@ export class PostsService {
 
   async create(postData: PostDataDto): Promise<Posts> {
     const post = await this.postsRepository.create(postData);
-    return this.postsRepository.save(post);
+    await this.postsRepository.save(post);
+    return this.postsRepository
+      .createQueryBuilder('post')
+      .where('post.id = :id', { id: post.id })
+      .leftJoin('post.user', 'user')
+      .leftJoin('post.comments', 'comments')
+      .leftJoin('post.likes', 'likes')
+      .select(['post', 'user', 'comments', 'likes'])
+      .getOne();
   }
 
   async like(postId: PostIdDto, userId: Users): Promise<Posts> {
