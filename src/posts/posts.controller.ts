@@ -42,7 +42,6 @@ export class PostsController {
 
   @Get(':id')
   async getById(
-    @Req() req: Request,
     @Res() res: Response,
     @Param() postId: PostIdDto,
   ): Promise<Response> {

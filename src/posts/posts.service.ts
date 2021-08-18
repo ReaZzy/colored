@@ -39,6 +39,7 @@ export class PostsService {
         'commentUser',
         'user',
       ])
+      .orderBy('posts.createdDate', 'DESC')
       .getManyAndCount();
 
     return {
