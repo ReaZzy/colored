@@ -9,11 +9,14 @@ import { BiColorFill } from '@react-icons/all-files/bi/BiColorFill';
 import ColoredButton from '../coloredButton/ColoredButton';
 import { DebounceInput } from 'react-debounce-input';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { setPost } from '../../store/reducers/post/actions';
 
 interface IProps {}
 const WhatsNew: React.FC<IProps> = () => {
   const [text, setText] = useState('');
   const [color, setColor] = useState('#ffffff');
+  const dispatch = useDispatch();
   const handleChangeColor = (e: ChangeEvent<HTMLInputElement>) => {
     setColor(e.target.value);
   };
@@ -22,7 +25,7 @@ const WhatsNew: React.FC<IProps> = () => {
   };
   const handlePost = async () => {
     const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU4NGIzMDRiLTgwODAtNGYwYi1iYWQ1LWUwNzBhNmIwOWM0NiIsImxvZ2luIjoiUmVhWnp5RkFLRTEiLCJpYXQiOjE2Mjg4ODAxODcsImV4cCI6MTYyODk2NjU4N30.xHclHaOWo2UbzSDSTqbLvxGrWUefBx4OenxzGoS0d28';
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU4NGIzMDRiLTgwODAtNGYwYi1iYWQ1LWUwNzBhNmIwOWM0NiIsImxvZ2luIjoiUmVhWnp5RkFLRTEiLCJpYXQiOjE2MjkzMTQ4MTgsImV4cCI6MTYyOTQwMTIxOH0.xF_hiTuJdy9qI5OHO8FfFwt9Dz0C0_3k5ELKkPvTapU';
     const res = await axios.post(
       'http://localhost:4000/posts',
       { content: text, color },
@@ -32,6 +35,7 @@ const WhatsNew: React.FC<IProps> = () => {
         },
       },
     );
+    await dispatch(setPost(res.data));
     setText('');
   };
   return (
@@ -43,6 +47,7 @@ const WhatsNew: React.FC<IProps> = () => {
               'https://images.unsplash.com/photo-1544465544-1b71aee9dfa3?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fHBob3RvfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80'
             }
             className={s.whatsNew__img}
+            alt={''}
           />
           <div className={s.whatsNew__text}>
             <TextareaAutosize

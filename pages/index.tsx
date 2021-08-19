@@ -1,18 +1,25 @@
-import React from 'react';
-import { GetServerSideProps, NextPage } from 'next';
+import React, { useEffect, useRef } from 'react';
+import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import s from './index.module.css';
-import { wrapper } from '../store/store';
+import { NextThunkDispatch, wrapper } from '../store/store';
 import { RootState } from '../store/reducers/rootReducer';
-import { useSelector } from 'react-redux';
-import axios from 'axios';
-import { setPosts } from '../store/reducers/post/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { getPosts } from '../store/reducers/post/thunks';
 
 const Post = dynamic(() => import('../componets/post/Post'));
 const Navbar = dynamic(() => import('../componets/navbar/Navbar'));
 const WhatsNew = dynamic(() => import('../componets/whatsNew/WhatsNew'));
 
 const Index: NextPage<RootState> = () => {
+  const dispatch = useDispatch();
+  const handleScroll = async (e: any) => {
+    const bottom =
+      e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+    if (bottom) {
+      await dispatch(await getPosts(3));
+    }
+  };
   const posts = useSelector((state: RootState) => state.post.posts);
   return (
     <div>
@@ -22,7 +29,10 @@ const Index: NextPage<RootState> = () => {
           <div className={s.center_block__whatsnew}>
             <WhatsNew />
           </div>
-          <div className={s.center_block__posts}>
+          <div
+            className={s.center_block__posts}
+            onScroll={(e) => handleScroll(e)}
+          >
             {posts?.map((post) => (
               <Post key={post.id} post={post} />
             ))}
@@ -35,14 +45,8 @@ const Index: NextPage<RootState> = () => {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   async ({ store }) => {
-    const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU4NGIzMDRiLTgwODAtNGYwYi1iYWQ1LWUwNzBhNmIwOWM0NiIsImxvZ2luIjoiUmVhWnp5RkFLRTEiLCJpYXQiOjE2MjkxNDExODksImV4cCI6MTYyOTIyNzU4OX0.adA69lI2HhRGy1gahTOh4BHJ5MhzzM6YSNpKSs7lsv8';
-    const res = await axios.get('http://localhost:4000/posts?page=1', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    await store.dispatch(setPosts(res.data.posts));
+    const dispatch = store.dispatch as NextThunkDispatch;
+    await dispatch(await getPosts(2));
   },
 );
 

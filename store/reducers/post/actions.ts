@@ -11,3 +11,15 @@ export const setPost = (post: IPosts) =>
     type: 'post/SET_POST',
     payload: post,
   } as const);
+
+export const setFetchingPost = (fetching: boolean) =>
+  ({
+    type: 'post/SET_FETCHING',
+    payload: fetching,
+  } as const);
+
+export const setTotalPost = (total: number) =>
+  ({
+    type: 'post/SET_TOTAL',
+    payload: total,
+  } as const);
