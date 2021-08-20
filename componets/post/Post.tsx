@@ -11,7 +11,7 @@ interface IProps {
   post: IPosts;
 }
 
-const Post: React.FC<IProps> = ({ post }) => {
+const Post: React.FC<IProps> = React.memo(({ post }) => {
   const color = Color(post.color);
   const fontColor = color.isDark() ? '#fff' : '#000';
 
@@ -79,6 +79,6 @@ const Post: React.FC<IProps> = ({ post }) => {
       </div>
     </div>
   );
-};
-
+});
+Post.displayName = 'Post';
 export default Post;

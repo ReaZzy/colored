@@ -17,7 +17,7 @@ export const postReducer = (
       return { ...state, posts: [action.payload, ...state.posts] };
     }
     case 'post/SET_POSTS': {
-      return { ...state, posts: [...action.payload] };
+      return { ...state, posts: [...state.posts, ...action.payload] };
     }
     case 'post/SET_TOTAL': {
       return { ...state, total: action.payload };

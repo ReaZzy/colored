@@ -6,9 +6,9 @@ import { IoSearchOutline } from '@react-icons/all-files/io5/IoSearchOutline';
 import { IoMdHeartEmpty } from '@react-icons/all-files/io/IoMdHeartEmpty';
 import ColoredButton from '../coloredButton/ColoredButton';
 
-interface iProps {}
+interface IProps {}
 
-const Navbar: React.FC<iProps> = () => {
+const Navbar: React.FC<IProps> = React.memo(() => {
   return (
     <nav className={s.nav}>
       <div className={s.nav__content}>
@@ -34,6 +34,6 @@ const Navbar: React.FC<iProps> = () => {
       </div>
     </nav>
   );
-};
-
+});
+Navbar.displayName = 'Navbar';
 export default Navbar;

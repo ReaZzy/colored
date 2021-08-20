@@ -13,7 +13,7 @@ import { useDispatch } from 'react-redux';
 import { setPost } from '../../store/reducers/post/actions';
 
 interface IProps {}
-const WhatsNew: React.FC<IProps> = () => {
+const WhatsNew: React.FC<IProps> = React.memo(() => {
   const [text, setText] = useState('');
   const [color, setColor] = useState('#ffffff');
   const dispatch = useDispatch();
@@ -93,6 +93,6 @@ const WhatsNew: React.FC<IProps> = () => {
       </div>
     </div>
   );
-};
-
+});
+WhatsNew.displayName = 'WhatsNew';
 export default WhatsNew;
