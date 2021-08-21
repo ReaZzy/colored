@@ -8,9 +8,9 @@ import { HiOutlineEmojiHappy } from '@react-icons/all-files/hi/HiOutlineEmojiHap
 import { BiColorFill } from '@react-icons/all-files/bi/BiColorFill';
 import ColoredButton from '../coloredButton/ColoredButton';
 import { DebounceInput } from 'react-debounce-input';
-import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { setPost } from '../../store/reducers/post/actions';
+import { instance } from '../../store/reducers/api';
 
 interface IProps {}
 const WhatsNew: React.FC<IProps> = React.memo(() => {
@@ -24,17 +24,7 @@ const WhatsNew: React.FC<IProps> = React.memo(() => {
     setText(e.target.value);
   };
   const handlePost = async () => {
-    const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU4NGIzMDRiLTgwODAtNGYwYi1iYWQ1LWUwNzBhNmIwOWM0NiIsImxvZ2luIjoiUmVhWnp5RkFLRTEiLCJpYXQiOjE2MjkzMTQ4MTgsImV4cCI6MTYyOTQwMTIxOH0.xF_hiTuJdy9qI5OHO8FfFwt9Dz0C0_3k5ELKkPvTapU';
-    const res = await axios.post(
-      'http://localhost:4000/posts',
-      { content: text, color },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
-    );
+    const res = await instance.post('/posts', { content: text, color });
     await dispatch(setPost(res.data));
     setText('');
   };

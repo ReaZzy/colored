@@ -25,7 +25,7 @@ const Index: NextPage<RootState> = () => {
     <div>
       <Navbar />
       <div className={s.content}>
-        <div className={s.center_block} id={'scrollableDiv'}>
+        <div className={s.center_block}>
           <div className={s.center_block__whatsnew}>
             <WhatsNew />
           </div>
