@@ -103,7 +103,11 @@
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
+<<<<<<< HEAD
 >>>>>>> 0992303... feat🔨: add users.entity.ts 🧑
+=======
+    "cookie-parser": "^1.4.5",
+>>>>>>> f2656af... feat🔨: add cookies
     "cross-env": "^7.0.3",
     "dotenv": "^10.0.0",
 <<<<<<< HEAD
@@ -159,9 +163,13 @@
     "@nestjs/testing": "^7.6.15",
     "@types/bcryptjs": "^2.4.2",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "@types/cookie-parser": "^1.4.2",
 =======
 >>>>>>> 0992303... feat🔨: add users.entity.ts 🧑
+=======
+    "@types/cookie-parser": "^1.4.2",
+>>>>>>> f2656af... feat🔨: add cookies
     "@types/express": "^4.17.11",
 <<<<<<< HEAD
     "@types/graphql-upload": "^8.0.7",
