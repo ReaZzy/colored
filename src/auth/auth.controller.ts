@@ -34,7 +34,10 @@ export class AuthController {
         message: 'Incorrect login or password',
       });
     }
-    res.cookie('auth', token.access_token, { httpOnly: true });
+    res.cookie('auth', token.access_token, {
+      httpOnly: true,
+      maxAge: 86_400_000,
+    });
     return res.status(HttpStatus.OK).send(token);
   }
 
