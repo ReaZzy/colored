@@ -1,5 +1,5 @@
-import { instance } from '../api';
 import { IPosts } from '../../../types/IPosts.types';
+import { instance } from '../api';
 
 export const getPostsRequest = async (
   page: number = 1,
@@ -7,6 +7,6 @@ export const getPostsRequest = async (
   posts: IPosts[];
   total: number;
 }> => {
-  const res = await instance.get(`posts?page=${page}`);
+  const res = await instance.get(`/posts?page=${page}`);
   return res.data;
 };

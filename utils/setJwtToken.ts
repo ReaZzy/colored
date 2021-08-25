@@ -9,13 +9,11 @@ export const setJwtToken =
   (dispatch: ThunkDispatch<RootState, void, AnyAction>) => {
     if (token) {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      localStorage.setItem('jwtToken', token);
       dispatch(setToken(token));
       dispatch(setIsAuth(true));
       return true;
     } else {
       delete axios.defaults.headers.common['Authorization'];
-      localStorage.removeItem('jwtToken');
       dispatch(setToken(null));
       dispatch(setIsAuth(false));
       return false;

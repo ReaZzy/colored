@@ -12,6 +12,7 @@
     "@react-icons/all-files": "^4.1.0",
     "axios": "^0.21.1",
     "color": "^4.0.1",
+    "cookies": "^0.8.0",
     "next": "11.0.1",
     "next-redux-wrapper": "^6.0.2",
     "react": "17.0.2",
@@ -27,6 +28,7 @@
   "devDependencies": {
     "@types/axios": "^0.14.0",
     "@types/color": "^3.0.2",
+    "@types/cookies": "^0.7.7",
     "@types/react": "17.0.14",
     "@types/react-redux": "^7.1.18",
     "@types/redux": "^3.6.0",

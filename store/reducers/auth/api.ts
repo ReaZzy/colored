@@ -1,10 +1,10 @@
-import axios from 'axios';
+import { instance } from '../api';
 
 export const loginRequest = async (
   find: string,
   password: string,
 ): Promise<string> => {
-  const res = await axios.post('http://localhost:4000/auth/login', {
+  const res = await instance.post('/auth/login', {
     find,
     password,
   });
