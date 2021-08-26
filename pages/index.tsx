@@ -9,6 +9,8 @@ import { setJwtToken } from '../utils/setJwtToken';
 import { login } from '../store/reducers/auth/thunks';
 import Cookies from 'cookies';
 import { getPosts } from '../store/reducers/post/thunks';
+import axios from 'axios';
+import { instance } from '../store/reducers/api';
 
 const Navbar = dynamic(() => import('../componets/navbar/Navbar'));
 const WhatsNew = dynamic(() => import('../componets/whatsNew/WhatsNew'));
@@ -47,7 +49,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
     const dispatch = store.dispatch as NextThunkDispatch;
     const token = cookies.get('auth') || null;
     await dispatch(setJwtToken(token));
-    await dispatch(await getPosts(1));
+    instance.defaults.headers.common.Cookie = `auth=${token}`;
+    token && (await dispatch(await getPosts(1)));
   },
 );
 
