@@ -5,7 +5,6 @@ import { getPosts } from '../../store/reducers/post/thunks';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/reducers/rootReducer';
-import { NextThunkDispatch, wrapper } from '../../store/store';
 const Post = dynamic(() => import('../post/Post'));
 
 const Posts: React.FC<{}> = React.memo(() => {

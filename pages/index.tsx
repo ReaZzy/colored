@@ -52,7 +52,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await dispatch(await getPosts(1));
     } else {
       res.statusCode = 302;
-      res.setHeader('Location', `/login`);
+      //res.setHeader('Location', `/login`);
     }
   },
 );

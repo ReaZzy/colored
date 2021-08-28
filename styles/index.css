@@ -25,7 +25,8 @@ body {
   min-width: 320px;
   scroll-behavior: smooth;
   text-rendering: optimizeSpeed;
-  line-height: 1.5;
+  line-height: 1.4;
+  letter-spacing: 0.25px;
   background: #fafafa;
   box-sizing: border-box;
   overflow-x: hidden;

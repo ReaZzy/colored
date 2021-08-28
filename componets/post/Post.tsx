@@ -18,7 +18,10 @@ const Post: React.FC<IProps> = React.memo(({ post }) => {
   return (
     <div className={s.post}>
       <div>
-        <div className={s.owner}>
+        <div
+          className={s.owner}
+          style={{ backgroundColor: `${color}`, color: `${fontColor}` }}
+        >
           <img
             src={
               'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeGZMvntM86MXW_ddi6psTHg9z0hAB4LVA_w&usqp=CAU'
@@ -34,30 +37,24 @@ const Post: React.FC<IProps> = React.memo(({ post }) => {
       </div>
 
       <div className={s.post__main}>
-        <div>
-          <div className={s.post__actions}>
-            <ColoredButton height={'25px'} width={'25px'}>
-              <IoMdHeartEmpty />
-            </ColoredButton>
-            <Link href={`/post/${post.id}`}>
-              <a>
-                <ColoredButton height={'25px'} width={'25px'}>
-                  <GoComment />
-                </ColoredButton>
-              </a>
-            </Link>
-          </div>
-          <div
-            className={s.actions_bc}
-            style={{ backgroundColor: `${color}`, color: `${fontColor}` }}
-          />
+        <div className={s.post__content}>{post.content}</div>
+      </div>
+      <div className={s.post__actions}>
+        <div className={s.post__actions__item}>
+          <ColoredButton height={'25px'} width={'25px'}>
+            <IoMdHeartEmpty />
+          </ColoredButton>
+          21
         </div>
-
-        <div
-          className={s.post__content}
-          style={{ backgroundColor: `${color}`, color: `${fontColor}` }}
-        >
-          {post.content}
+        <div className={s.post__actions__item}>
+          <Link href={`/post/${post.id}`}>
+            <a>
+              <ColoredButton height={'25px'} width={'25px'}>
+                <GoComment />
+              </ColoredButton>
+            </a>
+          </Link>
+          32
         </div>
       </div>
       <div>
