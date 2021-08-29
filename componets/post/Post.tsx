@@ -37,7 +37,35 @@ const Post: React.FC<IProps> = React.memo(({ post }) => {
       </div>
 
       <div className={s.post__main}>
-        <div className={s.post__content}>{post.content}</div>
+        <div className={s.post__content}>
+          {post.content}
+          <div className={s.post__images}>
+            <img
+              width={'100%'}
+              src={
+                'https://www.worldforestry.org/wp-content/uploads/2020/02/dan-otis-OYFHT4X5isg-unsplash-scaled.jpg'
+              }
+            />
+            <img
+              width={'100%'}
+              src={
+                'https://www.worldforestry.org/wp-content/uploads/2020/02/dan-otis-OYFHT4X5isg-unsplash-scaled.jpg'
+              }
+            />
+            <img
+              width={'100%'}
+              src={
+                'https://www.worldforestry.org/wp-content/uploads/2020/02/dan-otis-OYFHT4X5isg-unsplash-scaled.jpg'
+              }
+            />
+            <img
+              width={'100%'}
+              src={
+                'https://www.worldforestry.org/wp-content/uploads/2020/02/dan-otis-OYFHT4X5isg-unsplash-scaled.jpg'
+              }
+            />
+          </div>
+        </div>
       </div>
       <div className={s.post__actions}>
         <div className={s.post__actions__item}>
