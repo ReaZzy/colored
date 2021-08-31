@@ -1,34 +1,36 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { login } from '../../store/reducers/auth/thunks';
 import { useRouter } from 'next/router';
+import s from './login.module.css';
+import { Field, Form, Formik } from 'formik';
 
 const Login: React.FC = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const [userLogin, setUserLogin] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const handleSubmit = async () => {
-    await dispatch(await login(userLogin, password));
-    setUserLogin('');
-    setPassword('');
+  const handleSubmit = async (values: any) => {
+    await dispatch(await login(values.find, values.password));
     await router.push('/');
   };
   return (
-    <div>
-      <input
-        value={userLogin}
-        onChange={(e) => setUserLogin(e.currentTarget.value)}
-      />
-      <input
-        type={'password'}
-        value={password}
-        onChange={(e) => setPassword(e.currentTarget.value)}
-      />
-      <button type={'submit'} onClick={handleSubmit}>
-        Login 🔐
-      </button>
-    </div>
+    <Formik onSubmit={handleSubmit} initialValues={{ find: '', password: '' }}>
+      <Form>
+        <label htmlFor={'find'}>Login or Email</label>
+        <Field
+          id={'find'}
+          name={'find'}
+          placeholder={'Enter your login or email'}
+        />
+        <label htmlFor={'password'}>Password</label>
+        <Field
+          id={'password'}
+          name={'password'}
+          placeholder={'Enter your password'}
+          type={'password'}
+        />
+        <button type={'submit'}>Login 🔐</button>
+      </Form>
+    </Formik>
   );
 };
 
