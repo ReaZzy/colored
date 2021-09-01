@@ -24,7 +24,8 @@
     "react-textarea-autosize": "^8.3.3",
     "redux": "^4.1.1",
     "redux-devtools-extension": "^2.13.9",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
