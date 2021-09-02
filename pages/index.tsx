@@ -25,14 +25,15 @@ const Index: NextPage<RootState> = () => {
     </div>
   );
 };
+
 export const getServerSideProps = wrapper.getServerSideProps(
   async ({ store, res, req }) => {
     const cookies = new Cookies(req, res);
     const dispatch = store.dispatch as NextThunkDispatch;
     const token = cookies.get('auth') || null;
-    await dispatch(setJwtToken(token));
+    const valid = await dispatch(setJwtToken(token));
 
-    if (token) {
+    if (valid) {
       await dispatch(await getPosts(1));
     } else {
       res.statusCode = 302;
