@@ -25,7 +25,7 @@ const Login: React.FC = () => {
       validationSchema={validationSchema}
     >
       {({ errors, touched }) => (
-        <Form>
+        <Form className={s.login}>
           <label htmlFor={'find'}>Login or Email</label>
           <Field
             id={'find'}

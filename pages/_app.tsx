@@ -7,7 +7,7 @@ import Layout from '../componets/layout/Layout';
 const WrappedApp: React.FC<AppProps> = ({ Component, pageProps }) => {
   return (
     <Layout>
-      <Component {...pageProps} />;
+      <Component {...pageProps} />
     </Layout>
   );
 };
