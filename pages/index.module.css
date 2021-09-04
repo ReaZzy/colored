@@ -10,7 +10,9 @@
   flex-direction: column;
   gap: 10px;
 }
-
+.modal {
+  outline: none;
+}
 @media (min-width: 700px) {
   .content {
     width: 80%;

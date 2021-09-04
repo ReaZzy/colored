@@ -8,9 +8,11 @@ import { useSelector } from 'react-redux';
 import { setJwtToken } from '../utils/setJwtToken';
 import Cookies from 'cookies';
 import { getPosts } from '../store/reducers/post/thunks';
+import Modal from 'react-modal';
 
 const WhatsNew = dynamic(() => import('../componets/whatsNew/WhatsNew'));
 const Posts = dynamic(() => import('../componets/posts/Posts'));
+const Login = dynamic(() => import('../componets/login/Login'));
 
 const Index: NextPage<RootState> = () => {
   const { isAuth } = useSelector((state: RootState) => state.auth);
@@ -20,7 +22,18 @@ const Index: NextPage<RootState> = () => {
         <div className={s.center_block__whatsnew}>
           <WhatsNew />
         </div>
-        {isAuth && <Posts />}
+        {isAuth ? (
+          <Posts />
+        ) : (
+          <Modal
+            isOpen={true}
+            contentLabel="Login"
+            style={{ overlay: { zIndex: 10 } }}
+            className={s.modal}
+          >
+            <Login />
+          </Modal>
+        )}
       </div>
     </div>
   );
@@ -33,12 +46,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     const token = cookies.get('auth') || null;
     const valid = await dispatch(setJwtToken(token));
 
-    if (valid) {
-      await dispatch(await getPosts(1));
-    } else {
-      res.statusCode = 302;
-      res.setHeader('Location', `/login`);
-    }
+    valid && (await dispatch(await getPosts(1)));
   },
 );
 
