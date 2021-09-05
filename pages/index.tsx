@@ -22,18 +22,7 @@ const Index: NextPage<RootState> = () => {
         <div className={s.center_block__whatsnew}>
           <WhatsNew />
         </div>
-        {isAuth ? (
-          <Posts />
-        ) : (
-          <Modal
-            isOpen={true}
-            contentLabel="Login"
-            style={{ overlay: { zIndex: 10 } }}
-            className={s.modal}
-          >
-            <Login />
-          </Modal>
-        )}
+        {isAuth ? <Posts /> : <Login />}
       </div>
     </div>
   );
