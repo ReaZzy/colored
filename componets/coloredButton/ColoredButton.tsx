@@ -10,21 +10,15 @@ interface IProps {
 }
 const ColoredButton: React.FC<IProps> = React.memo(
   ({ children, height, width, ...props }) => {
-    const colorArray = [
-      '#e24b4b',
-      '#00B594',
-      '#FFD93B',
-      '#CF6848',
-      '#FECECE',
-      '#F8746B',
-      '#FC6E51',
-      '#DA4453',
-      '#D770AD',
-      '#A7BC7A',
-      '#5D9CEC',
-      '#4A89DC',
-      '#4A566E',
-    ];
+    const getRandomColor = (): string => {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    };
+
     const [style, setStyle] = useState({
       color: '',
     });
@@ -34,7 +28,7 @@ const ColoredButton: React.FC<IProps> = React.memo(
         onMouseEnter={() => {
           setStyle({
             ...style,
-            color: colorArray[Math.ceil(Math.random() * colorArray.length)],
+            color: getRandomColor(),
           });
         }}
         onMouseLeave={() => {
