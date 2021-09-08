@@ -1,3 +1,7 @@
+::root {
+  --red: rgb(246, 54, 54);
+}
+
 * {
   box-sizing: border-box;
   font-family: Poppins, sans-serif;
@@ -55,6 +59,7 @@ button {
 }
 
 .Modal {
+  outline: none;
   right: 10px;
   left: 10px;
   border-radius: 10px;

@@ -1,0 +1,13 @@
+.validatedInput {
+  display: flex;
+  flex-direction: column;
+}
+
+.errorMessage {
+  font-weight: bold;
+  font-size: 12px;
+  color: rgb(246, 54, 54);
+}
+.errorMessage:first-letter {
+  text-transform: capitalize;
+}

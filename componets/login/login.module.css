@@ -38,16 +38,16 @@
 .login__item input {
   outline: none;
   border: none;
-  border-bottom: 1px solid #0e0e0e;
+  border-bottom: 2px solid #0e0e0e;
   transition: 0.3s;
 }
 .login__item input:hover {
-  border-bottom: 1px solid #47db47;
+  border-bottom: 2px solid #47db47;
 }
 .login__item input:focus {
-  background-color: #47db47;
-  border-bottom: 1px solid #459145;
+  border-bottom: 2px solid #337633;
 }
+
 @media (min-width: 550px) {
   .login__image {
     display: block;

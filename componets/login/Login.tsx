@@ -3,9 +3,10 @@ import { useDispatch } from 'react-redux';
 import { login } from '../../store/reducers/auth/thunks';
 import { useRouter } from 'next/router';
 import s from './login.module.css';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { Field, Form, Formik } from 'formik';
 import * as yup from 'yup';
 import Modal from 'react-modal';
+import { ValidatedInput } from '../validatedInput/ValidatedInput';
 
 const validationSchema = yup.object({
   find: yup.string().min(6).max(64).required(),
@@ -40,30 +41,32 @@ const Login: React.FC = () => {
           initialValues={{ find: '', password: '' }}
           validationSchema={validationSchema}
         >
-          <Form className={s.login__block}>
-            <div className={s.login__item}>
-              <label htmlFor={'find'}>Login or Email</label>
-              <Field
-                id={'find'}
-                name={'find'}
-                placeholder={'Enter your login or email'}
-              />
-              <ErrorMessage name={'find'} />
-            </div>
-            <div className={s.login__item}>
-              <label htmlFor={'password'}>Password</label>
-              <Field
-                id={'password'}
-                name={'password'}
-                placeholder={'Enter your password'}
-                type={'password'}
-              />
-              <ErrorMessage name={'password'} />
-            </div>
-            <button className={s.login__button} type={'submit'}>
-              Login 🔐
-            </button>
-          </Form>
+          {({ errors, touched }) => (
+            <Form className={s.login__block}>
+              <div className={s.login__item}>
+                <label htmlFor={'find'}>Login or Email</label>
+                <Field
+                  component={ValidatedInput}
+                  id={'find'}
+                  name={'find'}
+                  placeholder={'Enter your login or email'}
+                />
+              </div>
+              <div className={s.login__item}>
+                <label htmlFor={'password'}>Password</label>
+                <Field
+                  component={ValidatedInput}
+                  id={'password'}
+                  name={'password'}
+                  placeholder={'Enter your password'}
+                  type={'password'}
+                />
+              </div>
+              <button className={s.login__button} type={'submit'}>
+                Login 🔐
+              </button>
+            </Form>
+          )}
         </Formik>
       </div>
     </Modal>
