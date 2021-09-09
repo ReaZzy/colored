@@ -6,6 +6,8 @@
 
 .login {
   display: flex;
+  flex-direction: column;
+  gap: 10px;
   width: 100%;
   align-items: center;
   justify-content: center;
@@ -46,6 +48,18 @@
 }
 .login__item input:focus {
   border-bottom: 2px solid #337633;
+}
+.noAccaunt {
+  align-self: center;
+  font-weight: bold;
+  font-size: 12px;
+}
+.noAccaunt__register {
+  color: #337633;
+}
+.noAccaunt__register:hover {
+  border-bottom: 1px solid #337633;
+  cursor: pointer;
 }
 
 @media (min-width: 550px) {

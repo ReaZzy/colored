@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { login } from '../../store/reducers/auth/thunks';
 import { useRouter } from 'next/router';
@@ -16,6 +16,7 @@ const validationSchema = yup.object({
 const Login: React.FC = () => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const [isRegistration, setIsRegistration] = useState(false);
   const handleSubmit = async (values: { find: string; password: string }) => {
     await dispatch(await login(values.find, values.password));
     await router.push('/');
@@ -36,12 +37,12 @@ const Login: React.FC = () => {
         alt={'right-bc-image'}
       />
       <div className={s.login}>
-        <Formik
-          onSubmit={handleSubmit}
-          initialValues={{ find: '', password: '' }}
-          validationSchema={validationSchema}
-        >
-          {({ errors, touched }) => (
+        {!isRegistration ? (
+          <Formik
+            onSubmit={handleSubmit}
+            initialValues={{ find: '', password: '' }}
+            validationSchema={validationSchema}
+          >
             <Form className={s.login__block}>
               <div className={s.login__item}>
                 <label htmlFor={'find'}>Login or Email</label>
@@ -63,11 +64,62 @@ const Login: React.FC = () => {
                 />
               </div>
               <button className={s.login__button} type={'submit'}>
-                Login 🔐
+                Login
               </button>
             </Form>
-          )}
-        </Formik>
+          </Formik>
+        ) : (
+          <Formik
+            onSubmit={handleSubmit}
+            initialValues={{ find: '', password: '' }}
+            validationSchema={validationSchema}
+          >
+            <Form className={s.login__block}>
+              <div className={s.login__item}>
+                <label htmlFor={'find'}>Login or Email</label>
+                <Field
+                  component={ValidatedInput}
+                  id={'find'}
+                  name={'find'}
+                  placeholder={'Enter your login or email'}
+                />
+              </div>
+              <div className={s.login__item}>
+                <label htmlFor={'find'}>Login or Email</label>
+                <Field
+                  component={ValidatedInput}
+                  id={'find'}
+                  name={'find'}
+                  placeholder={'Enter your login or email'}
+                />
+              </div>
+              <div className={s.login__item}>
+                <label htmlFor={'password'}>Password</label>
+                <Field
+                  component={ValidatedInput}
+                  id={'password'}
+                  name={'password'}
+                  placeholder={'Enter your password'}
+                  type={'password'}
+                />
+              </div>
+              <button className={s.login__button} type={'submit'}>
+                Login
+              </button>
+            </Form>
+          </Formik>
+        )}
+        <div className={s.noAccaunt}>
+          Don't have an account?{' '}
+          <span
+            className={s.noAccaunt__register}
+            onClick={() => {
+              setIsRegistration(!isRegistration);
+            }}
+          >
+            Register
+          </span>
+        </div>
       </div>
     </Modal>
   );
