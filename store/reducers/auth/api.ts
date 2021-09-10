@@ -10,3 +10,16 @@ export const loginRequest = async (
   });
   return res.data.access_token;
 };
+
+export const registerRequest = async (
+  login: string,
+  email: string,
+  password: string,
+): Promise<string> => {
+  const res = await instance.post('/auth/register', {
+    login,
+    email,
+    password,
+  });
+  return res.data;
+};

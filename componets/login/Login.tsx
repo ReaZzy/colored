@@ -12,6 +12,11 @@ const validationSchema = yup.object({
   find: yup.string().min(6).max(64).required(),
   password: yup.string().min(6).max(64).required(),
 });
+const validationSchemaRegistration = yup.object({
+  emailRegistration: yup.string().email().max(64).required(),
+  loginRegistration: yup.string().min(6).max(64).required(),
+  passwordRegistration: yup.string().min(6).max(64).required(),
+});
 
 const Login: React.FC = () => {
   const dispatch = useDispatch();
@@ -71,34 +76,38 @@ const Login: React.FC = () => {
         ) : (
           <Formik
             onSubmit={handleSubmit}
-            initialValues={{ find: '', password: '' }}
-            validationSchema={validationSchema}
+            initialValues={{
+              emailRegistration: '',
+              loginRegistration: '',
+              passwordRegistration: '',
+            }}
+            validationSchema={validationSchemaRegistration}
           >
             <Form className={s.login__block}>
               <div className={s.login__item}>
-                <label htmlFor={'find'}>Login or Email</label>
+                <label htmlFor={'emailRegistration'}>Email</label>
                 <Field
                   component={ValidatedInput}
-                  id={'find'}
-                  name={'find'}
-                  placeholder={'Enter your login or email'}
+                  id={'emailRegistration'}
+                  name={'emailRegistration'}
+                  placeholder={'Enter your email'}
                 />
               </div>
               <div className={s.login__item}>
-                <label htmlFor={'find'}>Login or Email</label>
+                <label htmlFor={'loginRegistration'}>Login</label>
                 <Field
                   component={ValidatedInput}
-                  id={'find'}
-                  name={'find'}
-                  placeholder={'Enter your login or email'}
+                  id={'loginRegistration'}
+                  name={'loginRegistration'}
+                  placeholder={'Enter your login'}
                 />
               </div>
               <div className={s.login__item}>
-                <label htmlFor={'password'}>Password</label>
+                <label htmlFor={'passwordRegistration'}>Password</label>
                 <Field
                   component={ValidatedInput}
-                  id={'password'}
-                  name={'password'}
+                  id={'passwordRegistration'}
+                  name={'passwordRegistration'}
                   placeholder={'Enter your password'}
                   type={'password'}
                 />
@@ -110,14 +119,14 @@ const Login: React.FC = () => {
           </Formik>
         )}
         <div className={s.noAccaunt}>
-          Don't have an account?{' '}
+          {isRegistration ? 'Already a member? ' : `Don\'t have an account? `}
           <span
             className={s.noAccaunt__register}
             onClick={() => {
               setIsRegistration(!isRegistration);
             }}
           >
-            Register
+            {isRegistration ? 'Login' : 'Register'}
           </span>
         </div>
       </div>
