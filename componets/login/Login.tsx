@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Image from 'next/image';
+import loginBC from '../../utils/images/loginBC.jpg';
 import { useDispatch } from 'react-redux';
 import { login } from '../../store/reducers/auth/thunks';
 import { useRouter } from 'next/router';
@@ -34,13 +36,7 @@ const Login: React.FC = () => {
       className="Modal"
       overlayClassName="Overlay"
     >
-      <img
-        src={
-          'https://images.unsplash.com/photo-1541963463532-d68292c34b19?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjB8fHJlYWR8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80'
-        }
-        className={s.login__image}
-        alt={'right-bc-image'}
-      />
+      <Image src={loginBC} className={s.login__image} alt={'right-bc-image'} />
       <div className={s.login}>
         {!isRegistration ? (
           <Formik
