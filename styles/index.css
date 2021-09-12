@@ -1,7 +1,6 @@
 ::root {
   --red: rgb(246, 54, 54);
 }
-
 * {
   box-sizing: border-box;
   font-family: Poppins, sans-serif;
@@ -78,6 +77,9 @@ button {
   right: 0;
   bottom: 0;
   background-color: rgba(12, 12, 12, 0.4);
+}
+.login__image {
+  object-fit: cover;
 }
 @media (min-width: 900px) {
   .Modal {

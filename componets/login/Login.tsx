@@ -36,7 +36,15 @@ const Login: React.FC = () => {
       className="Modal"
       overlayClassName="Overlay"
     >
-      <Image src={loginBC} className={s.login__image} alt={'right-bc-image'} />
+      <div className={s.login__image}>
+        <Image
+          src={loginBC}
+          layout={'fill'}
+          className={'login__image'}
+          alt={'right-bc-image'}
+        />
+      </div>
+
       <div className={s.login}>
         {!isRegistration ? (
           <Formik
