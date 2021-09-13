@@ -49,7 +49,18 @@ export class AuthController {
   }
 
   @Post('/register')
-  async create(@Body() usersData: UsersDataDto): Promise<Users> {
-    return this.usersService.create(usersData);
+  async create(
+    @Body() usersData: UsersDataDto,
+    @Res() res: Response,
+  ): Promise<Response> {
+    const user = await this.usersService.create(usersData);
+    const { access_token } = await this.authService.login(
+      await this.usersService.create(user),
+    );
+    res.cookie('auth', access_token, {
+      httpOnly: true,
+      maxAge: 86_400_000,
+    });
+    return res.status(HttpStatus.OK).send({ user, access_token });
   }
 }
