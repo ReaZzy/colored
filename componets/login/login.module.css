@@ -2,7 +2,7 @@
   display: none;
   position: relative;
   height: 100%;
-  width: 30%;
+  width: 65%;
 }
 
 .login {
@@ -51,9 +51,12 @@
   border-bottom: 2px solid #337633;
 }
 .noAccaunt {
+  display: flex;
+  flex-direction: column;
   align-self: center;
   font-weight: bold;
   font-size: 12px;
+  gap: 20px;
 }
 .noAccaunt__register {
   color: #337633;
@@ -61,6 +64,19 @@
 .noAccaunt__register:hover {
   border-bottom: 1px solid #337633;
   cursor: pointer;
+}
+.loginVia {
+  text-align: center;
+}
+.social {
+  margin-top: 5px;
+  justify-content: center;
+  display: flex;
+  gap: 10px;
+}
+.social svg {
+  width: 25px;
+  height: 25px;
 }
 
 @media (min-width: 550px) {

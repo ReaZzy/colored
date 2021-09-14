@@ -21,5 +21,5 @@ export const registerRequest = async (
     email,
     password,
   });
-  return res.data;
+  return res.data.access_token;
 };
