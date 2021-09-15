@@ -4,10 +4,11 @@ import dynamic from 'next/dynamic';
 import s from './index.module.css';
 import { NextThunkDispatch, wrapper } from '../store/store';
 import { RootState } from '../store/reducers/rootReducer';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { setJwtToken } from '../utils/setJwtToken';
 import Cookies from 'cookies';
 import { getPosts } from '../store/reducers/post/thunks';
+import { logout } from '../store/reducers/auth/thunks';
 
 const WhatsNew = dynamic(() => import('../componets/whatsNew/WhatsNew'));
 const Posts = dynamic(() => import('../componets/posts/Posts'));
@@ -15,12 +16,22 @@ const Login = dynamic(() => import('../componets/login/Login'));
 
 const Index: NextPage<RootState> = () => {
   const { isAuth } = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch();
   return (
     <div className={s.content}>
       <div className={s.center_block}>
         <div className={s.center_block__whatsnew}>
           <WhatsNew />
         </div>
+        {isAuth && (
+          <button
+            onClick={async () => {
+              dispatch(await logout());
+            }}
+          >
+            Logout
+          </button>
+        )}
         {isAuth ? <Posts /> : <Login />}
       </div>
     </div>

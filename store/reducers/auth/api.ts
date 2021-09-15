@@ -23,3 +23,8 @@ export const registerRequest = async (
   });
   return res.data.access_token;
 };
+
+export const logoutRequest = async (): Promise<undefined> => {
+  const res = await instance.delete('/auth/logout');
+  return;
+};
