@@ -25,6 +25,9 @@ export class Users extends BaseEntity {
   @IsEmail()
   email: string;
 
+  @Column('varchar', { default: '' })
+  avatar: string;
+
   @Column('varchar', { unique: true })
   @Length(3, 60)
   login: string;

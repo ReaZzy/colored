@@ -177,6 +177,7 @@
     "@types/passport": "^1.0.7",
 =======
     "@types/jest": "^26.0.22",
+    "@types/multer": "^1.4.7",
     "@types/node": "^14.14.36",
 <<<<<<< HEAD
 >>>>>>> c55ba73... feat🔨: add auth.service 🔒
