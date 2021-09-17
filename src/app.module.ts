@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { CommentsModule } from './comments/comments.module';
+import { ProfileModule } from './profile/profile.module';
 import connectionOptions from './ormconfig';
 
 @Module({
@@ -15,6 +16,7 @@ import connectionOptions from './ormconfig';
     UsersModule,
     AuthModule,
     CommentsModule,
+    ProfileModule,
   ],
   controllers: [],
   providers: [],
