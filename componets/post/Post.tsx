@@ -24,7 +24,8 @@ const Post: React.FC<IProps> = React.memo(({ post }) => {
         >
           <img
             src={
-              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeGZMvntM86MXW_ddi6psTHg9z0hAB4LVA_w&usqp=CAU'
+              post.user.avatar ||
+              'https://i.pinimg.com/280x280_RS/09/07/3a/09073a84815d6669d9f3104623ab143c.jpg'
             }
             alt={`${post.user.login}`}
             className={`shadow ${s.owner__photo}`}

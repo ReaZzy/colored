@@ -1,14 +1,15 @@
 import { instance } from '../api';
+import { IUsers } from '../../../types/IUsers.types';
 
 export const loginRequest = async (
   find: string,
   password: string,
-): Promise<string> => {
+): Promise<{ access_token: string; user: IUsers }> => {
   const res = await instance.post('/auth/login', {
     find,
     password,
   });
-  return res.data.access_token;
+  return { access_token: res.data.access_token, user: res.data.user };
 };
 
 export const registerRequest = async (
@@ -27,4 +28,9 @@ export const registerRequest = async (
 export const logoutRequest = async (): Promise<undefined> => {
   const res = await instance.delete('/auth/logout');
   return;
+};
+
+export const profileRequest = async (): Promise<IUsers> => {
+  const res = await instance.get('/profile');
+  return res.data as IUsers;
 };

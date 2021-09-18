@@ -1,7 +1,7 @@
 import { ThunkDispatch } from 'redux-thunk';
 import { RootState } from '../store/reducers/rootReducer';
 import { AnyAction } from 'redux';
-import { setIsAuth, setToken } from '../store/reducers/auth/actions';
+import { setIsAuth, setToken, setUser } from '../store/reducers/auth/actions';
 import { instance } from '../store/reducers/api';
 import * as jwt from 'jsonwebtoken';
 export const setJwtToken =
@@ -23,6 +23,7 @@ export const setJwtToken =
       delete instance.defaults.headers.common['Authorization'];
       dispatch(setToken(null));
       dispatch(setIsAuth(false));
+      dispatch(setUser(null));
       return false;
     }
   };

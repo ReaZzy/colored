@@ -3,4 +3,5 @@ export interface IUsers {
   createdDate: Date;
   email: string;
   login: string;
+  avatar: string;
 }

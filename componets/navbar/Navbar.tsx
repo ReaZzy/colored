@@ -5,10 +5,19 @@ import { IoChatboxEllipsesOutline } from '@react-icons/all-files/io5/IoChatboxEl
 import { IoSearchOutline } from '@react-icons/all-files/io5/IoSearchOutline';
 import { IoMdHeartEmpty } from '@react-icons/all-files/io/IoMdHeartEmpty';
 import ColoredButton from '../coloredButton/ColoredButton';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../store/reducers/auth/thunks';
+import { RootState } from '../../store/reducers/rootReducer';
 
 interface IProps {}
 
 const Navbar: React.FC<IProps> = React.memo(() => {
+  const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.auth.user);
+  const handleLogout = async () => {
+    await dispatch(await logout());
+  };
+
   return (
     <nav className={s.nav}>
       <div className={s.nav__content}>
@@ -19,11 +28,10 @@ const Navbar: React.FC<IProps> = React.memo(() => {
           <IoIosAddCircleOutline />
         </ColoredButton>
         <img
-          src={
-            'https://images.unsplash.com/photo-1544465544-1b71aee9dfa3?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fHBob3RvfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80'
-          }
+          src={user?.avatar}
           className={`${s.nav__img} ${s.nav__item}`}
           alt={'avatar'}
+          onClick={handleLogout}
         />
         <ColoredButton height={'26px'} width={'26px'}>
           <IoMdHeartEmpty />

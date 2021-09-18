@@ -8,15 +8,17 @@ import { HiOutlineEmojiHappy } from '@react-icons/all-files/hi/HiOutlineEmojiHap
 import { BiColorFill } from '@react-icons/all-files/bi/BiColorFill';
 import ColoredButton from '../coloredButton/ColoredButton';
 import { DebounceInput } from 'react-debounce-input';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setPost } from '../../store/reducers/post/actions';
 import { instance } from '../../store/reducers/api';
+import { RootState } from '../../store/reducers/rootReducer';
 
 interface IProps {}
 const WhatsNew: React.FC<IProps> = React.memo(() => {
   const [text, setText] = useState('');
   const [color, setColor] = useState('#ffffff');
   const dispatch = useDispatch();
+  const avatar = useSelector((state: RootState) => state.auth.user?.avatar);
   const handleChangeColor = (e: ChangeEvent<HTMLInputElement>) => {
     setColor(e.target.value);
   };
@@ -32,13 +34,7 @@ const WhatsNew: React.FC<IProps> = React.memo(() => {
     <div className={s.whatsNew} style={{ backgroundColor: color }}>
       <div>
         <div className={s.whatsNew__row}>
-          <img
-            src={
-              'https://images.unsplash.com/photo-1544465544-1b71aee9dfa3?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fHBob3RvfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80'
-            }
-            className={s.whatsNew__img}
-            alt={''}
-          />
+          <img src={avatar} className={s.whatsNew__img} alt={''} />
           <div className={s.whatsNew__text}>
             <TextareaAutosize
               autoFocus
