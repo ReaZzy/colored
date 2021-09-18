@@ -19,7 +19,7 @@ export class UsersService {
   async getUser(loginOrEamil: string): Promise<Users | undefined> {
     return this.usersRepository.findOne({
       where: [{ email: loginOrEamil }, { login: loginOrEamil }],
-      select: ['id', 'email', 'login', 'password'],
+      select: ['id', 'email', 'login', 'password', 'avatar'],
     });
   }
 
