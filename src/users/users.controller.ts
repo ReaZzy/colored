@@ -2,7 +2,9 @@ import {
   Body,
   Controller,
   Get,
+  HttpCode,
   HttpStatus,
+  Param,
   Post,
   Req,
   Res,
@@ -19,6 +21,7 @@ import { Observable, of } from 'rxjs';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { v4 as uuidv4 } from 'uuid';
 import { diskStorage } from 'multer';
+import { join } from 'path';
 import path = require('path');
 
 @UseGuards(JwtAuthGuard)
@@ -43,7 +46,7 @@ export class UsersController {
     });
   }
 
-  @Post('/upload')
+  @Post('upload')
   @UseInterceptors(
     FileInterceptor('file', {
       storage: diskStorage({
@@ -62,6 +65,15 @@ export class UsersController {
     @Req() req: Request,
   ): Promise<Observable<any>> {
     await this.usersService.updateAvatar({ id: req.user.id, file });
-    return of({ imagePath: file.path });
+    return of({ imagePath: file.fieldname });
+  }
+  @Get('profile-image/:imagename')
+  async findProfileImage(
+    @Param('imagename') imageName: string,
+    @Res() res: Response,
+  ): Promise<void> {
+    return res.sendFile(
+      join(process.cwd(), `uploads/profileimages/${imageName}`),
+    );
   }
 }
