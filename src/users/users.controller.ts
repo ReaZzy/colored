@@ -64,8 +64,11 @@ export class UsersController {
     @UploadedFile() file: Express.Multer.File,
     @Req() req: Request,
   ): Promise<Observable<any>> {
-    await this.usersService.updateAvatar({ id: req.user.id, file });
-    return of({ imagePath: file.fieldname });
+    const avatar = `http://${process.env.HOST}:${process.env.PORT}/users/profile-image/${file.filename}`;
+    await this.usersService.updateAvatar({ id: req.user.id, file: avatar });
+    return of({
+      imagePath: avatar,
+    });
   }
   @Get('profile-image/:imagename')
   async findProfileImage(

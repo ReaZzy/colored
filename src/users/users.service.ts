@@ -30,6 +30,8 @@ export class UsersService {
 
   async updateAvatar(usersData: UserAvatarDto): Promise<Users> {
     const user = await this.usersRepository.findOne(usersData.id);
+    console.log(usersData);
+
     return await this.usersRepository.save({
       ...user,
       id: usersData.id,
