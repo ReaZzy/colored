@@ -16,7 +16,7 @@ import { RootState } from '../../store/reducers/rootReducer';
 interface IProps {}
 const WhatsNew: React.FC<IProps> = React.memo(() => {
   const [text, setText] = useState('');
-  const [color, setColor] = useState('#ffffff');
+  const [color, setColor] = useState('#fff');
   const dispatch = useDispatch();
   const avatar = useSelector((state: RootState) => state.auth.user?.avatar);
   const handleChangeColor = (e: ChangeEvent<HTMLInputElement>) => {
@@ -29,6 +29,7 @@ const WhatsNew: React.FC<IProps> = React.memo(() => {
     const res = await instance.post('/posts', { content: text, color });
     await dispatch(setPost(res.data));
     setText('');
+    setColor('#fff');
   };
   return (
     <div className={s.whatsNew} style={{ backgroundColor: color }}>
@@ -42,6 +43,7 @@ const WhatsNew: React.FC<IProps> = React.memo(() => {
               placeholder={"What's new, Emma"}
               value={text}
               onChange={(e) => handleChangeText(e)}
+              maxRows={120}
             />
             <ColoredButton
               className={s.whatsNew__button}

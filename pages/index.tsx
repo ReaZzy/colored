@@ -19,9 +19,11 @@ const Index: NextPage<RootState> = () => {
   return (
     <div className={s.content}>
       <div className={s.center_block}>
-        <div className={s.center_block__whatsnew}>
-          <WhatsNew />
-        </div>
+        {isAuth && (
+          <div className={s.center_block__whatsnew}>
+            <WhatsNew />
+          </div>
+        )}
         {isAuth ? <Posts /> : <Login />}
       </div>
     </div>

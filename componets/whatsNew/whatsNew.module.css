@@ -14,9 +14,8 @@
   flex-grow: 1;
   padding: 10px 40px 10px 10px;
   outline: none;
-  min-height: 40px;
   resize: none;
-  max-height: 70px;
+  max-height: 250px;
   background: #ffffff;
   -webkit-box-shadow: 0 0 5px 3px rgba(183, 183, 183, 0.2);
   box-shadow: 0 0 5px 3px rgba(183, 183, 183, 0.2);

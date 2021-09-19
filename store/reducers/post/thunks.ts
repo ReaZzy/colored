@@ -10,6 +10,6 @@ export const getPosts =
     dispatch(setFetchingPost(true));
     const res = await getPostsRequest(page);
     dispatch(setPosts(res.posts));
-    dispatch(setTotalPost(res.total));
+    dispatch(setTotalPost(res.total ?? 0));
     dispatch(setFetchingPost(false));
   };
