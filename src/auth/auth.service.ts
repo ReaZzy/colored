@@ -17,6 +17,7 @@ export class AuthService {
     password,
   }: UserValidateDto): Promise<Users | undefined> {
     const user = await this.usersService.getUser(find);
+
     if (user && (await compare(password, user.password))) {
       const { password, ...userData } = user;
       return userData as Users;

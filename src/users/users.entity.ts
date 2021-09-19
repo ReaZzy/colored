@@ -5,7 +5,6 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  ManyToMany,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -42,8 +41,18 @@ export class Users extends BaseEntity {
   posts: Posts[];
 
   @BeforeInsert()
-  @BeforeUpdate()
   async hashPassword() {
     this.password = await hash(this.password, 10);
+  }
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  async setAvatar() {
+    if (!this.avatar)
+      this.avatar = `http://${process.env.HOST}:${
+        process.env.PORT
+      }/users/profile-image/profile-default-${Math.ceil(
+        Math.random() * 16,
+      )}.png`;
   }
 }
