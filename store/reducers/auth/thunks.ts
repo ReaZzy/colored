@@ -8,21 +8,29 @@ import {
   profileRequest,
 } from './api';
 import { setJwtToken } from '../../../utils/setJwtToken';
-import { setUser } from './actions';
+import { setUser, setLoginError, setRegistrationError } from './actions';
 
 export const login =
   (find: string, password: string) =>
   async (dispatch: ThunkDispatch<RootState, void, AuthActionTypes>) => {
-    const { access_token, user } = await loginRequest(find, password);
-    dispatch(setJwtToken(access_token));
-    dispatch(setUser(user));
+    const { access_token, user, err } = await loginRequest(find, password);
+    if (access_token || user) {
+      dispatch(setJwtToken(access_token));
+      dispatch(setUser(user!));
+      dispatch(setLoginError(null));
+    }
+    err && dispatch(setLoginError(err));
   };
 
 export const register =
   (login: string, email: string, password: string) =>
   async (dispatch: ThunkDispatch<RootState, void, AuthActionTypes>) => {
-    const token = await registerRequest(login, email, password);
-    dispatch(setJwtToken(token));
+    const { access_token, err } = await registerRequest(login, email, password);
+    if (access_token) {
+      dispatch(setJwtToken(access_token));
+      dispatch(setRegistrationError(null));
+    }
+    err && dispatch(setRegistrationError(err));
   };
 
 export const logout =
