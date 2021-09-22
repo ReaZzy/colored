@@ -1,5 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
 import s from './whatsNew.module.css';
+import 'emoji-mart/css/emoji-mart.css';
+import { Picker } from 'emoji-mart';
 import { IoIosArrowDropright } from '@react-icons/all-files/io/IoIosArrowDropright';
 import TextareaAutosize from 'react-textarea-autosize';
 import { BiImageAdd } from '@react-icons/all-files/bi/BiImageAdd';
@@ -12,11 +14,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setPost } from '../../store/reducers/post/actions';
 import { instance } from '../../store/reducers/api';
 import { RootState } from '../../store/reducers/rootReducer';
+import { getRandomColor } from '../coloredButton/ColoredButton';
 
 interface IProps {}
 const WhatsNew: React.FC<IProps> = React.memo(() => {
   const [text, setText] = useState('');
   const [color, setColor] = useState('#fff');
+  const [showEmoji, setShowEmoji] = useState(false);
   const dispatch = useDispatch();
   const avatar = useSelector((state: RootState) => state.auth.user?.avatar);
   const handleChangeColor = (e: ChangeEvent<HTMLInputElement>) => {
@@ -62,7 +66,11 @@ const WhatsNew: React.FC<IProps> = React.memo(() => {
           <ColoredButton height={'20px'} width={'20px'}>
             <BiImageAdd />
           </ColoredButton>
-          <ColoredButton height={'20px'} width={'20px'}>
+          <ColoredButton
+            height={'20px'}
+            width={'20px'}
+            onClick={() => setShowEmoji(!showEmoji)}
+          >
             <HiOutlineEmojiHappy />
           </ColoredButton>
 
@@ -78,6 +86,16 @@ const WhatsNew: React.FC<IProps> = React.memo(() => {
             </>
           </ColoredButton>
         </div>
+        {showEmoji && (
+          <Picker
+            style={{ width: '100%', marginTop: '10px' }}
+            color={getRandomColor()}
+            native
+            onSelect={(emoji) => {
+              setText(`${text}${emoji.native}`);
+            }}
+          />
+        )}
       </div>
     </div>
   );

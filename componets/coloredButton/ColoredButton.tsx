@@ -8,17 +8,17 @@ interface IProps {
   className?: any;
   [key: string]: any;
 }
+
+export const getRandomColor = (): string => {
+  const letters = '0123456789ABCDEF';
+  let color = '#';
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+};
 const ColoredButton: React.FC<IProps> = React.memo(
   ({ children, height, width, ...props }) => {
-    const getRandomColor = (): string => {
-      const letters = '0123456789ABCDEF';
-      let color = '#';
-      for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-      }
-      return color;
-    };
-
     const [style, setStyle] = useState({
       color: '',
     });
