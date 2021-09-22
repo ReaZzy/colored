@@ -49,9 +49,7 @@ export class Users extends BaseEntity {
   @BeforeUpdate()
   async setAvatar() {
     if (!this.avatar)
-      this.avatar = `http://${process.env.HOST}:${
-        process.env.PORT
-      }/users/profile-image/profile-default-${Math.ceil(
+      this.avatar = `users/profile-image/profile-default-${Math.ceil(
         Math.random() * 16,
       )}.png`;
   }
