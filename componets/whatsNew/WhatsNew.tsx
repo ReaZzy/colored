@@ -91,6 +91,7 @@ const WhatsNew: React.FC<IProps> = React.memo(() => {
             style={{ width: '100%', marginTop: '10px' }}
             color={getRandomColor()}
             native
+            emoji={'point_up_2'}
             onSelect={(emoji) => {
               setText(`${text}${emoji.native}`);
             }}
