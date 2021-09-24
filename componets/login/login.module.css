@@ -19,7 +19,7 @@
   flex-direction: column;
   width: 50%;
   max-width: 400px;
-  min-width: 300px;
+  min-width: 290px;
 }
 .login__item {
   display: flex;

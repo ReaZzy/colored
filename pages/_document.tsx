@@ -14,7 +14,7 @@ class MyDocument extends Document {
           <meta
             name="viewport"
             content="width=device-width, user-scalable=no"
-          ></meta>
+          />
         </Head>
         <body>
           <Main />

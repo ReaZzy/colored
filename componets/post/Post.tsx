@@ -15,6 +15,18 @@ const Post: React.FC<IProps> = React.memo(({ post }) => {
   const color = Color(post.color);
   const fontColor = color.isDark() ? '#fff' : '#000';
 
+  const convertDate = (inputFormat: string) => {
+    const pad = (s: number) => {
+      return s < 10 ? '0' + s : s;
+    };
+    const date = new Date(inputFormat);
+    return [
+      pad(date.getDate()),
+      pad(date.getMonth() + 1),
+      date.getFullYear(),
+    ].join('.');
+  };
+
   return (
     <div className={s.post}>
       <div>
@@ -32,7 +44,7 @@ const Post: React.FC<IProps> = React.memo(({ post }) => {
           />
           <div className={s.owner__login}>
             <div>{post.user.login}</div>
-            <div className={s.postDate}>{post.createdDate}</div>
+            <div className={s.postDate}>{convertDate(post.createdDate)}</div>
           </div>
         </div>
       </div>
