@@ -26,7 +26,6 @@ const Post: React.FC<IProps> = React.memo(({ post }) => {
       date.getFullYear(),
     ].join('.');
   };
-
   return (
     <div className={s.post}>
       <div>
@@ -36,10 +35,10 @@ const Post: React.FC<IProps> = React.memo(({ post }) => {
         >
           <img
             src={
-              post.user.avatar ||
+              `http://localhost:4000/${post.user.avatar}` ||
               'https://i.pinimg.com/280x280_RS/09/07/3a/09073a84815d6669d9f3104623ab143c.jpg'
             }
-            alt={`${post.user.login}`}
+            alt={''}
             className={`shadow ${s.owner__photo}`}
           />
           <div className={s.owner__login}>
