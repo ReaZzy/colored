@@ -39,7 +39,7 @@ const WhatsNew: React.FC<IProps> = React.memo(() => {
     <div className={s.whatsNew} style={{ backgroundColor: color }}>
       <div>
         <div className={s.whatsNew__row}>
-          <img src={avatar} className={s.whatsNew__img} alt={''} />
+          <img src={`http://localhost:4000/${avatar}`} className={s.whatsNew__img} alt={''} />
           <div className={s.whatsNew__text}>
             <TextareaAutosize
               autoFocus

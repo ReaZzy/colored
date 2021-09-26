@@ -28,7 +28,7 @@ const Navbar: React.FC<IProps> = React.memo(() => {
           <IoIosAddCircleOutline />
         </ColoredButton>
         <img
-          src={user?.avatar}
+          src={`http://localhost:4000/${user?.avatar}`}
           className={`${s.nav__img} ${s.nav__item}`}
           alt={'avatar'}
           onClick={handleLogout}
