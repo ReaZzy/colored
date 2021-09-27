@@ -6,7 +6,6 @@ and can't imagine their life without they 😊
 ## Requirements 🛠
 - [NodeJS](https://nodejs.org/en/)
 - [Docker](https://www.docker.com/get-started)
-- ------
 ## How to start ❔
 
 > 1. __clone this repository by__
@@ -19,20 +18,15 @@ and can't imagine their life without they 😊
 > ```docker-compose up```
 > 5. __run client__
 > ```npm run dev```
-------
-## Stack: 🔨
-### Frontend
-- NextJS
-- ReactJS
-- TypeScript
-- Redux
-- CSS
-- HTML
-------
-### Backend
-- NestJS
-- TypeScript
-- Docker
-- Typeorm
-- Postgres
-- JWT
+
+## Stack 🔨
+| Frontend 🧑    | Backend 💻   |
+|-------------|------------|
+| NextJS      | NestJS     |
+| ReactJS     | TypeScript |
+| TypeScript  | Docker     |
+| Redux       | Typeorm    |
+| Redux-thunk | Postgres   |
+| Axios       | Jwt        |
+| HTML        |            |
+| CSS         |            |
