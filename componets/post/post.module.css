@@ -1,7 +1,6 @@
 .post {
   background: #ffffff;
   border-radius: 15px;
-  overflow: hidden;
   -webkit-box-shadow: 0 0 5px 3px rgba(183, 183, 183, 0.2);
   box-shadow: 0 0 5px 3px rgba(183, 183, 183, 0.2);
 }
@@ -64,20 +63,4 @@
   display: flex;
   gap: 10px;
   object-fit: contain;
-}
-.post__images img:first-child:nth-last-child(n + 2),
-.post__images img:first-child:nth-last-child(n + 2) ~ img {
-  width: 30%;
-}
-.post__images img:first-child:nth-last-child(n + 3),
-.post__images img:first-child:nth-last-child(n + 3) ~ img {
-  width: 20%;
-}
-.post__images img:first-child:nth-last-child(n + 4),
-.post__images
-  img:first-child:nth-last-child(n + 4)
-  ~ img
-  .post__images
-  img:first-child {
-  width: 65%;
 }

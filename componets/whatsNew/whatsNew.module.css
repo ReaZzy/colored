@@ -29,7 +29,6 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
-
 .whatsNew__img {
   flex-grow: 0;
   -webkit-box-shadow: 0 0 5px 3px rgba(183, 183, 183, 0.2);
