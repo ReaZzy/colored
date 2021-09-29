@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setPost } from '../../store/reducers/post/actions';
 import { instance } from '../../store/reducers/api';
 import { RootState } from '../../store/reducers/rootReducer';
-import { getRandomColor } from '../coloredButton/ColoredButton';
+import { getRandomColor } from '../../utils/getRandomColor';
 
 interface IProps {}
 const WhatsNew: React.FC<IProps> = React.memo(() => {

@@ -1,4 +1,5 @@
 import React, { ReactChild, ReactChildren, useState } from 'react';
+import { getRandomColor } from '../../utils/getRandomColor';
 import s from './coloredButton.module.css';
 
 interface IProps {
@@ -9,14 +10,6 @@ interface IProps {
   [key: string]: any;
 }
 
-export const getRandomColor = (): string => {
-  const letters = '0123456789ABCDEF';
-  let color = '#';
-  for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
-};
 const ColoredButton: React.FC<IProps> = React.memo(
   ({ children, height, width, ...props }) => {
     const [style, setStyle] = useState({
