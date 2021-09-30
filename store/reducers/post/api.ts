@@ -10,3 +10,8 @@ export const getPostsRequest = async (
   const res = await instance.get(`/posts?page=${page}`);
   return res.data;
 };
+
+export const setLikeRequest = async (id: string): Promise<IPosts> => {
+  const res = await instance.put(`/posts/like/${id}`);
+  return res.data;
+};

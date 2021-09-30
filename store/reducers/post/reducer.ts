@@ -1,5 +1,6 @@
-import { PostActionTypes } from '../../../types/IRedux.types';
 import { IPosts } from '../../../types/IPosts.types';
+import { PostActionTypes } from '../../../types/IRedux.types';
+import { IUsers } from '../../../types/IUsers.types';
 
 const initialState = {
   posts: [] as IPosts[],
@@ -24,6 +25,20 @@ export const postReducer = (
     }
     case 'post/SET_FETCHING': {
       return { ...state, isFetching: action.payload };
+    }
+    case 'post/SET_LIKE': {
+      const candidate = state.posts.map((post) => {
+        if (post.id === action.payload) {
+          post.likes.push({ id: '123' } as IUsers);
+          return post;
+        }
+        return post;
+      });
+
+      return {
+        ...state,
+        posts: [...candidate],
+      };
     }
     default:
       return { ...state };

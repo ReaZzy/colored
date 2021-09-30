@@ -23,3 +23,9 @@ export const setTotalPost = (total: number) =>
     type: 'post/SET_TOTAL',
     payload: total,
   } as const);
+
+export const setLike = (id: string) =>
+  ({
+    type: 'post/SET_LIKE',
+    payload: id,
+  } as const);

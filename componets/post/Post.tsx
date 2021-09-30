@@ -6,12 +6,16 @@ import ColoredButton from '../coloredButton/ColoredButton';
 import { IoMdHeartEmpty } from '@react-icons/all-files/io/IoMdHeartEmpty';
 import { GoComment } from '@react-icons/all-files/go/GoComment';
 import Link from 'next/link';
+import { like } from '../../store/reducers/post/thunks';
+import { useDispatch } from 'react-redux';
 
 interface IProps {
   post: IPosts;
 }
 
 const Post: React.FC<IProps> = React.memo(({ post }) => {
+  const dispatch = useDispatch();
+
   const color = Color(post.color);
   const fontColor = color.isDark() ? '#fff' : '#000';
 
@@ -26,6 +30,7 @@ const Post: React.FC<IProps> = React.memo(({ post }) => {
       date.getFullYear(),
     ].join('.');
   };
+
   return (
     <div className={s.post}>
       <div>
@@ -56,10 +61,16 @@ const Post: React.FC<IProps> = React.memo(({ post }) => {
       </div>
       <div className={s.post__actions}>
         <div className={s.post__actions__item}>
-          <ColoredButton height={'25px'} width={'25px'}>
+          <ColoredButton
+            height={'25px'}
+            width={'25px'}
+            onClick={() => {
+              dispatch(like(post.id));
+            }}
+          >
             <IoMdHeartEmpty />
           </ColoredButton>
-          21
+          {post.likes.length}
         </div>
         <div className={s.post__actions__item}>
           <Link href={`/post/${post.id}`}>
@@ -69,7 +80,7 @@ const Post: React.FC<IProps> = React.memo(({ post }) => {
               </ColoredButton>
             </a>
           </Link>
-          32
+          {post.comments.length}
         </div>
       </div>
       <div>
