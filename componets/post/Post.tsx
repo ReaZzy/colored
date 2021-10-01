@@ -8,6 +8,8 @@ import { GoComment } from '@react-icons/all-files/go/GoComment';
 import Link from 'next/link';
 import { like } from '../../store/reducers/post/thunks';
 import { useDispatch } from 'react-redux';
+import ReactTooltip from 'react-tooltip';
+import { getRandomColor } from '../../utils/getRandomColor';
 
 interface IProps {
   post: IPosts;
@@ -30,6 +32,7 @@ const Post: React.FC<IProps> = React.memo(({ post }) => {
       date.getFullYear(),
     ].join('.');
   };
+  console.log(post.likes);
 
   return (
     <div className={s.post}>
@@ -60,18 +63,44 @@ const Post: React.FC<IProps> = React.memo(({ post }) => {
         </div>
       </div>
       <div className={s.post__actions}>
-        <div className={s.post__actions__item}>
-          <ColoredButton
-            height={'25px'}
-            width={'25px'}
-            onClick={() => {
-              dispatch(like(post.id));
-            }}
-          >
-            <IoMdHeartEmpty />
-          </ColoredButton>
-          {post.likes.length}
-        </div>
+        <a data-for={`${post.id}`} data-tip>
+          <div className={s.post__actions__item}>
+            <ColoredButton
+              height={'25px'}
+              width={'25px'}
+              onClick={() => {
+                dispatch(like(post.id));
+              }}
+            >
+              <IoMdHeartEmpty />
+            </ColoredButton>
+
+            {post.likes.length}
+          </div>
+        </a>
+        <ReactTooltip
+          id={`${post.id}`}
+          type="light"
+          effect={'solid'}
+          backgroundColor={getRandomColor()}
+        >
+          <div style={{ display: 'flex', gap: '5px' }}>
+            {post.likes.map((user) => {
+              return (
+                <img
+                  src={`http://localhost:4000/${user.avatar}`}
+                  style={{
+                    width: '30px',
+                    objectFit: 'cover',
+                    height: '30px',
+                    border: '1px solid white',
+                    borderRadius: '50%',
+                  }}
+                />
+              );
+            })}
+          </div>
+        </ReactTooltip>
         <div className={s.post__actions__item}>
           <Link href={`/post/${post.id}`}>
             <a>
