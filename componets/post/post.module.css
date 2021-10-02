@@ -64,3 +64,17 @@
   gap: 10px;
   object-fit: contain;
 }
+.tooltip {
+}
+.tooltip__body {
+  transition: 1s;
+  display: flex;
+  gap: 5px;
+}
+.tooltip__item {
+  width: 30px;
+  object-fit: cover;
+  height: 30px;
+  border: 1px solid white;
+  border-radius: 50%;
+}

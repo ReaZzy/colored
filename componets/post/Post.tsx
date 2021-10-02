@@ -82,20 +82,15 @@ const Post: React.FC<IProps> = React.memo(({ post }) => {
           id={`${post.id}`}
           type="light"
           effect={'solid'}
+          className={s.tooltip}
           backgroundColor={getRandomColor()}
         >
-          <div style={{ display: 'flex', gap: '5px' }}>
+          <div className={s.tooltip__body}>
             {post.likes.map((user) => {
               return (
                 <img
                   src={`http://localhost:4000/${user.avatar}`}
-                  style={{
-                    width: '30px',
-                    objectFit: 'cover',
-                    height: '30px',
-                    border: '1px solid white',
-                    borderRadius: '50%',
-                  }}
+                  className={s.tooltip__item}
                 />
               );
             })}
