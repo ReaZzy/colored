@@ -65,6 +65,9 @@
   object-fit: contain;
 }
 .tooltip {
+  border-radius: 10px !important;
+  padding: 5px 15px !important;
+  transition: opacity 0.2s !important;
 }
 .tooltip__body {
   transition: 1s;
