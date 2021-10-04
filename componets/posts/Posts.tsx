@@ -5,12 +5,15 @@ import { getPosts } from '../../store/reducers/post/thunks';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/reducers/rootReducer';
+import Preloader from '../preloader/Preloader';
 const Post = dynamic(() => import('../post/Post'));
 
 const Posts: React.FC<{}> = React.memo(() => {
   const dispatch = useDispatch();
   const [page, setPage] = useState<number>(1);
-  const { posts, total } = useSelector((state: RootState) => state.post);
+  const { posts, total, isFetching } = useSelector(
+    (state: RootState) => state.post,
+  );
 
   useEffect(() => {
     setPage(1);
@@ -24,11 +27,13 @@ const Posts: React.FC<{}> = React.memo(() => {
         await dispatch(await getPosts(page + 1));
       }}
       hasMore={posts.length < total}
-      loader={<h4>Loading...</h4>}
+      loader={<Preloader />}
     >
-      {posts?.map((post) => (
-        <Post key={post.id} post={post} />
-      ))}
+      {isFetching ? (
+        <Preloader />
+      ) : (
+        posts?.map((post) => <Post key={post.id} post={post} />)
+      )}
     </InfiniteScroll>
   );
 });

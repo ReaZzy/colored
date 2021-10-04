@@ -7,9 +7,10 @@ import { IoMdHeartEmpty } from '@react-icons/all-files/io/IoMdHeartEmpty';
 import { GoComment } from '@react-icons/all-files/go/GoComment';
 import Link from 'next/link';
 import { like } from '../../store/reducers/post/thunks';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ReactTooltip from 'react-tooltip';
 import { getRandomColor } from '../../utils/getRandomColor';
+import { RootState } from '../../store/reducers/rootReducer';
 
 interface IProps {
   post: IPosts;
@@ -32,7 +33,6 @@ const Post: React.FC<IProps> = React.memo(({ post }) => {
       date.getFullYear(),
     ].join('.');
   };
-  console.log(post.likes);
 
   return (
     <div className={s.post}>
