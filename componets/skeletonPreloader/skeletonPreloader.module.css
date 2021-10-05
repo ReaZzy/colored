@@ -1,0 +1,76 @@
+.loading {
+  width: 100%;
+  display: block;
+  background: #ffffff;
+  -webkit-box-shadow: 0 0 5px 3px rgba(183, 183, 183, 0.2);
+  box-shadow: 0 0 5px 3px rgba(183, 183, 183, 0.2);
+  border-radius: 15px;
+  padding: 15px;
+}
+.owner {
+  align-items: center;
+  margin-bottom: 10px;
+  display: flex;
+  gap: 10px;
+}
+.owner__info {
+  display: flex;
+  flex: 1;
+  gap: 3px;
+  flex-direction: column;
+}
+.owner__avatar,
+.info__date,
+.info__name,
+.loading_gradient {
+  border-radius: 15px;
+
+  display: block;
+  background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(255, 255, 255, 0) 80%
+    ),
+    lightgray;
+  background-repeat: repeat-y;
+  background-size: 50px 500px;
+  background-position: 0 0;
+  animation: shine 1s infinite;
+}
+.owner__avatar {
+  margin-left: 4px;
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+}
+
+.info__name {
+  max-width: 250px;
+  width: 55%;
+  height: 15px;
+}
+.info__date {
+  max-width: 130px;
+  width: 25%;
+  height: 10px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.loading_gradient {
+  width: 100%;
+  height: 10px;
+}
+@keyframes shine {
+  from {
+    background-position: -20% 0, 0 0;
+  }
+  to {
+    background-position: 120% 0, 0 0;
+  }
+}

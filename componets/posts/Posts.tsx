@@ -6,6 +6,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/reducers/rootReducer';
 import Preloader from '../preloader/Preloader';
+import SkeletonPreloader from '../skeletonPreloader/SkeletonPreloader';
 const Post = dynamic(() => import('../post/Post'));
 
 const Posts: React.FC<{}> = React.memo(() => {
@@ -27,13 +28,11 @@ const Posts: React.FC<{}> = React.memo(() => {
         await dispatch(await getPosts(page + 1));
       }}
       hasMore={posts.length < total}
-      loader={<Preloader />}
+      loader={<SkeletonPreloader />}
     >
-      {isFetching ? (
-        <Preloader />
-      ) : (
-        posts?.map((post) => <Post key={post.id} post={post} />)
-      )}
+      {posts?.map((post) => (
+        <Post key={post.id} post={post} />
+      ))}
     </InfiniteScroll>
   );
 });
