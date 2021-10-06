@@ -7,16 +7,19 @@ import { IoMdHeartEmpty } from '@react-icons/all-files/io/IoMdHeartEmpty';
 import { GoComment } from '@react-icons/all-files/go/GoComment';
 import Link from 'next/link';
 import { like } from '../../store/reducers/post/thunks';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ReactTooltip from 'react-tooltip';
 import { getRandomColor } from '../../utils/getRandomColor';
+import { RootState } from '../../store/reducers/rootReducer';
 
 interface IProps {
   post: IPosts;
 }
 
-const Post: React.FC<IProps> = React.memo(({ post }) => {
+const Post: React.FC<IProps> = ({ post }) => {
   const dispatch = useDispatch();
+
+  const user = useSelector((state: RootState) => state.auth.user);
 
   const color = Color(post.color);
   const fontColor = color.isDark() ? '#fff' : '#000';
@@ -68,7 +71,7 @@ const Post: React.FC<IProps> = React.memo(({ post }) => {
               height={'25px'}
               width={'25px'}
               onClick={() => {
-                dispatch(like(post.id));
+                dispatch(like(post.id, user));
               }}
             >
               <IoMdHeartEmpty />
@@ -77,24 +80,27 @@ const Post: React.FC<IProps> = React.memo(({ post }) => {
             {post.likes.length}
           </div>
         </a>
-        <ReactTooltip
-          id={`${post.id}`}
-          type="light"
-          effect={'solid'}
-          className={s.tooltip}
-          backgroundColor={getRandomColor()}
-        >
-          <div className={s.tooltip__body}>
-            {post.likes.map((user) => {
-              return (
-                <img
-                  src={`http://localhost:4000/${user.avatar}`}
-                  className={s.tooltip__item}
-                />
-              );
-            })}
-          </div>
-        </ReactTooltip>
+        {post.likes.length > 0 && (
+          <ReactTooltip
+            id={`${post.id}`}
+            type="light"
+            effect={'solid'}
+            className={s.tooltip}
+            backgroundColor={getRandomColor()}
+          >
+            <div className={s.tooltip__body}>
+              {post.likes.map((user) => {
+                return (
+                  <img
+                    src={`http://localhost:4000/${user.avatar}`}
+                    className={s.tooltip__item}
+                  />
+                );
+              })}
+            </div>
+          </ReactTooltip>
+        )}
+
         <div className={s.post__actions__item}>
           <Link href={`/post/${post.id}`}>
             <a>
@@ -125,6 +131,6 @@ const Post: React.FC<IProps> = React.memo(({ post }) => {
       </div>
     </div>
   );
-});
+};
 Post.displayName = 'Post';
 export default Post;

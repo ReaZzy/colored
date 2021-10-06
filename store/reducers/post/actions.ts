@@ -1,4 +1,5 @@
 import { IPosts } from '../../../types/IPosts.types';
+import { IUsers } from '../../../types/IUsers.types';
 
 export const setPosts = (posts: IPosts[]) =>
   ({
@@ -24,8 +25,8 @@ export const setTotalPost = (total: number) =>
     payload: total,
   } as const);
 
-export const setLike = (id: string) =>
+export const setLike = (id: string, user: IUsers | null) =>
   ({
     type: 'post/SET_LIKE',
-    payload: id,
+    payload: { id, user },
   } as const);

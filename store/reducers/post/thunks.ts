@@ -3,6 +3,7 @@ import { PostActionTypes } from '../../../types/IRedux.types';
 import { RootState } from '../rootReducer';
 import { setFetchingPost, setPosts, setTotalPost, setLike } from './actions';
 import { getPostsRequest, setLikeRequest } from './api';
+import { IUsers } from '../../../types/IUsers.types';
 
 export const getPosts =
   (page?: number) =>
@@ -15,8 +16,8 @@ export const getPosts =
   };
 
 export const like =
-  (id: string) =>
+  (id: string, user: IUsers) =>
   async (dispatch: ThunkDispatch<RootState, void, PostActionTypes>) => {
-    const res = await setLikeRequest(id);
-    dispatch(setLike(id));
+    await setLikeRequest(id);
+    dispatch(setLike(id, user));
   };

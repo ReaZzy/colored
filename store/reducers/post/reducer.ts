@@ -27,9 +27,11 @@ export const postReducer = (
       return { ...state, isFetching: action.payload };
     }
     case 'post/SET_LIKE': {
+      const { user, id } = action.payload;
+      if (!user) return { ...state };
       const candidate = state.posts.map((post) => {
-        if (post.id === action.payload) {
-          post.likes.push({ id: '123' } as IUsers);
+        if (post.id === id) {
+          !post.likes.find((u) => u.id === user.id) && post.likes.push(user);
           return post;
         }
         return post;

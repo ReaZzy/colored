@@ -1,7 +1,11 @@
 import React from 'react';
 import s from './skeletonPreloader.module.css';
 
-const SkeletonPreloader: React.FC = React.memo(() => {
+interface IProps {
+  rows: number;
+}
+
+const SkeletonPreloader: React.FC<IProps> = React.memo(({ rows }) => {
   return (
     <div className={s.loading}>
       <div className={s.owner}>
@@ -12,10 +16,9 @@ const SkeletonPreloader: React.FC = React.memo(() => {
         </div>
       </div>
       <div className={s.content}>
-        <span className={s.loading_gradient}></span>
-        <span className={s.loading_gradient}></span>
-        <span className={s.loading_gradient}></span>
-        <span className={s.loading_gradient}></span>
+        {new Array(rows).fill('').map((_, index) => (
+          <span className={s.loading_gradient} key={index} />
+        ))}
       </div>
     </div>
   );
