@@ -16,7 +16,7 @@ export const getPosts =
   };
 
 export const like =
-  (id: string, user: IUsers) =>
+  (id: string, user: IUsers | null) =>
   async (dispatch: ThunkDispatch<RootState, void, PostActionTypes>) => {
     await setLikeRequest(id);
     dispatch(setLike(id, user));
