@@ -4,6 +4,7 @@ import s from './post.module.css';
 import Color from 'color';
 import ColoredButton from '../coloredButton/ColoredButton';
 import { IoMdHeartEmpty } from '@react-icons/all-files/io/IoMdHeartEmpty';
+import { IoMdHeart } from '@react-icons/all-files/io/IoMdHeart';
 import { GoComment } from '@react-icons/all-files/go/GoComment';
 import Link from 'next/link';
 import { like } from '../../store/reducers/post/thunks';
@@ -74,7 +75,11 @@ const Post: React.FC<IProps> = ({ post }) => {
                 dispatch(like(post.id, user));
               }}
             >
-              <IoMdHeartEmpty />
+              {post.likes.some((u) => u.id === user?.id) ? (
+                <IoMdHeart color={'#EE3D48'} />
+              ) : (
+                <IoMdHeartEmpty />
+              )}
             </ColoredButton>
 
             {post.likes.length}
