@@ -15,3 +15,8 @@ export const setLikeRequest = async (id: string): Promise<IPosts> => {
   const res = await instance.put(`/posts/like/${id}`);
   return res.data;
 };
+
+export const setDislikeRequest = async (id: string): Promise<IPosts> => {
+  const res = await instance.delete(`/posts/like/${id}`);
+  return res.data;
+};

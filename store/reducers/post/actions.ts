@@ -30,3 +30,9 @@ export const setLike = (id: string, user: IUsers | null) =>
     type: 'post/SET_LIKE',
     payload: { id, user },
   } as const);
+
+export const setDislike = (id: string, user: IUsers | null) =>
+  ({
+    type: 'post/SET_DISLIKE',
+    payload: { id, user },
+  } as const);

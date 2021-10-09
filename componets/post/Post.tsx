@@ -7,7 +7,7 @@ import { IoMdHeartEmpty } from '@react-icons/all-files/io/IoMdHeartEmpty';
 import { IoMdHeart } from '@react-icons/all-files/io/IoMdHeart';
 import { GoComment } from '@react-icons/all-files/go/GoComment';
 import Link from 'next/link';
-import { like } from '../../store/reducers/post/thunks';
+import { like, dislike } from '../../store/reducers/post/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import ReactTooltip from 'react-tooltip';
 import { getRandomColor } from '../../utils/getRandomColor';
@@ -19,8 +19,14 @@ interface IProps {
 
 const Post: React.FC<IProps> = ({ post }) => {
   const dispatch = useDispatch();
-
   const user = useSelector((state: RootState) => state.auth.user);
+  const isLiked = post.likes.some((u) => u.id === user?.id);
+
+  const handleClick = async () => {
+    !isLiked
+      ? await dispatch(like(post.id, user))
+      : await dispatch(dislike(post.id, user));
+  };
 
   const color = Color(post.color);
   const fontColor = color.isDark() ? '#fff' : '#000';
@@ -68,18 +74,8 @@ const Post: React.FC<IProps> = ({ post }) => {
       <div className={s.post__actions}>
         <a data-for={`${post.id}`} data-tip>
           <div className={s.post__actions__item}>
-            <ColoredButton
-              height={'25px'}
-              width={'25px'}
-              onClick={() => {
-                dispatch(like(post.id, user));
-              }}
-            >
-              {post.likes.some((u) => u.id === user?.id) ? (
-                <IoMdHeart color={'#EE3D48'} />
-              ) : (
-                <IoMdHeartEmpty />
-              )}
+            <ColoredButton height={'25px'} width={'25px'} onClick={handleClick}>
+              {isLiked ? <IoMdHeart color={'#EE3D48'} /> : <IoMdHeartEmpty />}
             </ColoredButton>
 
             {post.likes.length}

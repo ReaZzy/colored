@@ -1,8 +1,14 @@
 import { ThunkDispatch } from 'redux-thunk';
 import { PostActionTypes } from '../../../types/IRedux.types';
 import { RootState } from '../rootReducer';
-import { setFetchingPost, setPosts, setTotalPost, setLike } from './actions';
-import { getPostsRequest, setLikeRequest } from './api';
+import {
+  setFetchingPost,
+  setPosts,
+  setTotalPost,
+  setLike,
+  setDislike,
+} from './actions';
+import { getPostsRequest, setDislikeRequest, setLikeRequest } from './api';
 import { IUsers } from '../../../types/IUsers.types';
 
 export const getPosts =
@@ -20,4 +26,11 @@ export const like =
   async (dispatch: ThunkDispatch<RootState, void, PostActionTypes>) => {
     await setLikeRequest(id);
     dispatch(setLike(id, user));
+  };
+
+export const dislike =
+  (id: string, user: IUsers | null) =>
+  async (dispatch: ThunkDispatch<RootState, void, PostActionTypes>) => {
+    await setDislikeRequest(id);
+    dispatch(setDislike(id, user));
   };

@@ -26,20 +26,26 @@ export const postReducer = (
     case 'post/SET_FETCHING': {
       return { ...state, isFetching: action.payload };
     }
+    case 'post/SET_DISLIKE': {
+      const { user, id } = action.payload;
+      if (!user) return { ...state };
+      const candidate = state.posts.findIndex((post) => post.id === id);
+      state.posts[candidate] = {
+        ...state.posts[candidate],
+        likes: state.posts[candidate].likes.filter((u) => u.id !== user.id),
+      };
+      return {
+        ...state,
+      };
+    }
     case 'post/SET_LIKE': {
       const { user, id } = action.payload;
       if (!user) return { ...state };
-      const candidate = state.posts.map((post) => {
-        if (post.id === id) {
-          !post.likes.find((u) => u.id === user.id) && post.likes.push(user);
-          return post;
-        }
-        return post;
-      });
+      const candidate = state.posts.findIndex((post) => post.id === id);
+      state.posts[candidate].likes.push(user);
 
       return {
         ...state,
-        posts: [...candidate],
       };
     }
     default:
