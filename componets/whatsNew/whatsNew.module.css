@@ -1,8 +1,10 @@
 .whatsNew {
   margin-top: 10px;
-  background: #e0d9f4;
+  background: #fff;
   border-radius: 10px;
   padding: 7px;
+  -webkit-box-shadow: 0 0 5px 3px rgba(183, 183, 183, 0.05);
+  box-shadow: 0 0 5px 3px rgba(183, 183, 183, 0.05);
 }
 
 .whatsNew__row {

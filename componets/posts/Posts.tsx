@@ -26,6 +26,7 @@ const Posts: React.FC<{}> = () => {
       }}
       hasMore={posts.length < total}
       loader={<SkeletonPreloader rows={5} />}
+      style={{ overflow: 'visible' }}
     >
       {posts?.map((post) => (
         <Post key={post.id} post={post} />
