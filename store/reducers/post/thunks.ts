@@ -8,8 +8,14 @@ import {
   setLike,
   setDislike,
 } from './actions';
-import { getPostsRequest, setDislikeRequest, setLikeRequest } from './api';
+import {
+  getPostsRequest,
+  setDislikeRequest,
+  setLikeRequest,
+  getPostByIdRequest,
+} from './api';
 import { IUsers } from '../../../types/IUsers.types';
+import { setPost } from './actions';
 
 export const getPosts =
   (page?: number) =>
@@ -18,6 +24,14 @@ export const getPosts =
     const res = await getPostsRequest(page);
     dispatch(setPosts(res.posts));
     dispatch(setTotalPost(res.total ?? 0));
+    dispatch(setFetchingPost(false));
+  };
+
+export const getPost =
+  (id: string) =>
+  async (dispatch: ThunkDispatch<RootState, void, PostActionTypes>) => {
+    dispatch(setFetchingPost(true));
+    const res = await getPostByIdRequest(id);
     dispatch(setFetchingPost(false));
   };
 

@@ -11,7 +11,7 @@ import { RootState } from '../../store/reducers/rootReducer';
 const validationSchemaRegistration = yup.object({
   email: yup.string().email().max(64).required(),
   login: yup.string().min(6).max(64).required(),
-  password: yup.string().min(6).max(64).required(),
+  password: yup.string().min(8).max(64).required(),
 });
 
 const RegisterForm = React.memo(() => {

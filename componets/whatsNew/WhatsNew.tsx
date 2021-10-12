@@ -22,6 +22,7 @@ const WhatsNew: React.FC<IProps> = React.memo(() => {
   const [color, setColor] = useState('#fff');
   const [showEmoji, setShowEmoji] = useState(false);
   const dispatch = useDispatch();
+  const login = useSelector((state: RootState) => state.auth.user?.login);
   const avatar = useSelector((state: RootState) => state.auth.user?.avatar);
   const handleChangeColor = (e: ChangeEvent<HTMLInputElement>) => {
     setColor(e.target.value);
@@ -48,7 +49,7 @@ const WhatsNew: React.FC<IProps> = React.memo(() => {
             <TextareaAutosize
               autoFocus
               className={s.whatsNew__textarea}
-              placeholder={"What's new, Emma"}
+              placeholder={`What's new, ${login}`}
               value={text}
               onChange={(e) => handleChangeText(e)}
               maxRows={120}

@@ -1,6 +1,6 @@
 import { IPosts } from '../../../types/IPosts.types';
 import { PostActionTypes } from '../../../types/IRedux.types';
-import { IUsers } from '../../../types/IUsers.types';
+
 
 const initialState = {
   posts: [] as IPosts[],

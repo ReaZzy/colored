@@ -9,7 +9,7 @@ import { setJwtToken } from '../utils/setJwtToken';
 import Cookies from 'cookies';
 import { getPosts } from '../store/reducers/post/thunks';
 import { user } from '../store/reducers/auth/thunks';
-import SkeletonPreloader from '../componets/skeletonPreloader/SkeletonPreloader';
+
 
 const WhatsNew = dynamic(() => import('../componets/whatsNew/WhatsNew'));
 const Posts = dynamic(() => import('../componets/posts/Posts'));
