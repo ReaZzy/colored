@@ -11,9 +11,7 @@ export const getPostsRequest = async (
   return res.data;
 };
 
-export const getPostByIdRequest = async (
-  id: string,
-): Promise<{ post: IPosts }> => {
+export const getPostByIdRequest = async (id: string): Promise<IPosts> => {
   const res = await instance.get(`/posts/${id}`);
   return res.data;
 };
