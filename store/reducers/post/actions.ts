@@ -6,6 +6,11 @@ export const setPosts = (posts: IPosts[]) =>
     type: 'post/SET_POSTS',
     payload: posts,
   } as const);
+export const setCurrentPost = (posts: IPosts) =>
+  ({
+    type: 'post/SET_CURRENT_POST',
+    payload: posts,
+  } as const);
 
 export const setPost = (post: IPosts) =>
   ({

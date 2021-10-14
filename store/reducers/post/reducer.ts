@@ -1,9 +1,9 @@
 import { IPosts } from '../../../types/IPosts.types';
 import { PostActionTypes } from '../../../types/IRedux.types';
 
-
 const initialState = {
   posts: [] as IPosts[],
+  currentPost: null as IPosts | null,
   total: 0,
   isFetching: true,
 };
@@ -15,16 +15,27 @@ export const postReducer = (
 ): InitialStateType => {
   switch (action.type) {
     case 'post/SET_POST': {
-      return { ...state, posts: [action.payload, ...state.posts] };
+      return {
+        ...state,
+        posts: [action.payload, ...state.posts],
+        currentPost: null,
+      };
     }
     case 'post/SET_POSTS': {
-      return { ...state, posts: [...state.posts, ...action.payload] };
+      return {
+        ...state,
+        posts: [...state.posts, ...action.payload],
+        currentPost: null,
+      };
     }
     case 'post/SET_TOTAL': {
       return { ...state, total: action.payload };
     }
     case 'post/SET_FETCHING': {
       return { ...state, isFetching: action.payload };
+    }
+    case 'post/SET_CURRENT_POST': {
+      return { ...state, currentPost: action.payload };
     }
     case 'post/SET_DISLIKE': {
       const { user, id } = action.payload;

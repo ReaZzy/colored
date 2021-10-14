@@ -15,7 +15,7 @@ import {
   getPostByIdRequest,
 } from './api';
 import { IUsers } from '../../../types/IUsers.types';
-import { IPosts } from '../../../types/IPosts.types';
+import { setCurrentPost } from './actions';
 
 export const getPosts =
   (page?: number) =>
@@ -32,7 +32,7 @@ export const getPost =
   async (dispatch: ThunkDispatch<RootState, void, PostActionTypes>) => {
     dispatch(setFetchingPost(true));
     const res = await getPostByIdRequest(id);
-    dispatch(setPosts([res]));
+    dispatch(setCurrentPost(res));
     dispatch(setFetchingPost(false));
   };
 
