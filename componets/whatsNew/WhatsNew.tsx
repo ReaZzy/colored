@@ -11,10 +11,10 @@ import { BiColorFill } from '@react-icons/all-files/bi/BiColorFill';
 import ColoredButton from '../coloredButton/ColoredButton';
 import { DebounceInput } from 'react-debounce-input';
 import { useDispatch, useSelector } from 'react-redux';
-import { setPost } from '../../store/reducers/post/actions';
 import { instance } from '../../store/reducers/api';
 import { RootState } from '../../store/reducers/rootReducer';
 import { getRandomColor } from '../../utils/getRandomColor';
+import { setPost } from '../../store/reducers/post/reducer';
 
 interface IProps {}
 const WhatsNew: React.FC<IProps> = React.memo(() => {

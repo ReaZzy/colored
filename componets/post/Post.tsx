@@ -20,7 +20,7 @@ interface IProps {
 const Post: React.FC<IProps> = ({ post }) => {
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.auth.user);
-  const isLiked = post.likes.some((u) => u.id === user?.id);
+  const isLiked = post.likes?.some((u) => u.id === user?.id);
 
   const handleClick = async () => {
     !isLiked
@@ -52,14 +52,14 @@ const Post: React.FC<IProps> = ({ post }) => {
         >
           <img
             src={
-              `http://localhost:4000/${post.user.avatar}` ||
+              `http://localhost:4000/${post.user?.avatar}` ||
               'https://i.pinimg.com/280x280_RS/09/07/3a/09073a84815d6669d9f3104623ab143c.jpg'
             }
             alt={''}
             className={`shadow ${s.owner__photo}`}
           />
           <div className={s.owner__login}>
-            <div>{post.user.login}</div>
+            <div>{post.user?.login}</div>
             <div className={s.postDate}>{convertDate(post.createdDate)}</div>
           </div>
         </div>
@@ -78,10 +78,10 @@ const Post: React.FC<IProps> = ({ post }) => {
               {isLiked ? <IoMdHeart color={'#EE3D48'} /> : <IoMdHeartEmpty />}
             </ColoredButton>
 
-            {post.likes.length}
+            {post.likes?.length}
           </div>
         </a>
-        {post.likes.length > 0 && (
+        {post.likes?.length > 0 && (
           <ReactTooltip
             id={`${post.id}`}
             type="light"
@@ -110,11 +110,11 @@ const Post: React.FC<IProps> = ({ post }) => {
               </ColoredButton>
             </a>
           </Link>
-          {post.comments.length}
+          {post.comments?.length}
         </div>
       </div>
       <div>
-        {post.comments.map((comment) => (
+        {post.comments?.map((comment) => (
           <div key={comment.id}>
             <span style={{ marginRight: '5px', color: `${color}` }}>
               {comment.user.login}

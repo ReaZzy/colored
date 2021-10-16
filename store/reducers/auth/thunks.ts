@@ -8,7 +8,7 @@ import {
   profileRequest,
 } from './api';
 import { setJwtToken } from '../../../utils/setJwtToken';
-import { setUser, setLoginError, setRegistrationError } from './actions';
+import { setLoginError, setRegistrationError, setUser } from './reducer';
 
 export const login =
   (find: string, password: string) =>

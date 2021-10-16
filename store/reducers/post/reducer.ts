@@ -1,5 +1,5 @@
+import { createSlice } from '@reduxjs/toolkit';
 import { IPosts } from '../../../types/IPosts.types';
-import { PostActionTypes } from '../../../types/IRedux.types';
 
 const initialState = {
   posts: [] as IPosts[],
@@ -7,59 +7,50 @@ const initialState = {
   total: 0,
   isFetching: true,
 };
-type InitialStateType = typeof initialState;
-
-export const postReducer = (
-  state: InitialStateType = initialState,
-  action: PostActionTypes,
-): InitialStateType => {
-  switch (action.type) {
-    case 'post/SET_POST': {
-      return {
-        ...state,
-        posts: [action.payload, ...state.posts],
-        currentPost: null,
-      };
-    }
-    case 'post/SET_POSTS': {
-      return {
-        ...state,
-        posts: [...state.posts, ...action.payload],
-        currentPost: null,
-      };
-    }
-    case 'post/SET_TOTAL': {
-      return { ...state, total: action.payload };
-    }
-    case 'post/SET_FETCHING': {
-      return { ...state, isFetching: action.payload };
-    }
-    case 'post/SET_CURRENT_POST': {
-      return { ...state, currentPost: action.payload };
-    }
-    case 'post/SET_DISLIKE': {
+const postReducer = createSlice({
+  name: 'post',
+  initialState: initialState,
+  reducers: {
+    setPost(state, action) {
+      state.posts.push(action.payload);
+      state.currentPost = null;
+    },
+    setPosts(state, action) {
+      state.posts = state.posts.concat(action.payload);
+      state.currentPost = null;
+    },
+    setFetchingPost(state, action) {
+      state.isFetching = action.payload;
+    },
+    setTotalPost(state, action) {
+      state.total = action.payload;
+    },
+    setCurrentPost(state, action) {
+      state.currentPost = action.payload;
+    },
+    setLike(state, action) {
       const { user, id } = action.payload;
-      if (!user) return { ...state };
+      const candidate = state.posts.findIndex((post) => post.id === id);
+      state.posts[candidate].likes.push(user);
+    },
+    setDislike(state, action) {
+      const { user, id } = action.payload;
       const candidate = state.posts.findIndex((post) => post.id === id);
       state.posts[candidate] = {
         ...state.posts[candidate],
         likes: state.posts[candidate].likes.filter((u) => u.id !== user.id),
       };
-      return {
-        ...state,
-      };
-    }
-    case 'post/SET_LIKE': {
-      const { user, id } = action.payload;
-      if (!user) return { ...state };
-      const candidate = state.posts.findIndex((post) => post.id === id);
-      state.posts[candidate].likes.push(user);
+    },
+  },
+});
 
-      return {
-        ...state,
-      };
-    }
-    default:
-      return { ...state };
-  }
-};
+export default postReducer.reducer;
+export const {
+  setDislike,
+  setLike,
+  setCurrentPost,
+  setFetchingPost,
+  setPost,
+  setPosts,
+  setTotalPost,
+} = postReducer.actions;

@@ -1,9 +1,9 @@
 import { ThunkDispatch } from 'redux-thunk';
 import { RootState } from '../store/reducers/rootReducer';
 import { AnyAction } from 'redux';
-import { setIsAuth, setToken, setUser } from '../store/reducers/auth/actions';
 import { instance } from '../store/reducers/api';
 import * as jwt from 'jsonwebtoken';
+import { setIsAuth, setToken, setUser } from '../store/reducers/auth/reducer';
 export const setJwtToken =
   (token?: string | null) =>
   (dispatch: ThunkDispatch<RootState, void, AnyAction>) => {

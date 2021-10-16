@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@react-icons/all-files": "^4.1.0",
+    "@reduxjs/toolkit": "^1.6.2",
     "axios": "^0.21.1",
     "color": "^4.0.1",
     "cookies": "^0.8.0",
@@ -26,9 +27,6 @@
     "react-redux": "^7.2.4",
     "react-textarea-autosize": "^8.3.3",
     "react-tooltip": "^4.2.21",
-    "redux": "^4.1.1",
-    "redux-devtools-extension": "^2.13.9",
-    "redux-thunk": "^2.3.0",
     "yup": "^0.32.9"
   },
   "devDependencies": {
@@ -41,7 +39,6 @@
     "@types/react-modal": "^3.12.1",
     "@types/react-redux": "^7.1.18",
     "@types/react-tooltip": "^4.2.4",
-    "@types/redux": "^3.6.0",
     "eslint": "7.30.0",
     "eslint-config-next": "11.0.1",
     "prettier": "2.3.2",
