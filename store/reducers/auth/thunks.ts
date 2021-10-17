@@ -1,6 +1,5 @@
 import { ThunkDispatch } from 'redux-thunk';
 import { RootState } from '../rootReducer';
-import { AuthActionTypes } from '../../../types/IRedux.types';
 import {
   loginRequest,
   registerRequest,
@@ -9,10 +8,11 @@ import {
 } from './api';
 import { setJwtToken } from '../../../utils/setJwtToken';
 import { setLoginError, setRegistrationError, setUser } from './reducer';
+import { AnyAction } from 'redux';
 
 export const login =
   (find: string, password: string) =>
-  async (dispatch: ThunkDispatch<RootState, void, AuthActionTypes>) => {
+  async (dispatch: ThunkDispatch<RootState, void, AnyAction>) => {
     const { access_token, user, err } = await loginRequest(find, password);
     if (access_token || user) {
       dispatch(setJwtToken(access_token));
@@ -24,7 +24,7 @@ export const login =
 
 export const register =
   (login: string, email: string, password: string) =>
-  async (dispatch: ThunkDispatch<RootState, void, AuthActionTypes>) => {
+  async (dispatch: ThunkDispatch<RootState, void, AnyAction>) => {
     const { access_token, err } = await registerRequest(login, email, password);
     if (access_token) {
       dispatch(setJwtToken(access_token));
@@ -34,14 +34,14 @@ export const register =
   };
 
 export const logout =
-  () => async (dispatch: ThunkDispatch<RootState, void, AuthActionTypes>) => {
+  () => async (dispatch: ThunkDispatch<RootState, void, AnyAction>) => {
     const token = await logoutRequest();
     dispatch(setJwtToken(token));
     dispatch(setUser(null));
   };
 
 export const user =
-  () => async (dispatch: ThunkDispatch<RootState, void, AuthActionTypes>) => {
+  () => async (dispatch: ThunkDispatch<RootState, void, AnyAction>) => {
     const profile = await profileRequest();
     dispatch(setUser(profile));
   };

@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { AuthActionTypes } from '../../../types/IRedux.types';
 import { IUsers } from '../../../types/IUsers.types';
 
 const initialState = {

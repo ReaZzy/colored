@@ -1,12 +1,11 @@
 import Cookies from 'cookies';
 import React from 'react';
 import { user } from '../../store/reducers/auth/thunks';
-import { NextThunkDispatch, wrapper, initializeStore } from '../../store/store';
+import { initializeStore } from '../../store/store';
 import { setJwtToken } from '../../utils/setJwtToken';
 import { getPost } from '../../store/reducers/post/thunks';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/reducers/rootReducer';
-import { Context } from 'next-redux-wrapper';
 
 const Post = () => {
   const post = useSelector((state: RootState) => state.post.currentPost);

@@ -2,7 +2,7 @@ import React from 'react';
 import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import s from './index.module.css';
-import { NextThunkDispatch, wrapper, initializeStore } from '../store/store';
+import { initializeStore } from '../store/store';
 import { RootState } from '../store/reducers/rootReducer';
 import { useSelector } from 'react-redux';
 import { setJwtToken } from '../utils/setJwtToken';
