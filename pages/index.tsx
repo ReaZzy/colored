@@ -38,6 +38,7 @@ export const getServerSideProps = async (ctx: any) => {
   const valid = await dispatch(setJwtToken(token));
   valid && (await dispatch(await user()));
   valid && (await dispatch(await getPosts(1)));
+
   return {
     props: {
       initialReduxState: store.getState(),
