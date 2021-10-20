@@ -51,10 +51,7 @@ const Post: React.FC<IProps> = ({ post }) => {
           style={{ backgroundColor: `${color}`, color: `${fontColor}` }}
         >
           <img
-            src={
-              `http://localhost:4000/${post.user?.avatar}` ||
-              'https://i.pinimg.com/280x280_RS/09/07/3a/09073a84815d6669d9f3104623ab143c.jpg'
-            }
+            src={`http://localhost:4000/${post.user?.avatar}`}
             alt={''}
             className={`shadow ${s.owner__photo}`}
           />

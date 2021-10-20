@@ -16,7 +16,22 @@ const Post = () => {
   }, [isAuth]);
   return (
     <div>
+      <img src={`http://localhost:4000/${post?.user.avatar}`} />
+      <div>{post?.createdDate}</div>
       <div>{post?.content}</div>
+      <div>
+        {post?.comments?.map((comment, index) => {
+          return (
+            <div key={index}>
+              <img src={`http://localhost:4000/${comment?.user.avatar}`} />
+              <div>{comment.user.login}</div>
+              <div>{comment.createdDate}</div>
+              <div>{comment.content}</div>
+            </div>
+          );
+        })}
+      </div>
+      <div>{post?.likes.length}</div>
     </div>
   );
 };
