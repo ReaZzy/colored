@@ -8,18 +8,17 @@ import { IoMdHeart } from '@react-icons/all-files/io/IoMdHeart';
 import { GoComment } from '@react-icons/all-files/go/GoComment';
 import Link from 'next/link';
 import { like, dislike } from '../../store/reducers/post/thunks';
-import { useDispatch, useSelector } from 'react-redux';
 import ReactTooltip from 'react-tooltip';
 import { getRandomColor } from '../../utils/getRandomColor';
-import { RootState } from '../../store/reducers/rootReducer';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 
 interface IProps {
   post: IPosts;
 }
 
 const Post: React.FC<IProps> = ({ post }) => {
-  const dispatch = useDispatch();
-  const user = useSelector((state: RootState) => state.auth.user);
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.auth.user);
   const isLiked = post.likes?.some((u) => u.id === user?.id);
 
   const handleClick = async () => {

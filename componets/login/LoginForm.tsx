@@ -2,20 +2,19 @@ import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
 import { login } from '../../store/reducers/auth/thunks';
-import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import s from './login.module.css';
 import { ValidatedInput } from '../validatedInput/ValidatedInput';
-import { RootState } from '../../store/reducers/rootReducer';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 
 const validationSchema = yup.object({
   find: yup.string().min(6).max(64).required(),
   password: yup.string().min(6).max(64).required(),
 });
 const LoginForm = React.memo(() => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const router = useRouter();
-  const loginError = useSelector((state: RootState) => state.auth.loginError);
+  const loginError = useAppSelector((state) => state.auth.loginError);
   const handleSubmit = async (values: { find: string; password: string }) => {
     await dispatch(await login(values.find, values.password));
     await router.push('/');

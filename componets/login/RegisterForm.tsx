@@ -3,10 +3,9 @@ import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
 import s from './login.module.css';
 import { register } from '../../store/reducers/auth/thunks';
-import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { ValidatedInput } from '../validatedInput/ValidatedInput';
-import { RootState } from '../../store/reducers/rootReducer';
+import { useAppSelector, useAppDispatch } from '../../hooks/redux';
 
 const validationSchemaRegistration = yup.object({
   email: yup.string().email().max(64).required(),
@@ -15,10 +14,10 @@ const validationSchemaRegistration = yup.object({
 });
 
 const RegisterForm = React.memo(() => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const router = useRouter();
-  const registrationError = useSelector(
-    (state: RootState) => state.auth.registrationError,
+  const registrationError = useAppSelector(
+    (state) => state.auth.registrationError,
   );
   const handleRegistration = async (values: {
     login: string;

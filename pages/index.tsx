@@ -4,18 +4,18 @@ import dynamic from 'next/dynamic';
 import s from './index.module.css';
 import { initializeStore } from '../store/store';
 import { RootState } from '../store/reducers/rootReducer';
-import { useSelector } from 'react-redux';
 import { setJwtToken } from '../utils/setJwtToken';
 import Cookies from 'cookies';
 import { getPosts } from '../store/reducers/post/thunks';
 import { user } from '../store/reducers/auth/thunks';
+import { useAppSelector } from '../hooks/redux';
 
 const WhatsNew = dynamic(() => import('../componets/whatsNew/WhatsNew'));
 const Posts = dynamic(() => import('../componets/posts/Posts'));
 const Login = dynamic(() => import('../componets/login/Login'));
 
 const Index: NextPage<RootState> = () => {
-  const { isAuth } = useSelector((state: RootState) => state.auth);
+  const { isAuth } = useAppSelector((state) => state.auth);
   return (
     <div className={s.content}>
       <div className={s.center_block}>

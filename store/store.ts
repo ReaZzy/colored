@@ -32,4 +32,6 @@ export function useStore(initialState: any) {
   const store = useMemo(() => initializeStore(initialState), [initialState]);
   return store;
 }
-export type NextThunkDispatch = ThunkDispatch<RootState, void, AnyAction>;
+
+export type AppStore = ReturnType<typeof makeStore>;
+export type AppDispatch = AppStore['dispatch'];

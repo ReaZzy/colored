@@ -5,15 +5,14 @@ import { IoChatboxEllipsesOutline } from '@react-icons/all-files/io5/IoChatboxEl
 import { IoSearchOutline } from '@react-icons/all-files/io5/IoSearchOutline';
 import { IoMdHeartEmpty } from '@react-icons/all-files/io/IoMdHeartEmpty';
 import ColoredButton from '../coloredButton/ColoredButton';
-import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../store/reducers/auth/thunks';
-import { RootState } from '../../store/reducers/rootReducer';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 
 interface IProps {}
 
 const Navbar: React.FC<IProps> = React.memo(() => {
-  const dispatch = useDispatch();
-  const user = useSelector((state: RootState) => state.auth.user);
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.auth.user);
   const handleLogout = async () => {
     await dispatch(await logout());
   };

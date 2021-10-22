@@ -10,20 +10,19 @@ import { HiOutlineEmojiHappy } from '@react-icons/all-files/hi/HiOutlineEmojiHap
 import { BiColorFill } from '@react-icons/all-files/bi/BiColorFill';
 import ColoredButton from '../coloredButton/ColoredButton';
 import { DebounceInput } from 'react-debounce-input';
-import { useDispatch, useSelector } from 'react-redux';
 import { instance } from '../../store/reducers/api';
-import { RootState } from '../../store/reducers/rootReducer';
 import { getRandomColor } from '../../utils/getRandomColor';
 import { setPost } from '../../store/reducers/post/reducer';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 
 interface IProps {}
 const WhatsNew: React.FC<IProps> = React.memo(() => {
   const [text, setText] = useState('');
   const [color, setColor] = useState('#fff');
   const [showEmoji, setShowEmoji] = useState(false);
-  const dispatch = useDispatch();
-  const login = useSelector((state: RootState) => state.auth.user?.login);
-  const avatar = useSelector((state: RootState) => state.auth.user?.avatar);
+  const dispatch = useAppDispatch();
+  const login = useAppSelector((state) => state.auth.user?.login);
+  const avatar = useAppSelector((state) => state.auth.user?.avatar);
   const handleChangeColor = (e: ChangeEvent<HTMLInputElement>) => {
     setColor(e.target.value);
   };
