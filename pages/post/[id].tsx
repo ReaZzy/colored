@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Cookies from 'cookies';
 import React, { useEffect } from 'react';
 import { user } from '../../store/reducers/auth/thunks';
@@ -16,14 +17,14 @@ const Post = () => {
   }, [isAuth]);
   return (
     <div>
-      <img src={`http://localhost:4000/${post?.user.avatar}`} />
+      <img src={`http://localhost:4000/${post?.user.avatar}`} alt={`${post?.user.login}_avatar`}/>
       <div>{post?.createdDate}</div>
       <div>{post?.content}</div>
       <div>
         {post?.comments?.map((comment, index) => {
           return (
             <div key={index}>
-              <img src={`http://localhost:4000/${comment?.user.avatar}`} />
+              <img src={`http://localhost:4000/${comment?.user.avatar}`} alt={`${post?.user.login}_avatar`}/>
               <div>{comment.user.login}</div>
               <div>{comment.createdDate}</div>
               <div>{comment.content}</div>
