@@ -9,6 +9,7 @@ import Cookies from 'cookies';
 import { getPosts } from '../store/reducers/post/thunks';
 import { user } from '../store/reducers/auth/thunks';
 import { useAppSelector } from '../hooks/redux';
+import { createGssp } from '../utils/gssp';
 
 const WhatsNew = dynamic(() => import('../componets/whatsNew/WhatsNew'));
 const Posts = dynamic(() => import('../componets/posts/Posts'));
@@ -30,20 +31,13 @@ const Index: NextPage<RootState> = () => {
   );
 };
 
-export const getServerSideProps = async (ctx: any) => {
-  const store = initializeStore();
-  const { dispatch } = store;
-  const cookies = new Cookies(ctx.req, ctx.res);
-  const token = cookies.get('auth') || null;
-  const valid = await dispatch(setJwtToken(token));
-  valid && (await dispatch(await user()));
-  valid && (await dispatch(await getPosts(1)));
-
+export const getServerSideProps = createGssp(async (ctx, store, dispatch) => {
+  await dispatch(await getPosts(1));
   return {
     props: {
       initialReduxState: store.getState(),
     },
   };
-};
+});
 
 export default Index;

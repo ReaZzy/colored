@@ -1,28 +1,34 @@
 import Cookies from 'cookies';
 import { GetServerSideProps } from 'next';
 import { user } from '../store/reducers/auth/thunks';
-import { initializeStore } from '../store/store';
+import { initializeStore, AppStore, AppDispatch } from '../store/store';
 import { setJwtToken } from './setJwtToken';
 
-export const createGssp: any =
-  //@ts-ignore
+type IGssp = (
+  ctx: any,
+  store?: AppStore,
+  dispatch?: AppDispatch,
+) => Promise<any>;
 
-    ({ checkAuth = true, handleShit }): GetServerSideProps =>
-    async (ctx) => {
-      let props = {};
+export const createGssp =
+  (gssp: IGssp, checkAuth = true): GetServerSideProps =>
+  async (ctx: any): Promise<any> => {
+    const store = initializeStore();
+    const { dispatch } = store;
+    if (checkAuth) {
+      const cookies = new Cookies(ctx.req, ctx.res);
+      const token = cookies.get('auth') || null;
+      const valid = await dispatch(setJwtToken(token));
 
-      if (checkAuth) {
-        const store = initializeStore();
-        const { dispatch } = store;
-        const cookies = new Cookies(ctx.req, ctx.res);
-        const token = cookies.get('auth') || null;
-        const valid = await dispatch(setJwtToken(token));
-        valid && (await dispatch(await user()));
+      valid && (await dispatch(await user()));
+      if (!valid) {
+        return {
+          redirect: {
+            destination: '/',
+            permanent: false,
+          },
+        };
       }
-      if (handleShit) {
-        props = { ...props, ...handleShit(ctx) };
-      }
-      return {
-        props,
-      };
-    };
+    }
+    return await gssp(ctx, store, dispatch);
+  };

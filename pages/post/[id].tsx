@@ -1,13 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
-import Cookies from 'cookies';
 import React, { useEffect } from 'react';
-import { user } from '../../store/reducers/auth/thunks';
-import { initializeStore } from '../../store/store';
-import { setJwtToken } from '../../utils/setJwtToken';
 import { getPost } from '../../store/reducers/post/thunks';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/reducers/rootReducer';
 import Router from 'next/router';
+import { createGssp } from '../../utils/gssp';
 
 const Post = () => {
   const post = useSelector((state: RootState) => state.post.currentPost);
@@ -17,14 +14,20 @@ const Post = () => {
   }, [isAuth]);
   return (
     <div>
-      <img src={`http://localhost:4000/${post?.user.avatar}`} alt={`${post?.user.login}_avatar`}/>
+      <img
+        src={`http://localhost:4000/${post?.user.avatar}`}
+        alt={`${post?.user.login}_avatar`}
+      />
       <div>{post?.createdDate}</div>
       <div>{post?.content}</div>
       <div>
         {post?.comments?.map((comment, index) => {
           return (
             <div key={index}>
-              <img src={`http://localhost:4000/${comment?.user.avatar}`} alt={`${post?.user.login}_avatar`}/>
+              <img
+                src={`http://localhost:4000/${comment?.user.avatar}`}
+                alt={`${post?.user.login}_avatar`}
+              />
               <div>{comment.user.login}</div>
               <div>{comment.createdDate}</div>
               <div>{comment.content}</div>
@@ -36,34 +39,9 @@ const Post = () => {
     </div>
   );
 };
-
-export const getServerSideProps = async (ctx: any) => {
-  const store = initializeStore();
-  const { dispatch } = store;
-
-  const cookies = new Cookies(ctx.req, ctx.res);
-  const token = cookies.get('auth') || null;
-
-  if (!ctx.params?.id) {
-    return {
-      redirect: {
-        destination: '/',
-        permanent: false,
-      },
-    };
-  }
-  const valid = await dispatch(setJwtToken(token));
-  valid && (await dispatch(await user()));
-  valid && (await dispatch(await getPost(ctx.params.id as string)));
-  if (!valid) {
-    return {
-      redirect: {
-        destination: '/',
-        permanent: false,
-      },
-    };
-  }
+export const getServerSideProps = createGssp(async (ctx, store, dispatch) => {
+  await dispatch(await getPost(ctx.params.id as string));
   return { props: { initialReduxState: store.getState() } };
-};
+});
 
 export default Post;
