@@ -2,12 +2,8 @@ import React from 'react';
 import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import s from './index.module.css';
-import { initializeStore } from '../store/store';
 import { RootState } from '../store/reducers/rootReducer';
-import { setJwtToken } from '../utils/setJwtToken';
-import Cookies from 'cookies';
 import { getPosts } from '../store/reducers/post/thunks';
-import { user } from '../store/reducers/auth/thunks';
 import { useAppSelector } from '../hooks/redux';
 import { createGssp } from '../utils/gssp';
 
@@ -38,6 +34,6 @@ export const getServerSideProps = createGssp(async (ctx, store, dispatch) => {
       initialReduxState: store.getState(),
     },
   };
-});
+}, false);
 
 export default Index;
