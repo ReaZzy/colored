@@ -21,7 +21,9 @@ export const createGssp =
       const valid = await dispatch(setJwtToken(token));
 
       valid && (await dispatch(await user()));
-      if (!valid && needRedirect) {
+      if (!valid) {
+        if (!needRedirect)
+          return { props: { initialReduxState: store.getState() } };
         return {
           redirect: {
             destination: '/',
