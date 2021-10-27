@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../store/reducers/rootReducer';
 import Router from 'next/router';
 import { createGssp } from '../../utils/gssp';
+import { Avatar } from '../../componets/avatar/Avatar';
 
 const Post = () => {
   const post = useSelector((state: RootState) => state.post.currentPost);
@@ -24,10 +25,7 @@ const Post = () => {
         {post?.comments?.map((comment, index) => {
           return (
             <div key={index}>
-              <img
-                src={`http://localhost:4000/${comment?.user.avatar}`}
-                alt={`${post?.user.login}_avatar`}
-              />
+              <Avatar url={comment?.user.avatar} />
               <div>{comment.user.login}</div>
               <div>{comment.createdDate}</div>
               <div>{comment.content}</div>
