@@ -1,11 +1,10 @@
-/* eslint-disable @next/next/no-img-element */
 import React, { useEffect } from 'react';
 import { getPost } from '../../store/reducers/post/thunks';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/reducers/rootReducer';
 import Router from 'next/router';
 import { createGssp } from '../../utils/gssp';
-import { Avatar } from '../../componets/avatar/Avatar';
+import Avatar from '../../componets/avatar/Avatar';
 
 const Post = () => {
   const post = useSelector((state: RootState) => state.post.currentPost);
@@ -15,10 +14,7 @@ const Post = () => {
   }, [isAuth]);
   return (
     <div>
-      <img
-        src={`http://localhost:4000/${post?.user.avatar}`}
-        alt={`${post?.user.login}_avatar`}
-      />
+      <Avatar url={post?.user.avatar} />
       <div>{post?.createdDate}</div>
       <div>{post?.content}</div>
       <div>

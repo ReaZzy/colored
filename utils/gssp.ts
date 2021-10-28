@@ -26,7 +26,7 @@ export const createGssp =
           return { props: { initialReduxState: store.getState() } };
         return {
           redirect: {
-            destination: '/',
+            destination: '/login',
             permanent: false,
           },
         };

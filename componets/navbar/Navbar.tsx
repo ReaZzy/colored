@@ -7,6 +7,7 @@ import { IoMdHeartEmpty } from '@react-icons/all-files/io/IoMdHeartEmpty';
 import ColoredButton from '../coloredButton/ColoredButton';
 import { logout } from '../../store/reducers/auth/thunks';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import Avatar from '../avatar/Avatar';
 
 interface IProps {}
 
@@ -26,12 +27,12 @@ const Navbar: React.FC<IProps> = React.memo(() => {
         <ColoredButton height={'26px'} width={'26px'}>
           <IoIosAddCircleOutline />
         </ColoredButton>
-        <img
-          src={`http://localhost:4000/${user?.avatar}`}
+        <Avatar
+          url={user?.avatar}
           className={`${s.nav__img} ${s.nav__item}`}
-          alt={'avatar'}
           onClick={handleLogout}
         />
+
         <ColoredButton height={'26px'} width={'26px'}>
           <IoMdHeartEmpty />
         </ColoredButton>

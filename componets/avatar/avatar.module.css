@@ -1,0 +1,27 @@
+.avatar:empty {
+  border-radius: 50%;
+  display: block;
+  background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(255, 255, 255, 0) 80%
+    ),
+    lightgray;
+  background-repeat: repeat-y;
+  background-size: 50px 500px;
+  background-position: 0 0;
+  animation: shine 1s infinite;
+  color: transparent;
+}
+.avatar:-moz-loading {
+  visibility: hidden;
+}
+@keyframes shine {
+  from {
+    background-position: -20% 0, 0 0;
+  }
+  to {
+    background-position: 120% 0, 0 0;
+  }
+}

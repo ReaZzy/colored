@@ -9,6 +9,7 @@ import {
 import { setJwtToken } from '../../../utils/setJwtToken';
 import { setLoginError, setRegistrationError, setUser } from './reducer';
 import { AnyAction } from 'redux';
+import router from 'next/router';
 
 export const login =
   (find: string, password: string) =>
@@ -18,6 +19,7 @@ export const login =
       dispatch(setJwtToken(access_token));
       dispatch(setUser(user!));
       dispatch(setLoginError(null));
+      await router.push('/');
     }
     err && dispatch(setLoginError(err));
   };
@@ -29,6 +31,7 @@ export const register =
     if (access_token) {
       dispatch(setJwtToken(access_token));
       dispatch(setRegistrationError(null));
+      await router.push('/');
     }
     err && dispatch(setRegistrationError(err));
   };

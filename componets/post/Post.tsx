@@ -11,6 +11,7 @@ import { like, dislike } from '../../store/reducers/post/thunks';
 import ReactTooltip from 'react-tooltip';
 import { getRandomColor } from '../../utils/getRandomColor';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import Avatar from '../avatar/Avatar';
 
 interface IProps {
   post: IPosts;
@@ -49,11 +50,11 @@ const Post: React.FC<IProps> = ({ post }) => {
           className={s.owner}
           style={{ backgroundColor: `${color}`, color: `${fontColor}` }}
         >
-          <img
-            src={`http://localhost:4000/${post.user?.avatar}`}
-            alt={''}
+          <Avatar
+            url={post.user?.avatar}
             className={`shadow ${s.owner__photo}`}
           />
+
           <div className={s.owner__login}>
             <div>{post.user?.login}</div>
             <div className={s.postDate}>{convertDate(post.createdDate)}</div>
@@ -88,9 +89,10 @@ const Post: React.FC<IProps> = ({ post }) => {
             <div className={s.tooltip__body}>
               {post.likes.map((user) => {
                 return (
-                  <img
-                    src={`http://localhost:4000/${user.avatar}`}
+                  <Avatar
+                    url={user.avatar}
                     className={s.tooltip__item}
+                    key={user.id}
                   />
                 );
               })}

@@ -2,7 +2,6 @@ import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
 import { login } from '../../store/reducers/auth/thunks';
-import { useRouter } from 'next/router';
 import s from './login.module.css';
 import { ValidatedInput } from '../validatedInput/ValidatedInput';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
@@ -13,11 +12,8 @@ const validationSchema = yup.object({
 });
 const LoginForm = React.memo(() => {
   const dispatch = useAppDispatch();
-  const router = useRouter();
-  const loginError = useAppSelector((state) => state.auth.loginError);
   const handleSubmit = async (values: { find: string; password: string }) => {
     await dispatch(await login(values.find, values.password));
-    await router.push('/');
   };
   return (
     <Formik
@@ -46,16 +42,6 @@ const LoginForm = React.memo(() => {
           />
         </div>
 
-        {loginError && (
-          <div
-            style={{
-              borderBottom: '2px solid rgb(246, 54, 54)',
-              color: 'rgb(246, 54, 54)',
-            }}
-          >
-            {loginError}
-          </div>
-        )}
         <button className={s.login__button} type={'submit'}>
           Login
         </button>

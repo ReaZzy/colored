@@ -14,6 +14,7 @@ import { instance } from '../../store/reducers/api';
 import { getRandomColor } from '../../utils/getRandomColor';
 import { setPost } from '../../store/reducers/post/reducer';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import Avatar from '../avatar/Avatar';
 
 interface IProps {}
 const WhatsNew: React.FC<IProps> = React.memo(() => {
@@ -39,11 +40,7 @@ const WhatsNew: React.FC<IProps> = React.memo(() => {
     <div className={s.whatsNew} style={{ backgroundColor: color }}>
       <div>
         <div className={s.whatsNew__row}>
-          <img
-            src={`http://localhost:4000/${avatar}`}
-            className={s.whatsNew__img}
-            alt={''}
-          />
+          <Avatar url={avatar} className={s.whatsNew__img} />
           <div className={s.whatsNew__text}>
             <TextareaAutosize
               autoFocus

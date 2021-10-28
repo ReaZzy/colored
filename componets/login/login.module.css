@@ -78,7 +78,18 @@
   width: 25px;
   height: 25px;
 }
-
+.error {
+  position: relative;
+  border-radius: 10px;
+  font-weight: 500;
+  padding: 3px;
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  color: white;
+  background-color: rgb(246, 54, 54);
+}
 @media (min-width: 550px) {
   .login__image {
     display: block !important;

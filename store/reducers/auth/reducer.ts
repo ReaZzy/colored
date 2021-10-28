@@ -21,12 +21,16 @@ const authReducer = createSlice({
     },
     setUser(state, action) {
       state.user = action.payload;
+      state.loginError = null;
+      state.registrationError = null;
     },
     setRegistrationError(state, action) {
       state.registrationError = action.payload;
+      state.loginError = null;
     },
     setLoginError(state, action) {
       state.loginError = action.payload;
+      state.registrationError = null;
     },
   },
 });

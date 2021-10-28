@@ -7,12 +7,16 @@ import { FaTwitter } from '@react-icons/all-files/fa/FaTwitter';
 import { SiFacebook } from '@react-icons/all-files/si/SiFacebook';
 import { FaGoogle } from '@react-icons/all-files/fa/FaGoogle';
 import dynamic from 'next/dynamic';
+import { useAppSelector } from '../../hooks/redux';
 
 const LoginForm = dynamic(() => import('./LoginForm'));
 const RegisterForm = dynamic(() => import('./RegisterForm'));
 
 const Login: React.FC = () => {
   const [isRegistration, setIsRegistration] = useState(false);
+  const { loginError, registrationError } = useAppSelector(
+    (state) => state.auth,
+  );
   return (
     <Modal
       isOpen={true}
@@ -31,6 +35,12 @@ const Login: React.FC = () => {
 
       <div className={s.login}>
         {isRegistration ? <RegisterForm /> : <LoginForm />}
+        {loginError && !isRegistration && (
+          <div className={`${s.error} ${s.login__block}`}>{loginError}</div>
+        )}
+        {registrationError && isRegistration && (
+          <div className={`${s.error} ${s.login__block}`}>{loginError}</div>
+        )}
         <div className={s.noAccaunt}>
           <div className={s.loginVia}>
             Or login via
