@@ -12,6 +12,7 @@ import ReactTooltip from 'react-tooltip';
 import { getRandomColor } from '../../utils/getRandomColor';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import Avatar from '../avatar/Avatar';
+import Owner from './owner/Owner';
 
 interface IProps {
   post: IPosts;
@@ -29,37 +30,16 @@ const Post: React.FC<IProps> = ({ post }) => {
   };
 
   const color = Color(post.color);
-  const fontColor = color.isDark() ? '#fff' : '#000';
-
-  const convertDate = (inputFormat: string) => {
-    const pad = (s: number) => {
-      return s < 10 ? '0' + s : s;
-    };
-    const date = new Date(inputFormat);
-    return [
-      pad(date.getDate()),
-      pad(date.getMonth() + 1),
-      date.getFullYear(),
-    ].join('.');
-  };
 
   return (
     <div className={s.post}>
       <div>
-        <div
-          className={s.owner}
-          style={{ backgroundColor: `${color}`, color: `${fontColor}` }}
-        >
-          <Avatar
-            url={post.user?.avatar}
-            className={`shadow ${s.owner__photo}`}
-          />
-
-          <div className={s.owner__login}>
-            <div>{post.user?.login}</div>
-            <div className={s.postDate}>{convertDate(post.createdDate)}</div>
-          </div>
-        </div>
+        <Owner
+          color={post?.color}
+          login={post?.user?.login}
+          date={post?.createdDate}
+          avatar={post?.user?.avatar}
+        />
       </div>
 
       <div className={s.post__main}>

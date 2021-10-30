@@ -1,21 +1,29 @@
 import React, { useEffect } from 'react';
+import Router from 'next/router';
+import s from '../../componets/post/post.module.css';
+import Owner from '../../componets/post/owner/Owner';
+import Avatar from '../../componets/avatar/Avatar';
 import { getPost } from '../../store/reducers/post/thunks';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/reducers/rootReducer';
-import Router from 'next/router';
 import { createGssp } from '../../utils/gssp';
-import Avatar from '../../componets/avatar/Avatar';
 
 const Post = () => {
   const post = useSelector((state: RootState) => state.post.currentPost);
   const isAuth = useSelector((state: RootState) => state.auth.isAuth);
+
   useEffect(() => {
     !isAuth && Router.push('/');
   }, [isAuth]);
   return (
-    <div>
-      <Avatar url={post?.user.avatar} />
-      <div>{post?.createdDate}</div>
+    <div className={s.post}>
+      <Owner
+        color={post?.color}
+        login={post?.user?.login}
+        date={post?.createdDate}
+        avatar={post?.user?.avatar}
+      />
+
       <div>{post?.content}</div>
       <div>
         {post?.comments?.map((comment, index) => {

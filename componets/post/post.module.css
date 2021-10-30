@@ -4,31 +4,7 @@
   box-shadow: 0 0 5px 3px rgba(183, 183, 183, 0.05);
   border-radius: 15px;
 }
-.owner {
-  width: 100%;
-  padding: 10px;
-  display: flex;
-  align-items: center;
-  border-radius: 15px;
-}
-.owner__photo {
-  z-index: 1;
-  margin-left: 4px;
-  width: 40px;
-  height: 40px;
-  border: 2px solid white;
-  object-fit: cover;
-  margin-right: 10px;
-  border-radius: 100%;
-}
-.owner__login {
-  font-weight: bold;
-  font-size: 14px;
-}
-.postDate {
-  font-weight: normal;
-  font-size: 11px;
-}
+
 .post__main {
   display: flex;
   color: white;
