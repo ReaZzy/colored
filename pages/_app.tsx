@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import '../styles/index.css';
 import { useStore } from '../store/store';
 import { AppProps } from 'next/app';
 import Layout from '../componets/layout/Layout';
 import Modal from 'react-modal';
-import router, { Router } from 'next/router';
+import { Router } from 'next/router';
 import Preloader from '../componets/preloader/Preloader';
 import { Provider } from 'react-redux';
-import { useAppSelector } from '../hooks/redux';
 
 Modal.setAppElement('#__next');
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {

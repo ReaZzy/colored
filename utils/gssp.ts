@@ -11,7 +11,7 @@ type IGssp = (
 ) => Promise<any>;
 
 export const createGssp =
-  (gssp: IGssp, needRedirect = true, checkAuth = true): GetServerSideProps =>
+  (gssp: IGssp, checkAuth = true): GetServerSideProps =>
   async (ctx: any): Promise<any> => {
     const store = initializeStore();
     const { dispatch } = store;
@@ -22,8 +22,6 @@ export const createGssp =
 
       valid && (await dispatch(await user()));
       if (!valid) {
-        if (!needRedirect)
-          return { props: { initialReduxState: store.getState() } };
         return {
           redirect: {
             destination: '/login',

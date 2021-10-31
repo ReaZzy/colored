@@ -31,10 +31,14 @@ export const getPosts =
 export const getPost =
   (id: string) =>
   async (dispatch: ThunkDispatch<RootState, void, AnyAction>) => {
-    dispatch(setFetchingPost(true));
-    const res = await getPostByIdRequest(id);
-    dispatch(setCurrentPost(res));
-    dispatch(setFetchingPost(false));
+    try {
+      dispatch(setFetchingPost(true));
+      const res = await getPostByIdRequest(id);
+      dispatch(setCurrentPost(res));
+      dispatch(setFetchingPost(false));
+    } catch (e) {
+      dispatch(setCurrentPost(null));
+    }
   };
 
 export const like =

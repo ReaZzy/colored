@@ -41,6 +41,7 @@ export const logout =
     const token = await logoutRequest();
     dispatch(setJwtToken(token));
     dispatch(setUser(null));
+    router.push('/login');
   };
 
 export const user =

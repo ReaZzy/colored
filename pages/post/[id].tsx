@@ -1,49 +1,25 @@
-import React, { useEffect } from 'react';
-import Router from 'next/router';
-import s from '../../componets/post/post.module.css';
-import Owner from '../../componets/post/owner/Owner';
-import Avatar from '../../componets/avatar/Avatar';
+import React from 'react';
 import { getPost } from '../../store/reducers/post/thunks';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/reducers/rootReducer';
 import { createGssp } from '../../utils/gssp';
+import Post from '../../componets/post/Post';
 
-const Post = () => {
-  const post = useSelector((state: RootState) => state.post.currentPost);
-  const isAuth = useSelector((state: RootState) => state.auth.isAuth);
-
-  useEffect(() => {
-    !isAuth && Router.push('/');
-  }, [isAuth]);
+const PostPage = () => {
+  const post = useSelector((state: RootState) => state.post.currentPost!);
   return (
-    <div className={s.post}>
-      <Owner
-        color={post?.color}
-        login={post?.user?.login}
-        date={post?.createdDate}
-        avatar={post?.user?.avatar}
-      />
-
-      <div>{post?.content}</div>
-      <div>
-        {post?.comments?.map((comment, index) => {
-          return (
-            <div key={index}>
-              <Avatar url={comment?.user.avatar} />
-              <div>{comment.user.login}</div>
-              <div>{comment.createdDate}</div>
-              <div>{comment.content}</div>
-            </div>
-          );
-        })}
-      </div>
-      <div>{post?.likes.length}</div>
-    </div>
+    <>
+      <Post post={post} />
+    </>
   );
 };
 export const getServerSideProps = createGssp(async (ctx, store, dispatch) => {
   await dispatch(await getPost(ctx.params.id as string));
-  return { props: { initialReduxState: store.getState() } };
+  if (store.getState().post.currentPost) {
+    return { props: { initialReduxState: store.getState() } };
+  } else {
+    return { notFound: true };
+  }
 });
 
-export default Post;
+export default PostPage;

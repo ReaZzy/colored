@@ -30,16 +30,28 @@ const postReducer = createSlice({
     },
     setLike(state, action) {
       const { user, id } = action.payload;
-      const candidate = state.posts.findIndex((post) => post.id === id);
-      state.posts[candidate].likes.push(user);
+
+      if (state.currentPost) {
+        state.currentPost.likes.push(user);
+      } else {
+        const candidate = state.posts.findIndex((post) => post.id === id);
+        state.posts[candidate].likes.push(user);
+      }
     },
     setDislike(state, action) {
       const { user, id } = action.payload;
-      const candidate = state.posts.findIndex((post) => post.id === id);
-      state.posts[candidate] = {
-        ...state.posts[candidate],
-        likes: state.posts[candidate].likes.filter((u) => u.id !== user.id),
-      };
+      if (state.currentPost) {
+        state.currentPost = {
+          ...state.currentPost,
+          likes: state.currentPost.likes.filter((u) => u.id !== user.id),
+        };
+      } else {
+        const candidate = state.posts.findIndex((post) => post.id === id);
+        state.posts[candidate] = {
+          ...state.posts[candidate],
+          likes: state.posts[candidate].likes.filter((u) => u.id !== user.id),
+        };
+      }
     },
   },
 });

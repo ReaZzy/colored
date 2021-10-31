@@ -20,8 +20,8 @@ const Owner: NextPage<IProps> = React.memo(
     return (
       <div
         style={{ backgroundColor: `${postColor}`, color: `${fontColor}` }}
+        className={`${s.owner} ${props.className}`}
         {...props}
-        className={s.owner}
       >
         <Avatar url={avatar} className={`shadow ${s.owner__photo}`} />
 
