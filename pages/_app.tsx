@@ -7,7 +7,6 @@ import Modal from 'react-modal';
 import { Router } from 'next/router';
 import Preloader from '../componets/preloader/Preloader';
 import { Provider } from 'react-redux';
-import { createGssp } from '../utils/gssp';
 
 Modal.setAppElement('#__next');
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
