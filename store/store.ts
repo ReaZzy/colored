@@ -1,6 +1,4 @@
-import { reducer, RootState } from './reducers/rootReducer';
-import { AnyAction } from 'redux';
-import { ThunkDispatch } from 'redux-thunk';
+import { reducer } from './reducers/rootReducer';
 import { useMemo } from 'react';
 import { configureStore } from '@reduxjs/toolkit';
 
@@ -24,7 +22,7 @@ export const initializeStore = (preloadedState?: any) => {
   if (typeof window === 'undefined') return _store;
 
   if (!store) store = _store;
-
+  
   return _store;
 };
 

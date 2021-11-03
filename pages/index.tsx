@@ -23,7 +23,7 @@ const Index: NextPage<RootState> = () => {
 };
 
 export const getServerSideProps = createGssp(async (ctx, store, dispatch) => {
-  await dispatch(await getPosts(1));
+  await dispatch(await getPosts(1, true));
   return { props: { initialReduxState: store.getState() } };
 });
 

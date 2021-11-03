@@ -19,6 +19,10 @@ const postReducer = createSlice({
       state.posts = state.posts.concat(action.payload);
       state.currentPost = null;
     },
+    initPosts(state, action) {
+      state.posts = action.payload;
+      state.currentPost = null;
+    },
     setFetchingPost(state, action) {
       state.isFetching = action.payload;
     },
@@ -65,4 +69,5 @@ export const {
   setPost,
   setPosts,
   setTotalPost,
+  initPosts,
 } = postReducer.actions;

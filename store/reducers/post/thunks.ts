@@ -9,6 +9,7 @@ import {
 } from './api';
 import { IUsers } from '../../../types/IUsers.types';
 import {
+  initPosts,
   setCurrentPost,
   setDislike,
   setFetchingPost,
@@ -19,11 +20,11 @@ import {
 import { AnyAction } from '@reduxjs/toolkit';
 
 export const getPosts =
-  (page?: number) =>
+  (page?: number, init = false) =>
   async (dispatch: ThunkDispatch<RootState, void, AnyAction>) => {
     dispatch(setFetchingPost(true));
     const res = await getPostsRequest(page);
-    dispatch(setPosts(res.posts));
+    init ? dispatch(initPosts(res.posts)) : dispatch(setPosts(res.posts));
     dispatch(setTotalPost(res.total ?? 0));
     dispatch(setFetchingPost(false));
   };
