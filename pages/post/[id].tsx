@@ -9,7 +9,7 @@ import router from 'next/router';
 const PostPage = () => {
   const post = useSelector((state: RootState) => state.post.currentPost!);
   return (
-    <>
+    <div>
       <button
         onClick={() => {
           router.back();
@@ -18,7 +18,7 @@ const PostPage = () => {
         Back
       </button>
       <Post post={post} />
-    </>
+    </div>
   );
 };
 export const getServerSideProps = createGssp(async (ctx, store, dispatch) => {

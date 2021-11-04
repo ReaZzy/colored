@@ -17,7 +17,7 @@ const Custom404: NextPage = () => {
   }, []);
 
   return (
-    <>
+    <div>
       <h1>404 - Page Not Found</h1>{' '}
       <button
         onClick={() => {
@@ -26,7 +26,7 @@ const Custom404: NextPage = () => {
       >
         Back
       </button>
-    </>
+    </div>
   );
 };
 

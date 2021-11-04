@@ -11,7 +11,7 @@ type IGssp = (
 ) => Promise<any>;
 
 export const createGssp =
-  (gssp: IGssp, checkAuth = true): GetServerSideProps =>
+  (gssp: IGssp, needRedirect = false, checkAuth = true): GetServerSideProps =>
   async (ctx: any): Promise<any> => {
     const store = initializeStore();
     const { dispatch } = store;
@@ -21,7 +21,7 @@ export const createGssp =
       const valid = await dispatch(setJwtToken(token));
 
       valid && (await dispatch(await user()));
-      if (!valid) {
+      if (!valid && needRedirect) {
         return {
           redirect: {
             destination: '/login',
