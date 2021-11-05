@@ -1,3 +1,7 @@
+.preloader {
+  position: relative;
+  margin: 0 auto;
+}
 .lds_ring {
   display: inline-block;
   position: relative;
