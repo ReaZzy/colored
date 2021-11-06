@@ -7,6 +7,7 @@ import Modal from 'react-modal';
 import { Router } from 'next/router';
 import Preloader from '../componets/preloader/Preloader';
 import { Provider } from 'react-redux';
+import { Meta } from '../componets/meta/Meta';
 
 Modal.setAppElement('#__next');
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
@@ -22,6 +23,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
 
   return (
     <Provider store={store}>
+      <Meta title={pageProps.title} />
       <Layout>
         {isLoading ? <Preloader /> : <Component {...pageProps} />}
       </Layout>

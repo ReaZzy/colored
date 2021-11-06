@@ -1,8 +1,14 @@
 import Error from 'next/error';
 import { GetServerSideProps, NextPage } from 'next';
+import React from 'react';
+import { Meta } from '../componets/meta/Meta';
 
 const ErrorPage: NextPage<any> = ({ statusCode }) => {
-  return <Error statusCode={statusCode}></Error>;
+  return (
+    <Error statusCode={statusCode}>
+      <Meta title={'505 - Server error'} />
+    </Error>
+  );
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {

@@ -11,7 +11,7 @@ type IGssp = (
 ) => Promise<any>;
 
 export const createGssp =
-  (gssp: IGssp, needRedirect = false, checkAuth = true): GetServerSideProps =>
+  (gssp: IGssp, needRedirect = true, checkAuth = true): GetServerSideProps =>
   async (ctx: any): Promise<any> => {
     const store = initializeStore();
     const { dispatch } = store;

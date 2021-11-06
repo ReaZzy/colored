@@ -5,11 +5,13 @@ import { RootState } from '../../store/reducers/rootReducer';
 import { createGssp } from '../../utils/gssp';
 import Post from '../../componets/post/Post';
 import router from 'next/router';
+import { Meta } from '../../componets/meta/Meta';
 
 const PostPage = () => {
   const post = useSelector((state: RootState) => state.post.currentPost!);
   return (
     <div>
+      <Meta title={post.user?.login} />
       <button
         onClick={() => {
           router.back();
@@ -24,7 +26,11 @@ const PostPage = () => {
 export const getServerSideProps = createGssp(async (ctx, store, dispatch) => {
   await dispatch(await getPost(ctx.params.id as string));
   if (store.getState().post.currentPost) {
-    return { props: { initialReduxState: store.getState() } };
+    return {
+      props: {
+        initialReduxState: store.getState(),
+      },
+    };
   } else {
     return { notFound: true };
   }

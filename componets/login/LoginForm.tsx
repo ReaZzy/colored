@@ -5,6 +5,7 @@ import { login } from '../../store/reducers/auth/thunks';
 import s from './login.module.css';
 import { ValidatedInput } from '../validatedInput/ValidatedInput';
 import { useAppDispatch } from '../../hooks/redux';
+import { Meta } from '../meta/Meta';
 
 const validationSchema = yup.object({
   find: yup.string().min(6).max(64).required(),

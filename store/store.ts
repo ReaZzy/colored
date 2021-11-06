@@ -12,6 +12,7 @@ const makeStore: any = (preloadedState = {}) =>
 
 export const initializeStore = (preloadedState?: any) => {
   let _store = store ?? makeStore(preloadedState);
+
   if (preloadedState && store) {
     _store = makeStore({
       ...store.getState(),
@@ -22,7 +23,7 @@ export const initializeStore = (preloadedState?: any) => {
   if (typeof window === 'undefined') return _store;
 
   if (!store) store = _store;
-  
+
   return _store;
 };
 
