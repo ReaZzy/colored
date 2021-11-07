@@ -8,7 +8,7 @@ interface IProps {
 export const Meta: NextPage<IProps> = ({ title }) => {
   return (
     <Head>
-      <title>{title || 'Colllored'}</title>
+      <title>{title || 'Colored'}</title>
     </Head>
   );
 };
