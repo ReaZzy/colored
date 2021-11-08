@@ -8,10 +8,10 @@ const Layout: React.FC = ({ children }) => {
   const isAuth = useAppSelector((state) => state.auth.isAuth);
 
   return (
-    <div className={'content'}>
+    <main className={'content'}>
       {isAuth && <Navbar />}
       {children}
-    </div>
+    </main>
   );
 };
 
