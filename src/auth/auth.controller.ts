@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Delete,
+  HttpException,
   HttpStatus,
   Post,
   Req,
@@ -35,7 +36,7 @@ export class AuthController {
       });
     }
     res.cookie('auth', token.access_token, {
-      httpOnly: true,
+      httpOnly: false,
       maxAge: 86_400_000,
     });
     return res.status(HttpStatus.OK).send(token);
@@ -53,14 +54,21 @@ export class AuthController {
     @Body() usersData: UsersDataDto,
     @Res() res: Response,
   ): Promise<Response> {
-    const user = await this.usersService.create(usersData);
-    const { access_token } = await this.authService.login(
-      await this.usersService.create(user),
-    );
-    res.cookie('auth', access_token, {
-      httpOnly: true,
-      maxAge: 86_400_000,
-    });
-    return res.status(HttpStatus.OK).send({ user, access_token });
+    try {
+      const user = await this.usersService.create(usersData);
+      const { access_token } = await this.authService.login(
+        await this.usersService.create(user),
+      );
+      res.cookie('auth', access_token, {
+        httpOnly: false,
+        maxAge: 86_400_000,
+      });
+      return res.status(HttpStatus.OK).send({ user, access_token });
+    } catch (e) {
+      throw new HttpException(
+        'User already exists',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 }
