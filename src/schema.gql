@@ -41,6 +41,7 @@ type Posts {
   userId: String!
 }
 
+<<<<<<< HEAD
 type PostReturnDto {
   posts: [Posts!]!
   total: Float!
@@ -117,4 +118,8 @@ input CommentsDataDto {
 
 type Subscription {
   getPostSubscription: Posts!
+=======
+type Query {
+  getAll: [Users!]!
+>>>>>>> a6d8cfa... refactor⚒: add graphql
 }

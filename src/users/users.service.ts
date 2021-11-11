@@ -13,7 +13,15 @@ export class UsersService {
   ) {}
 
   async getAll(): Promise<Users[]> {
-    return this.usersRepository.find();
+    return this.usersRepository.find({
+      join: {
+        alias: 'user',
+        leftJoinAndSelect: {
+          posts: 'user.posts',
+          post_user: 'posts.user',
+        },
+      },
+    });
   }
 
   async getUser(loginOrEamil: string): Promise<Users | undefined> {

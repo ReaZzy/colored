@@ -11,29 +11,38 @@ import {
 import { Length, Matches } from 'class-validator';
 import { Users } from '../users/users.entity';
 import { Comments } from '../comments/comments.entity';
+import { Field, ID, ObjectType } from '@nestjs/graphql';
 
+@ObjectType()
 @Entity('Posts')
 export default class Posts {
+  @Field(() => ID)
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Field(() => Date)
   @CreateDateColumn()
   createdDate: Date;
 
+  @Field(() => String)
   @Matches(/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/gi, {
     message: 'invalid color',
   })
   @Column('varchar')
   color: string;
+
+  @Field(() => String)
   @Column('varchar')
   @Length(3, 2500)
   content: string;
 
+  @Field(() => Users)
   @ManyToOne(() => Users, (user) => user.posts, {
     onDelete: 'CASCADE',
   })
-  user!: Users[];
+  user!: Users;
 
+  @Field(() => [Users])
   @ManyToMany(() => Users, (user) => user.login, {
     onDelete: 'CASCADE',
   })
@@ -42,11 +51,13 @@ export default class Posts {
   })
   likes!: Users[];
 
+  @Field(() => [Comments])
   @OneToMany(() => Comments, (comment) => comment.post, {
     onDelete: 'CASCADE',
   })
   comments: Comments[];
 
+  @Field(() => String)
   @Column({ select: false })
   userId: string;
 }

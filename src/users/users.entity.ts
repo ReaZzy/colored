@@ -11,29 +11,38 @@ import {
 import { IsEmail, Length } from 'class-validator';
 import { hash } from 'bcryptjs';
 import Posts from '../posts/posts.entity';
+import { Field, ID, ObjectType } from '@nestjs/graphql';
 
+@ObjectType()
 @Entity('Users')
 export class Users extends BaseEntity {
+  @Field(() => ID)
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Field(() => Date)
   @CreateDateColumn()
   createdDate: Date;
 
+  @Field(() => String)
   @Column({ unique: true })
   @IsEmail()
   email: string;
 
+  @Field(() => String)
   @Column('varchar', { default: '' })
   avatar: string;
 
+  @Field(() => String)
   @Column('varchar', { unique: true })
   @Length(3, 60)
   login: string;
 
+  @Field(() => String)
   @Column('varchar', { select: false })
   password: string;
 
+  @Field(() => [Posts])
   @OneToMany(() => Posts, (post) => post.user, {
     onDelete: 'CASCADE',
     eager: true,
