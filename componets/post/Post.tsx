@@ -81,7 +81,7 @@ const Post: React.FC<IProps> = ({ post }) => {
         )}
 
         <div className={s.post__actions__item}>
-          <Link href={`/post/${post.id}`}>
+          <Link href={`/post/${post.id}`} as={`/post/${post.id}`}>
             <a>
               <ColoredButton height={'25px'} width={'25px'}>
                 <GoComment />

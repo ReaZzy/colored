@@ -31,6 +31,7 @@ const postReducer = createSlice({
     },
     setCurrentPost(state, action) {
       state.currentPost = action.payload;
+      state.posts = [];
     },
     setLike(state, action) {
       const { user, id } = action.payload;

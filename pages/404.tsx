@@ -9,13 +9,6 @@ import { Meta } from '../componets/meta/Meta';
 
 const Custom404: NextPage = () => {
   const dispatch = useAppDispatch();
-  React.useEffect(() => {
-    const token = Cookies.get('auth') || null;
-    const valid = dispatch(setJwtToken(token));
-
-    valid && dispatch(user());
-    if (!valid) router.push('/login');
-  }, []);
 
   return (
     <div>
