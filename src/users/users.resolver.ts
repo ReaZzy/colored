@@ -14,7 +14,7 @@ import { Response, Request } from 'express';
 import { UsersService } from './users.service';
 import { Users } from './users.entity';
 import { UserFindDto } from './dto/user-find.dto';
-import {} from '../guards/jwt-auth.guard';
+import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { Observable, of } from 'rxjs';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { v4 as uuidv4 } from 'uuid';
@@ -23,15 +23,13 @@ import { join } from 'path';
 import { Query, Resolver } from '@nestjs/graphql';
 import path = require('path');
 
+@UseGuards(JwtAuthGuard)
 @Resolver()
 export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
 
   @Query(() => [Users])
   async getAll(): Promise<Users[]> {
-    console.log(
-      await (await this.usersService.getAll()).map((user) => user.posts),
-    );
     return this.usersService.getAll();
   }
 
