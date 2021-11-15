@@ -42,16 +42,21 @@ type Posts {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 type PostReturnDto {
   posts: [Posts!]!
   total: Float!
 }
 
 type LoginDto {
+=======
+type Login {
+>>>>>>> 9d1831b... feat🔨: add auth graphql
   access_token: String!
   user: Users!
 }
 
+<<<<<<< HEAD
 type Avatar {
   avatar: String!
 }
@@ -119,7 +124,20 @@ input CommentsDataDto {
 type Subscription {
   getPostSubscription: Posts!
 =======
+=======
+>>>>>>> 9d1831b... feat🔨: add auth graphql
 type Query {
   getAll: [Users!]!
 >>>>>>> a6d8cfa... refactor⚒: add graphql
+}
+
+type Mutation {
+  login(password: String!, find: String!): Login!
+  register(userData: UsersDataDto!): Login!
+}
+
+input UsersDataDto {
+  email: String!
+  login: String!
+  password: String!
 }

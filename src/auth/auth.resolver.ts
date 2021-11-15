@@ -1,45 +1,71 @@
 import {
-  Body,
-  Controller,
+  createParamDecorator,
   Delete,
+  ExecutionContext,
   HttpException,
   HttpStatus,
-  Post,
-  Req,
   Res,
   UseGuards,
 } from '@nestjs/common';
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from '../guards/local-auth.guard';
 import { Users } from '../users/users.entity';
 import { UsersDataDto } from '../users/dto/users-data.dto';
 import { UsersService } from '../users/users.service';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
+import { UnauthorizedException } from '@nestjs/common';
+import {
+  Args,
+  Context,
+  Field,
+  GqlExecutionContext,
+  InputType,
+  Mutation,
+  ObjectType,
+  Resolver,
+} from '@nestjs/graphql';
 export { Request, Response } from 'express';
 
-@Controller('auth')
-export class AuthController {
+@ObjectType()
+class Login {
+  @Field(() => String)
+  access_token: string;
+  @Field(() => Users)
+  user: Users;
+}
+
+export const CurrentUser = createParamDecorator(
+  (data: unknown, context: ExecutionContext) => {
+    const ctx = GqlExecutionContext.create(context);
+    return ctx.getContext().req.user;
+  },
+);
+
+@Resolver()
+export class AuthResolver {
   constructor(
     private readonly authService: AuthService,
     private readonly usersService: UsersService,
   ) {}
 
   @UseGuards(LocalAuthGuard)
-  @Post('/login')
-  async login(@Req() req: Request, @Res() res: Response) {
-    const token = await this.authService.login(req.user as Users);
+  @Mutation(() => Login)
+  async login(
+    @Args('find') find: string,
+    @Args('password') password: string,
+    @CurrentUser() user: Users,
+    @Context() ctx: any,
+  ) {
+    const token = await this.authService.login(user);
     if (!token) {
-      return res.status(HttpStatus.UNAUTHORIZED).send({
-        statusCode: HttpStatus.UNAUTHORIZED,
-        message: 'Incorrect login or password',
-      });
+      return new UnauthorizedException();
     }
-    res.cookie('auth', token.access_token, {
+    ctx.res.cookie('auth', token.access_token, {
       httpOnly: false,
       maxAge: 86_400_000,
     });
-    return res.status(HttpStatus.OK).send(token);
+    return token;
   }
 
   @UseGuards(JwtAuthGuard)
@@ -49,21 +75,21 @@ export class AuthController {
     return res.status(HttpStatus.OK).send();
   }
 
-  @Post('/register')
-  async create(
-    @Body() usersData: UsersDataDto,
-    @Res() res: Response,
-  ): Promise<Response> {
+  @Mutation(() => Login)
+  async register(
+    @Args('userData') usersData: UsersDataDto,
+    @Context() ctx: any,
+  ): Promise<Login> {
     try {
       const user = await this.usersService.create(usersData);
       const { access_token } = await this.authService.login(
         await this.usersService.create(user),
       );
-      res.cookie('auth', access_token, {
+      ctx.res.cookie('auth', access_token, {
         httpOnly: false,
         maxAge: 86_400_000,
       });
-      return res.status(HttpStatus.OK).send({ user, access_token });
+      return { user, access_token };
     } catch (e) {
       throw new HttpException(
         'User already exists',

@@ -1,11 +1,12 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
-import { Strategy } from 'passport-local';
+import { GraphQLLocalStrategy } from 'graphql-passport';
 import { AuthService } from './auth.service';
 import { Users } from '../users/users.entity';
+import { Strategy } from 'passport-local';
 
 @Injectable()
-export class LocalStrategy extends PassportStrategy(Strategy) {
+export class LocalStrategy extends PassportStrategy(Strategy, 'local') {
   constructor(private authService: AuthService) {
     super({
       usernameField: 'find',
@@ -13,6 +14,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(find: string, password: string): Promise<Users | Error> {
+    console.log(find, password);
     const user = await this.authService.validate({ find, password });
 
     if (!user) {

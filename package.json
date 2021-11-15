@@ -126,7 +126,11 @@
 >>>>>>> c55ba73... feat🔨: add auth.service 🔒
 =======
     "graphql": "^15.7.2",
+<<<<<<< HEAD
 >>>>>>> a6d8cfa... refactor⚒: add graphql
+=======
+    "graphql-passport": "^0.6.4",
+>>>>>>> 9d1831b... feat🔨: add auth graphql
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",

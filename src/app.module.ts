@@ -15,6 +15,7 @@ import { join } from 'path';
     GraphQLModule.forRoot({
       debug: true,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      context: ({ req }) => ({ ...req }),
     }),
     TypeOrmModule.forRoot(connectionOptions),
     ConfigModule.forRoot(),
