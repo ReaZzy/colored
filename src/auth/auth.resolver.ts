@@ -18,22 +18,13 @@ import { UnauthorizedException } from '@nestjs/common';
 import {
   Args,
   Context,
-  Field,
   GqlExecutionContext,
-  InputType,
   Mutation,
-  ObjectType,
   Resolver,
 } from '@nestjs/graphql';
+import { LoginDto } from './dto/login.dto';
+import { GqgAuthGuard } from 'src/guards/gql-auth.guard';
 export { Request, Response } from 'express';
-
-@ObjectType()
-class Login {
-  @Field(() => String)
-  access_token: string;
-  @Field(() => Users)
-  user: Users;
-}
 
 export const CurrentUser = createParamDecorator(
   (data: unknown, context: ExecutionContext) => {
@@ -50,7 +41,7 @@ export class AuthResolver {
   ) {}
 
   @UseGuards(LocalAuthGuard)
-  @Mutation(() => Login)
+  @Mutation(() => LoginDto)
   async login(
     @Args('find') find: string,
     @Args('password') password: string,
@@ -68,18 +59,18 @@ export class AuthResolver {
     return token;
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Delete('/logout')
-  async logout(@Res() res: Response) {
-    res.clearCookie('auth');
-    return res.status(HttpStatus.OK).send();
+  @UseGuards(GqgAuthGuard)
+  @Mutation(() => Boolean)
+  async logout(@Context() ctx: any) {
+    ctx.res.clearCookie('auth');
+    return ctx.res.status(HttpStatus.OK).send();
   }
 
-  @Mutation(() => Login)
+  @Mutation(() => LoginDto)
   async register(
     @Args('userData') usersData: UsersDataDto,
     @Context() ctx: any,
-  ): Promise<Login> {
+  ): Promise<LoginDto> {
     try {
       const user = await this.usersService.create(usersData);
       const { access_token } = await this.authService.login(

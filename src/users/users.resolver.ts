@@ -1,5 +1,4 @@
 import {
-  Body,
   Get,
   HttpStatus,
   Param,
@@ -13,13 +12,12 @@ import {
 import { Response, Request } from 'express';
 import { UsersService } from './users.service';
 import { Users } from './users.entity';
-import { UserFindDto } from './dto/user-find.dto';
 import { Observable, of } from 'rxjs';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { v4 as uuidv4 } from 'uuid';
 import { diskStorage } from 'multer';
 import { join } from 'path';
-import { Query, Resolver } from '@nestjs/graphql';
+import { Args, Context, Query, Resolver } from '@nestjs/graphql';
 import path = require('path');
 import { GqgAuthGuard } from 'src/guards/gql-auth.guard';
 
@@ -33,14 +31,14 @@ export class UsersResolver {
     return this.usersService.getAll();
   }
 
-  @Post('/user')
+  @Query(() => Users, { nullable: true })
   async getUser(
-    @Body() loginOrEmail: UserFindDto,
-    @Res() res: Response,
-  ): Promise<Response> {
-    const user = await this.usersService.getUser(loginOrEmail.find);
-    if (user) return res.status(HttpStatus.OK).send(user);
-    return res.status(HttpStatus.NOT_FOUND).send({
+    @Args('find') find: string,
+    @Context() ctx: any,
+  ): Promise<Users> {
+    const user = await this.usersService.getUser(find);
+    if (user) return user;
+    return ctx.res.status(HttpStatus.NOT_FOUND).send({
       message: 'User with such email or login doesn`t exists',
     });
   }
@@ -69,6 +67,7 @@ export class UsersResolver {
       imagePath: avatar,
     });
   }
+
   @Get('profile-image/:imagename')
   async findProfileImage(
     @Param('imagename') imageName: string,

@@ -43,6 +43,7 @@ type Posts {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 type PostReturnDto {
   posts: [Posts!]!
   total: Float!
@@ -52,6 +53,9 @@ type LoginDto {
 =======
 type Login {
 >>>>>>> 9d1831b... feat🔨: add auth graphql
+=======
+type LoginDto {
+>>>>>>> 18db429... refactor⚒: logout and getuser graphql
   access_token: String!
   user: Users!
 }
@@ -128,12 +132,17 @@ type Subscription {
 >>>>>>> 9d1831b... feat🔨: add auth graphql
 type Query {
   getAll: [Users!]!
+<<<<<<< HEAD
 >>>>>>> a6d8cfa... refactor⚒: add graphql
+=======
+  getUser(find: String!): Users
+>>>>>>> 18db429... refactor⚒: logout and getuser graphql
 }
 
 type Mutation {
-  login(password: String!, find: String!): Login!
-  register(userData: UsersDataDto!): Login!
+  login(password: String!, find: String!): LoginDto!
+  logout: Boolean!
+  register(userData: UsersDataDto!): LoginDto!
 }
 
 input UsersDataDto {
