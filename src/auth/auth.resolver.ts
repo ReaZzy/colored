@@ -1,19 +1,15 @@
 import {
   createParamDecorator,
-  Delete,
   ExecutionContext,
   HttpException,
   HttpStatus,
-  Res,
   UseGuards,
 } from '@nestjs/common';
-import { Response } from 'express';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from '../guards/local-auth.guard';
 import { Users } from '../users/users.entity';
 import { UsersDataDto } from '../users/dto/users-data.dto';
 import { UsersService } from '../users/users.service';
-import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { UnauthorizedException } from '@nestjs/common';
 import {
   Args,
