@@ -44,9 +44,14 @@ type Posts {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 type PostReturnDto {
   posts: [Posts!]!
   total: Float!
+=======
+type Avatar {
+  imagePath: String!
+>>>>>>> 6d8e4fb... refactor🔃: upload avatar to graphql
 }
 
 type LoginDto {
@@ -140,10 +145,14 @@ type Query {
 }
 
 type Mutation {
+  uploadAvatar(file: Upload!): Avatar!
   login(password: String!, find: String!): LoginDto!
   logout: Boolean!
   register(userData: UsersDataDto!): LoginDto!
 }
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
 
 input UsersDataDto {
   email: String!

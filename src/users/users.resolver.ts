@@ -17,9 +17,25 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { v4 as uuidv4 } from 'uuid';
 import { diskStorage } from 'multer';
 import { join } from 'path';
-import { Args, Context, Query, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Context,
+  Mutation,
+  Query,
+  Resolver,
+  ObjectType,
+  Field,
+} from '@nestjs/graphql';
 import path = require('path');
 import { GqgAuthGuard } from 'src/guards/gql-auth.guard';
+import { FileUpload, GraphQLUpload } from 'graphql-upload';
+import { createWriteStream } from 'fs';
+
+@ObjectType()
+class Avatar {
+  @Field()
+  imagePath: string;
+}
 
 @UseGuards(GqgAuthGuard)
 @Resolver()
@@ -43,31 +59,48 @@ export class UsersResolver {
     });
   }
 
-  @Post('upload')
-  @UseInterceptors(
-    FileInterceptor('file', {
-      storage: diskStorage({
-        destination: './uploads/profileimages',
-        filename: (req, file, cb) => {
-          const filename =
-            path.parse(file.originalname).name.replace(/\s/g, '') + uuidv4();
-          const extension = path.parse(file.originalname).ext;
-          cb(null, `${filename}${extension}`);
-        },
-      }),
-    }),
-  )
-  async uploadAvatar(
-    @UploadedFile() file: Express.Multer.File,
-    @Req() req: Request,
-  ): Promise<Observable<any>> {
-    const avatar = `http://${process.env.HOST}:${process.env.PORT}/users/profile-image/${file.filename}`;
-    await this.usersService.updateAvatar({ id: req.user.id, file: avatar });
-    return of({
-      imagePath: avatar,
-    });
-  }
+  // @Post('upload')
+  // @UseInterceptors(
+  //   FileInterceptor('file', {
+  //     storage: diskStorage({
+  //       destination: './uploads/profileimages',
+  //       filename: (req, file, cb) => {
+  //         const filename =
+  //           path.parse(file.originalname).name.replace(/\s/g, '') + uuidv4();
+  //         const extension = path.parse(file.originalname).ext;
+  //         cb(null, `${filename}${extension}`);
+  //       },
+  //     }),
+  //   }),
+  // )
+  // async uploadAvatar(
+  //   @UploadedFile() file: Express.Multer.File,
+  //   @Req() req: Request,
+  // ): Promise<Observable<any>> {
+  //   const avatar = `http://${process.env.HOST}:${process.env.PORT}/users/profile-image/${file.filename}`;
+  //   await this.usersService.updateAvatar({ id: req.user.id, file: avatar });
+  //   return of({
+  //     imagePath: avatar,
+  //   });
+  // }
 
+  @Mutation(() => Avatar)
+  async uploadAvatar(
+    @Args({ name: 'file', type: () => GraphQLUpload })
+    { createReadStream, filename }: FileUpload,
+  ) {
+    await new Promise(async (resolve, reject) =>
+      createReadStream()
+        .pipe(createWriteStream(`./uploads/profileimages`))
+        .on('finish', () => resolve(true))
+        .on('error', () => reject(false)),
+    );
+    const avatar = `http://${process.env.HOST}:${process.env.PORT}/users/profile-image/${filename}`;
+
+    return {
+      imagePath: '',
+    };
+  }
   @Get('profile-image/:imagename')
   async findProfileImage(
     @Param('imagename') imageName: string,
