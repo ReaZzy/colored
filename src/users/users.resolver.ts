@@ -1,21 +1,7 @@
-import {
-  Get,
-  HttpStatus,
-  Param,
-  Post,
-  Req,
-  Res,
-  UploadedFile,
-  UseGuards,
-  UseInterceptors,
-} from '@nestjs/common';
-import { Response, Request } from 'express';
+import { HttpStatus, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { Users } from './users.entity';
-import { Observable, of } from 'rxjs';
-import { FileInterceptor } from '@nestjs/platform-express';
 import { v4 as uuidv4 } from 'uuid';
-import { diskStorage } from 'multer';
 import { join } from 'path';
 import {
   Args,
@@ -34,7 +20,7 @@ import { createWriteStream } from 'fs';
 @ObjectType()
 class Avatar {
   @Field()
-  imagePath: string;
+  avatar: string;
 }
 
 @UseGuards(GqgAuthGuard)
@@ -59,54 +45,35 @@ export class UsersResolver {
     });
   }
 
-  // @Post('upload')
-  // @UseInterceptors(
-  //   FileInterceptor('file', {
-  //     storage: diskStorage({
-  //       destination: './uploads/profileimages',
-  //       filename: (req, file, cb) => {
-  //         const filename =
-  //           path.parse(file.originalname).name.replace(/\s/g, '') + uuidv4();
-  //         const extension = path.parse(file.originalname).ext;
-  //         cb(null, `${filename}${extension}`);
-  //       },
-  //     }),
-  //   }),
-  // )
-  // async uploadAvatar(
-  //   @UploadedFile() file: Express.Multer.File,
-  //   @Req() req: Request,
-  // ): Promise<Observable<any>> {
-  //   const avatar = `http://${process.env.HOST}:${process.env.PORT}/users/profile-image/${file.filename}`;
-  //   await this.usersService.updateAvatar({ id: req.user.id, file: avatar });
-  //   return of({
-  //     imagePath: avatar,
-  //   });
-  // }
-
   @Mutation(() => Avatar)
   async uploadAvatar(
+    @Context() ctx: any,
     @Args({ name: 'file', type: () => GraphQLUpload })
     { createReadStream, filename }: FileUpload,
   ) {
+    const fileExt = path.parse(filename).ext;
+    const imagePath = `${uuidv4()}${fileExt}`;
+
     await new Promise(async (resolve, reject) =>
       createReadStream()
-        .pipe(createWriteStream(`./uploads/profileimages`))
+        .pipe(createWriteStream(`./uploads/profileimages/${imagePath}`))
         .on('finish', () => resolve(true))
         .on('error', () => reject(false)),
     );
-    const avatar = `http://${process.env.HOST}:${process.env.PORT}/users/profile-image/${filename}`;
-
-    return {
-      imagePath: '',
-    };
+    const avatar = `http://${process.env.HOST}:${process.env.PORT}/users/profile-image/${imagePath}`;
+    await this.usersService.updateAvatar({
+      id: ctx.req.user.id,
+      file: avatar,
+    });
+    return { avatar };
   }
-  @Get('profile-image/:imagename')
-  async findProfileImage(
-    @Param('imagename') imageName: string,
-    @Res() res: Response,
+
+  @Query(() => GraphQLUpload)
+  async getProfileImage(
+    @Args('imagename') imageName: string,
+    @Context() ctx: any,
   ): Promise<void> {
-    return res.sendFile(
+    return ctx.res.sendFile(
       join(process.cwd(), `uploads/profileimages/${imageName}`),
     );
   }

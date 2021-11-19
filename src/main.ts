@@ -3,12 +3,14 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import * as cookieParser from 'cookie-parser';
 import * as passport from 'passport';
+import { graphqlUploadExpress } from 'graphql-upload';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
   app.enableCors({ credentials: true, origin: 'http://localhost:3000' });
   app.use(cookieParser());
+  app.use(graphqlUploadExpress());
   app.use(passport.initialize());
 
   passport.serializeUser(function (user, done) {
