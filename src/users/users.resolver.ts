@@ -1,4 +1,11 @@
-import { HttpStatus, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpStatus,
+  Param,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { Users } from './users.entity';
 import { v4 as uuidv4 } from 'uuid';
@@ -16,6 +23,8 @@ import path = require('path');
 import { GqgAuthGuard } from 'src/guards/gql-auth.guard';
 import { FileUpload, GraphQLUpload } from 'graphql-upload';
 import { createWriteStream } from 'fs';
+import { Response } from 'express';
+import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 
 @ObjectType()
 class Avatar {
@@ -23,16 +32,18 @@ class Avatar {
   avatar: string;
 }
 
-@UseGuards(GqgAuthGuard)
+@Controller('users')
 @Resolver()
 export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
 
+  @UseGuards(GqgAuthGuard)
   @Query(() => [Users])
   async getAll(): Promise<Users[]> {
     return this.usersService.getAll();
   }
 
+  @UseGuards(GqgAuthGuard)
   @Query(() => Users, { nullable: true })
   async getUser(
     @Args('find') find: string,
@@ -45,6 +56,7 @@ export class UsersResolver {
     });
   }
 
+  @UseGuards(GqgAuthGuard)
   @Mutation(() => Avatar)
   async uploadAvatar(
     @Context() ctx: any,
@@ -68,12 +80,13 @@ export class UsersResolver {
     return { avatar };
   }
 
-  @Query(() => GraphQLUpload)
-  async getProfileImage(
-    @Args('imagename') imageName: string,
-    @Context() ctx: any,
+  @UseGuards(JwtAuthGuard)
+  @Get('profile-image/:imageName')
+  async getImage(
+    @Param('imageName') imageName: string,
+    @Res() res: Response,
   ): Promise<void> {
-    return ctx.res.sendFile(
+    return res.sendFile(
       join(process.cwd(), `uploads/profileimages/${imageName}`),
     );
   }
