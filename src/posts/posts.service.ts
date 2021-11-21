@@ -5,7 +5,6 @@ import { Repository } from 'typeorm';
 import { PostDataDto } from './dto/post-data.dto';
 import { PostIdDto } from './dto/post-id.dto';
 import { Users } from '../users/users.entity';
-import { PostPageDto } from './dto/post-page.dto';
 
 @Injectable()
 export class PostsService {
@@ -14,9 +13,10 @@ export class PostsService {
     private readonly postsRepository: Repository<Posts>,
   ) {}
 
-  async getAll(page?: PostPageDto): Promise<{ posts: Posts[]; total: number }> {
+  async getAll(page?: number): Promise<{ posts: Posts[]; total: number }> {
+    if (page < 1) page = 1;
     const take = 10;
-    const skip = (page.page - 1) * take;
+    const skip = (page - 1) * take;
     const [result, total] = await this.postsRepository
       .createQueryBuilder('posts')
       .leftJoin('posts.comments', 'comments')
@@ -61,10 +61,10 @@ export class PostsService {
       .getOne();
   }
 
-  async like(postId: PostIdDto, userId: Users): Promise<Posts> {
+  async like(postId: string, userId: Users): Promise<Posts> {
     const post = await this.postsRepository.findOne({
       where: {
-        id: postId.id,
+        id: postId,
       },
       relations: ['likes'],
     });
@@ -72,16 +72,16 @@ export class PostsService {
     return this.postsRepository.save(post);
   }
 
-  async getById(postId: PostIdDto): Promise<Posts | undefined> {
+  async getById(postId: string): Promise<Posts | undefined> {
     return this.postsRepository.findOneOrFail({
       where: {
-        id: postId.id,
+        id: postId,
       },
       relations: ['user', 'likes'],
     });
   }
 
-  async unLike(postId: PostIdDto, userId: Users): Promise<Posts> {
+  async unLike(postId: string, userId: Users): Promise<Posts> {
     const post = await this.postsRepository.findOne(postId, {
       relations: ['likes'],
     });

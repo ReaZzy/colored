@@ -12,6 +12,7 @@ import { IsEmail, Length } from 'class-validator';
 import { hash } from 'bcryptjs';
 import Posts from '../posts/posts.entity';
 import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Exclude } from 'class-transformer';
 
 @ObjectType()
 @Entity('Users')
@@ -39,6 +40,7 @@ export class Users extends BaseEntity {
   login: string;
 
   @Field(() => String)
+  @Exclude()
   @Column('varchar', { select: false })
   password: string;
 

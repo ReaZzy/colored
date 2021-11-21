@@ -46,6 +46,7 @@ type Posts {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 type PostReturnDto {
   posts: [Posts!]!
   total: Float!
@@ -66,6 +67,13 @@ type LoginDto {
 type Login {
 >>>>>>> 9d1831b... feat🔨: add auth graphql
 =======
+=======
+type PostReturnDto {
+  posts: [Posts!]!
+  total: Float!
+}
+
+>>>>>>> c22806b... refactor🔃: posts to graphql
 type LoginDto {
 >>>>>>> 18db429... refactor⚒: logout and getuser graphql
   access_token: String!
@@ -149,6 +157,8 @@ type Subscription {
 =======
 >>>>>>> 614316a... refactor🔃: profile to graphql
 type Query {
+  getAllPosts(page: Float!): PostReturnDto!
+  getPostById(postId: ID!): Posts!
   getAll: [Users!]!
 <<<<<<< HEAD
 >>>>>>> a6d8cfa... refactor⚒: add graphql
@@ -169,10 +179,19 @@ type Query {
 }
 
 type Mutation {
+  createPost(post: PostDataDto!): Posts!
+  like(postId: ID!): Posts!
+  unLike(postId: ID!): Posts!
   uploadAvatar(file: Upload!): Avatar!
   login(password: String!, find: String!): LoginDto!
   logout: Boolean!
   register(userData: UsersDataDto!): LoginDto!
+}
+
+input PostDataDto {
+  content: String!
+  color: String!
+  userId: String
 }
 
 """The `Upload` scalar type represents a file upload."""
