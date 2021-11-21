@@ -45,6 +45,7 @@ type Posts {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 type PostReturnDto {
   posts: [Posts!]!
   total: Float!
@@ -58,6 +59,8 @@ type Avatar {
 >>>>>>> 697f54b... fix🛠: profile uploads
 }
 
+=======
+>>>>>>> 614316a... refactor🔃: profile to graphql
 type LoginDto {
 =======
 type Login {
@@ -70,10 +73,14 @@ type LoginDto {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 614316a... refactor🔃: profile to graphql
 type Avatar {
   avatar: String!
 }
 
+<<<<<<< HEAD
 type commentsOutput {
   comments: [Comments!]!
   total: Int!
@@ -139,6 +146,8 @@ type Subscription {
 =======
 =======
 >>>>>>> 9d1831b... feat🔨: add auth graphql
+=======
+>>>>>>> 614316a... refactor🔃: profile to graphql
 type Query {
   getAll: [Users!]!
 <<<<<<< HEAD
@@ -147,12 +156,16 @@ type Query {
   getUser(find: String!): Users
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 18db429... refactor⚒: logout and getuser graphql
 =======
   getProfileImage(imagename: String!): Upload!
 >>>>>>> 697f54b... fix🛠: profile uploads
 =======
 >>>>>>> 98415e6... fix🛠: get image request
+=======
+  getProfile(id: ID): Users!
+>>>>>>> 614316a... refactor🔃: profile to graphql
 }
 
 type Mutation {

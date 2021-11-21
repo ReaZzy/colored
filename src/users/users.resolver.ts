@@ -10,27 +10,15 @@ import { UsersService } from './users.service';
 import { Users } from './users.entity';
 import { v4 as uuidv4 } from 'uuid';
 import { join } from 'path';
-import {
-  Args,
-  Context,
-  Mutation,
-  Query,
-  Resolver,
-  ObjectType,
-  Field,
-} from '@nestjs/graphql';
+import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import path = require('path');
 import { GqgAuthGuard } from 'src/guards/gql-auth.guard';
 import { FileUpload, GraphQLUpload } from 'graphql-upload';
 import { createWriteStream } from 'fs';
 import { Response } from 'express';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
-
-@ObjectType()
-class Avatar {
-  @Field()
-  avatar: string;
-}
+import { CurrentUser } from '../auth/auth.resolver';
+import { Avatar } from './dto/user-avatar.dto';
 
 @Controller('users')
 @Resolver()
@@ -59,7 +47,7 @@ export class UsersResolver {
   @UseGuards(GqgAuthGuard)
   @Mutation(() => Avatar)
   async uploadAvatar(
-    @Context() ctx: any,
+    @CurrentUser() user: Users,
     @Args({ name: 'file', type: () => GraphQLUpload })
     { createReadStream, filename }: FileUpload,
   ) {
@@ -74,7 +62,7 @@ export class UsersResolver {
     );
     const avatar = `http://${process.env.HOST}:${process.env.PORT}/users/profile-image/${imagePath}`;
     await this.usersService.updateAvatar({
-      id: ctx.req.user.id,
+      id: user.id,
       file: avatar,
     });
     return { avatar };
