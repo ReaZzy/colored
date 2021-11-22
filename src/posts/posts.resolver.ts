@@ -1,20 +1,7 @@
-import {
-  Body,
-  Delete,
-  Get,
-  HttpStatus,
-  Param,
-  Post,
-  Put,
-  Req,
-  Res,
-  UseGuards,
-} from '@nestjs/common';
-import { Request, Response } from 'express';
+import { UseGuards } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import Posts from './posts.entity';
 import { PostDataDto } from './dto/post-data.dto';
-import { PostIdDto } from './dto/post-id.dto';
 import { GqgAuthGuard } from 'src/guards/gql-auth.guard';
 import { Args, Query, Resolver, Mutation, ID } from '@nestjs/graphql';
 import { PostReturnDto } from './dto/post-return.dto';
