@@ -14,17 +14,18 @@ export class CommentsService {
   ) {}
 
   async getAll(
-    page: PostPageDto,
-    postId: PostIdDto,
+    page: number,
+    postId: string,
   ): Promise<{ comments: Comments[]; total: number }> {
+    if (page < 1) page = 1;
     const take = 2;
-    const skip = (page.page - 1) * take;
+    const skip = (page - 1) * take;
     const [result, total] = await this.commentsRepository.findAndCount({
       take: take,
       skip: skip || 0,
       relations: ['replies'],
       where: {
-        postId: postId.id,
+        postId: postId,
         commentsId: null,
       },
     });

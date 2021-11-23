@@ -89,11 +89,15 @@ type Avatar {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 6b6a020... refactor🔃: comments to graphql
 type commentsOutput {
   comments: [Comments!]!
   total: Int!
 }
 
+<<<<<<< HEAD
 type Query {
   getAllPosts(page: Float!): PostReturnDto!
   getPostById(postId: ID!): Posts!
@@ -163,6 +167,12 @@ type Query {
 <<<<<<< HEAD
 >>>>>>> a6d8cfa... refactor⚒: add graphql
 =======
+=======
+type Query {
+  getAllPosts(page: Float!): PostReturnDto!
+  getPostById(postId: ID!): Posts!
+  getAll(postId: String!, page: Float!): commentsOutput!
+>>>>>>> 6b6a020... refactor🔃: comments to graphql
   getUser(find: String!): Users
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -186,6 +196,7 @@ type Mutation {
   login(password: String!, find: String!): LoginDto!
   logout: Boolean!
   register(userData: UsersDataDto!): LoginDto!
+  create(commentsData: CommentsDataDto!, postId: ID!): Comments!
 }
 
 input PostDataDto {
@@ -201,4 +212,11 @@ input UsersDataDto {
   email: String!
   login: String!
   password: String!
+}
+
+input CommentsDataDto {
+  content: String!
+  repliedTo: String
+  postId: String
+  userId: String
 }

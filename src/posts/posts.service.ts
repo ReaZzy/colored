@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import Posts from './posts.entity';
 import { Repository } from 'typeorm';
 import { PostDataDto } from './dto/post-data.dto';
-import { PostIdDto } from './dto/post-id.dto';
 import { Users } from '../users/users.entity';
 
 @Injectable()
