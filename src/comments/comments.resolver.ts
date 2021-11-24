@@ -10,12 +10,9 @@ import {
   Mutation,
   ID,
 } from '@nestjs/graphql';
-import { Request } from 'express';
 import { CommentsService } from './comments.service';
 import { Comments } from './comments.entity';
 import { CommentsDataDto } from './dto/comments-data.dto';
-import { PostIdDto } from '../posts/dto/post-id.dto';
-import { PostPageDto } from '../posts/dto/post-page.dto';
 import { CurrentUser } from '../auth/auth.resolver';
 import { Users } from 'src/users/users.entity';
 
