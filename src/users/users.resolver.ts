@@ -12,6 +12,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { join } from 'path';
 import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import path = require('path');
+import fs = require('fs');
 import { GqgAuthGuard } from 'src/guards/gql-auth.guard';
 import { FileUpload, GraphQLUpload } from 'graphql-upload';
 import { createWriteStream } from 'fs';
@@ -51,6 +52,7 @@ export class UsersResolver {
     @Args({ name: 'file', type: () => GraphQLUpload })
     { createReadStream, filename }: FileUpload,
   ) {
+    const prevAvatar = await this.usersService.getUser(user.login);
     const fileExt = path.parse(filename).ext;
     const imagePath = `${uuidv4()}${fileExt}`;
 
@@ -60,11 +62,20 @@ export class UsersResolver {
         .on('finish', () => resolve(true))
         .on('error', () => reject(false)),
     );
-    const avatar = `http://${process.env.HOST}:${process.env.PORT}/users/profile-image/${imagePath}`;
+    const avatar = `users/profile-image/${imagePath}`;
     await this.usersService.updateAvatar({
       id: user.id,
       file: avatar,
     });
+    try {
+      if (!prevAvatar.avatar.includes('profile-default'))
+        fs.unlinkSync(
+          `./uploads/profileimages/${prevAvatar.avatar.split('/')[2]}`,
+        );
+    } catch (e) {
+      console.log(e);
+    }
+
     return { avatar };
   }
 

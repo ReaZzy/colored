@@ -31,7 +31,7 @@ export class CommentsResolver {
   constructor(private readonly commentsService: CommentsService) {}
 
   @Query(() => commentsOutput)
-  async getAll(
+  async getAllComments(
     @Args('page') page: number,
     @Args('postId') postId: string,
   ): Promise<commentsOutput> {
@@ -39,7 +39,7 @@ export class CommentsResolver {
   }
 
   @Mutation(() => Comments)
-  async create(
+  async createComment(
     @Args({ name: 'postId', type: () => ID }) postId: string,
     @Args('commentsData') commentsData: CommentsDataDto,
     @CurrentUser() user: Users,

@@ -171,6 +171,7 @@ type Query {
 type Query {
   getAllPosts(page: Float!): PostReturnDto!
   getPostById(postId: ID!): Posts!
+<<<<<<< HEAD
   getAll(postId: String!, page: Float!): commentsOutput!
 >>>>>>> 6b6a020... refactor🔃: comments to graphql
   getUser(find: String!): Users
@@ -184,6 +185,11 @@ type Query {
 =======
 >>>>>>> 98415e6... fix🛠: get image request
 =======
+=======
+  getAll: [Users!]!
+  getUser(find: String!): Users
+  getAllComments(postId: String!, page: Float!): commentsOutput!
+>>>>>>> 7916a72... feat🔨: delete old avatar on change
   getProfile(id: ID): Users!
 >>>>>>> 614316a... refactor🔃: profile to graphql
 }
@@ -196,7 +202,7 @@ type Mutation {
   login(password: String!, find: String!): LoginDto!
   logout: Boolean!
   register(userData: UsersDataDto!): LoginDto!
-  create(commentsData: CommentsDataDto!, postId: ID!): Comments!
+  createComment(commentsData: CommentsDataDto!, postId: ID!): Comments!
 }
 
 input PostDataDto {
