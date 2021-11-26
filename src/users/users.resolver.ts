@@ -20,6 +20,7 @@ import { Response } from 'express';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { CurrentUser } from '../auth/auth.resolver';
 import { Avatar } from './dto/user-avatar.dto';
+import { UserUpdateDto } from './dto/user-update.dto';
 
 @Controller('users')
 @Resolver()
@@ -43,6 +44,16 @@ export class UsersResolver {
     return ctx.res.status(HttpStatus.NOT_FOUND).send({
       message: 'User with such email or login doesn`t exists',
     });
+  }
+
+  @UseGuards(GqgAuthGuard)
+  @Mutation(() => Users)
+  async updateProfile(
+    @CurrentUser() user: Users,
+    @Args({ name: 'data', type: () => UserUpdateDto }) data: UserUpdateDto,
+  ) {
+    await console.log(await this.usersService.updateProfile(user, data));
+    return this.usersService.updateProfile(user, data);
   }
 
   @UseGuards(GqgAuthGuard)
