@@ -7,6 +7,7 @@ import { Args, Query, Resolver, Mutation, ID } from '@nestjs/graphql';
 import { PostReturnDto } from './dto/post-return.dto';
 import { CurrentUser } from '../auth/auth.resolver';
 import { Users } from '../users/users.entity';
+import { PostUpdateDto } from './dto/post-update.dto';
 
 @UseGuards(GqgAuthGuard)
 @Resolver()
@@ -35,6 +36,14 @@ export class PostsResolver {
   ): Promise<Posts> {
     post.userId = user.id;
     return this.postsService.create(post);
+  }
+  @Mutation(() => Posts)
+  async updatePost(
+    @Args({ name: 'postId', type: () => ID }) postId: string,
+    @Args({ name: 'postData', type: () => PostUpdateDto })
+    postData: PostUpdateDto,
+  ): Promise<Posts> {
+    return this.postsService.update(postId, postData);
   }
 
   @Mutation(() => Posts)

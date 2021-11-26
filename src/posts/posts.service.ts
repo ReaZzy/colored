@@ -4,6 +4,7 @@ import Posts from './posts.entity';
 import { Repository } from 'typeorm';
 import { PostDataDto } from './dto/post-data.dto';
 import { Users } from '../users/users.entity';
+import { PostUpdateDto } from './dto/post-update.dto';
 
 @Injectable()
 export class PostsService {
@@ -45,6 +46,14 @@ export class PostsService {
       posts: result,
       total,
     };
+  }
+  async update(postId: string, postData: PostUpdateDto): Promise<Posts> {
+    const post = await this.postsRepository.findOne({
+      where: {
+        id: postId,
+      },
+    });
+    return this.postsRepository.save({ ...post, ...postData, id: post.id });
   }
 
   async create(postData: PostDataDto): Promise<Posts> {
