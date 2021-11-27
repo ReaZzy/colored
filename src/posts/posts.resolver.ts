@@ -42,8 +42,9 @@ export class PostsResolver {
     @Args({ name: 'postId', type: () => ID }) postId: string,
     @Args({ name: 'postData', type: () => PostUpdateDto })
     postData: PostUpdateDto,
+    @CurrentUser() user: Users,
   ): Promise<Posts> {
-    return this.postsService.update(postId, postData);
+    return this.postsService.update(postId, postData, user.id);
   }
 
   @Mutation(() => Posts)

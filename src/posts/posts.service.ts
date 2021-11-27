@@ -47,12 +47,17 @@ export class PostsService {
       total,
     };
   }
-  async update(postId: string, postData: PostUpdateDto): Promise<Posts> {
+  async update(
+    postId: string,
+    postData: PostUpdateDto,
+    userId: string,
+  ): Promise<Posts | null> {
     const post = await this.postsRepository.findOne({
       where: {
         id: postId,
       },
     });
+    if (post.user.id !== userId) return null;
     return this.postsRepository.save({ ...post, ...postData, id: post.id });
   }
 
