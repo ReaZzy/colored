@@ -1,6 +1,5 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
-import { GraphQLLocalStrategy } from 'graphql-passport';
 import { AuthService } from './auth.service';
 import { Users } from '../users/users.entity';
 import { Strategy } from 'passport-local';
