@@ -2,7 +2,7 @@ import { reducer } from './reducers/rootReducer';
 import { useMemo } from 'react';
 import { configureStore } from '@reduxjs/toolkit';
 
-export let store: any;
+let store: any;
 
 const makeStore: any = (preloadedState = {}) =>
   configureStore({
@@ -19,12 +19,11 @@ export const initializeStore = (preloadedState?: any) => {
     });
     store = undefined;
   }
-  if (!store) {
-    store = _store;
-  }
 
+  if (!store) store = _store;
   return _store;
 };
+
 export function useStore(initialState?: any) {
   const store = useMemo(() => initializeStore(initialState), [initialState]);
   return store;

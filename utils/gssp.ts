@@ -1,12 +1,7 @@
 import Cookies from 'cookies';
 import { GetServerSideProps } from 'next';
 import { user } from '../store/reducers/auth/thunks';
-import {
-  initializeStore,
-  AppStore,
-  AppDispatch,
-  store as _store,
-} from '../store/store';
+import { initializeStore, AppStore, AppDispatch } from '../store/store';
 import { setJwtToken } from './setJwtToken';
 
 type IGssp = (
@@ -18,7 +13,7 @@ type IGssp = (
 export const createGssp =
   (gssp: IGssp, needRedirect = true, checkAuth = true): GetServerSideProps =>
   async (ctx: any): Promise<any> => {
-    const store = _store ?? initializeStore();
+    const store = initializeStore();
     const { dispatch } = store;
     if (checkAuth) {
       const cookies = new Cookies(ctx.req, ctx.res);

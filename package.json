@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@apollo/client": "^3.5.5",
     "@react-icons/all-files": "^4.1.0",
     "@reduxjs/toolkit": "^1.6.2",
     "axios": "^0.21.1",
@@ -16,6 +17,7 @@
     "cookies": "^0.8.0",
     "emoji-mart": "^3.0.1",
     "formik": "^2.2.9",
+    "graphql": "^16.0.1",
     "js-cookie": "^3.0.1",
     "jsonwebtoken": "^8.5.1",
     "next": "11.0.1",
@@ -35,6 +37,7 @@
     "@types/color": "^3.0.2",
     "@types/cookies": "^0.7.7",
     "@types/emoji-mart": "^3.0.6",
+    "@types/graphql": "^14.5.0",
     "@types/js-cookie": "^3.0.0",
     "@types/jsonwebtoken": "^8.5.5",
     "@types/react": "17.0.14",
