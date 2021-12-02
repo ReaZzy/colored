@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { ApolloProvider } from '@apollo/client';
 import '../styles/index.css';
+import { ApolloProvider } from '@apollo/client';
+import { Provider } from 'react-redux';
+import { Router } from 'next/router';
 import { useStore } from '../store/store';
+import { useApollo } from '../apollo/client';
 import { AppProps } from 'next/app';
 import Layout from '../componets/layout/Layout';
 import Modal from 'react-modal';
-import { Router } from 'next/router';
 import Preloader from '../componets/preloader/Preloader';
-import { Provider } from 'react-redux';
 import { Meta } from '../componets/meta/Meta';
-import { useApollo } from '../apollo/client';
 
 Modal.setAppElement('#__next');
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {

@@ -1,11 +1,11 @@
-import { NextPage } from 'next';
-import Cookies from 'js-cookie';
-import router from 'next/router';
 import React from 'react';
+import { NextPage } from 'next';
+import router from 'next/router';
+import Cookies from 'js-cookie';
+import { Meta } from '../componets/meta/Meta';
 import { useAppDispatch } from '../hooks/redux';
 import { user } from '../store/reducers/auth/thunks';
 import { setJwtToken } from '../utils/setJwtToken';
-import { Meta } from '../componets/meta/Meta';
 
 const Custom404: NextPage = () => {
   const dispatch = useAppDispatch();

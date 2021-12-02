@@ -1,9 +1,9 @@
 import React from 'react';
 import s from './post.module.css';
-import { getPost } from '../../store/reducers/post/thunks';
+import { createGssp } from '../../utils/gssp';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/reducers/rootReducer';
-import { createGssp } from '../../utils/gssp';
+import { getPost } from '../../store/reducers/post/thunks';
 import Post from '../../componets/post/Post';
 import { Back } from '../../componets/back/Back';
 

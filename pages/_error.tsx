@@ -1,6 +1,6 @@
+import React from 'react';
 import Error from 'next/error';
 import { GetServerSideProps, NextPage } from 'next';
-import React from 'react';
 import { Meta } from '../componets/meta/Meta';
 
 const ErrorPage: NextPage<any> = ({ statusCode }) => {

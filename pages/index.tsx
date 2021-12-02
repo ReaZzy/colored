@@ -1,13 +1,13 @@
 import React from 'react';
+import s from './index.module.css';
 import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
-import s from './index.module.css';
+import gql from 'graphql-tag';
+import { Meta } from '../componets/meta/Meta';
+import { addApolloState, initializeApollo } from '../apollo/client';
 import { RootState } from '../store/reducers/rootReducer';
 import { getPosts } from '../store/reducers/post/thunks';
 import { createGssp } from '../utils/gssp';
-import { Meta } from '../componets/meta/Meta';
-import { addApolloState, initializeApollo } from '../apollo/client';
-import gql from 'graphql-tag';
 
 const WhatsNew = dynamic(() => import('../componets/whatsNew/WhatsNew'));
 const Posts = dynamic(() => import('../componets/posts/Posts'));

@@ -1,3 +1,4 @@
+import React from 'react';
 import Login from '../../componets/login/Login';
 import { createGssp } from '../../utils/gssp';
 
