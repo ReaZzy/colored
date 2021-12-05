@@ -27,6 +27,6 @@ and can't imagine their life without they 😊
 | TypeScript  | Docker     |
 | Redux       | Typeorm    |
 | Redux-thunk | Postgres   |
-| Axios       | Jwt        |
+| Apollo      | JWT        |
 | HTML        |            |
 | CSS         |            |
