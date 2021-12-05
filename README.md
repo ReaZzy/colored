@@ -28,9 +28,13 @@ and can't imagine their life without they 😊
 | Redux       | Typeorm    |
 | Redux-thunk | Postgres   |
 <<<<<<< HEAD
+<<<<<<< HEAD
 | Apollo      | JWT        |
 =======
 | Axios       | Jwt        |
 >>>>>>> ee42783... docs📄: update readme
+=======
+| Apollo      | JWT        |
+>>>>>>> 4192f20... docs📄: update README.md
 | HTML        |            |
 | CSS         |            |
