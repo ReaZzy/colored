@@ -15,7 +15,7 @@ const Custom404: NextPage = () => {
 
     valid && dispatch(user());
     if (!valid) router.push('/login');
-  }, []);
+  }, [dispatch]);
 
   return (
     <div>
