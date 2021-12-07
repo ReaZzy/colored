@@ -1,8 +1,8 @@
 import { reducer } from './reducers/rootReducer';
 import { useMemo } from 'react';
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, Store } from '@reduxjs/toolkit';
 
-let store: any;
+let store: Store | null | undefined;
 
 const makeStore: any = (preloadedState = {}) =>
   configureStore({
@@ -10,7 +10,7 @@ const makeStore: any = (preloadedState = {}) =>
     preloadedState,
   });
 
-export const initializeStore = (preloadedState?: any) => {
+export const initializeStore = (preloadedState?: AppStore) => {
   let _store = store ?? makeStore(preloadedState);
   if (preloadedState && store) {
     _store = makeStore({
