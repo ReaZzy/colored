@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
 import { login } from '../../store/reducers/auth/thunks';
@@ -8,6 +8,8 @@ import { useAppDispatch } from '../../hooks/redux';
 import { Meta } from '../meta/Meta';
 import { useMutation } from '@apollo/client';
 import gql from 'graphql-tag';
+import { setLoginError, setUser } from '../../store/reducers/auth/reducer';
+import { setJwtToken } from '../../utils/setJwtToken';
 
 const validationSchema = yup.object({
   find: yup.string().min(6).max(64).required(),
@@ -18,6 +20,11 @@ const loginMutation = gql`
   mutation login($find: String!, $password: String!) {
     login(find: $find, password: $password) {
       access_token
+      user {
+        id
+        login
+        avatar
+      }
     }
   }
 `;
@@ -25,12 +32,14 @@ const LoginForm = React.memo(() => {
   const dispatch = useAppDispatch();
   const [mutateFunction, { data, loading, error }] = useMutation(loginMutation);
   const handleSubmit = async (values: { find: string; password: string }) => {
-    //await dispatch(await login(values.find, values.password));
-
     await mutateFunction({
       variables: { find: values.find, password: values.password },
     });
+    dispatch(setJwtToken(data.login.access_token));
+    dispatch(setUser(data.login.user!));
+    dispatch(setLoginError(null));
   };
+
   return (
     <Formik
       onSubmit={handleSubmit}
