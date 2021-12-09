@@ -11,10 +11,10 @@ import { BiColorFill } from '@react-icons/all-files/bi/BiColorFill';
 import ColoredButton from '../coloredButton/ColoredButton';
 import { DebounceInput } from 'react-debounce-input';
 import { instance } from '../../store/reducers/api';
-import { getRandomColor } from '../../utils/getRandomColor';
 import { setPost } from '../../store/reducers/post/reducer';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import Avatar from '../avatar/Avatar';
+import { useRandomColor } from '../../hooks/useRandomColor';
 
 interface IProps {}
 const WhatsNew: React.FC<IProps> = React.memo(() => {
@@ -24,6 +24,7 @@ const WhatsNew: React.FC<IProps> = React.memo(() => {
   const dispatch = useAppDispatch();
   const login = useAppSelector((state) => state.auth.user?.login);
   const avatar = useAppSelector((state) => state.auth.user?.avatar);
+  const randomColor = useRandomColor();
   const handleChangeColor = (e: ChangeEvent<HTMLInputElement>) => {
     setColor(e.target.value);
   };
@@ -90,7 +91,7 @@ const WhatsNew: React.FC<IProps> = React.memo(() => {
         {showEmoji && (
           <Picker
             style={{ width: '100%', marginTop: '10px' }}
-            color={getRandomColor()}
+            color={randomColor}
             native
             emoji={'point_up_2'}
             onSelect={(emoji: any) => {

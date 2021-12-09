@@ -9,10 +9,10 @@ import { GoComment } from '@react-icons/all-files/go/GoComment';
 import Link from 'next/link';
 import { like, dislike } from '../../store/reducers/post/thunks';
 import ReactTooltip from 'react-tooltip';
-import { getRandomColor } from '../../utils/getRandomColor';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import Avatar from '../avatar/Avatar';
 import Owner from './owner/Owner';
+import { useRandomColor } from '../../hooks/useRandomColor';
 
 interface IProps {
   post: IPosts;
@@ -22,6 +22,7 @@ const Post: React.FC<IProps> = ({ post }) => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.user);
   const isLiked = post.likes?.some((u) => u.id === user?.id);
+  const randomColor = useRandomColor();
 
   const handleClick = async () => {
     !isLiked
@@ -64,7 +65,7 @@ const Post: React.FC<IProps> = ({ post }) => {
             type="light"
             effect={'solid'}
             className={s.tooltip}
-            backgroundColor={getRandomColor()}
+            backgroundColor={randomColor}
           >
             <div className={s.tooltip__body}>
               {post.likes.map((user) => {

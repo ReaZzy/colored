@@ -1,6 +1,6 @@
 import React, { ReactChild, ReactChildren, useState } from 'react';
-import { getRandomColor } from '../../utils/getRandomColor';
 import s from './coloredButton.module.css';
+import { useRandomColor } from '../../hooks/useRandomColor';
 
 interface IProps {
   children: ReactChild | ReactChildren;
@@ -12,6 +12,7 @@ interface IProps {
 
 const ColoredButton: React.FC<IProps> = React.memo(
   ({ children, height, width, ...props }) => {
+    const [color] = useRandomColor();
     const [style, setStyle] = useState({
       color: '',
     });
@@ -21,7 +22,7 @@ const ColoredButton: React.FC<IProps> = React.memo(
         onMouseEnter={() => {
           setStyle({
             ...style,
-            color: getRandomColor(),
+            color: color,
           });
         }}
         onMouseLeave={() => {
