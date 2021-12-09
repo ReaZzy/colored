@@ -22,7 +22,7 @@ const Post: React.FC<IProps> = ({ post }) => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.user);
   const isLiked = post.likes?.some((u) => u.id === user?.id);
-  const randomColor = useRandomColor();
+  const [randomColor] = useRandomColor();
 
   const handleClick = async () => {
     !isLiked

@@ -24,7 +24,7 @@ const WhatsNew: React.FC<IProps> = React.memo(() => {
   const dispatch = useAppDispatch();
   const login = useAppSelector((state) => state.auth.user?.login);
   const avatar = useAppSelector((state) => state.auth.user?.avatar);
-  const randomColor = useRandomColor();
+  const [randomColor] = useRandomColor();
   const handleChangeColor = (e: ChangeEvent<HTMLInputElement>) => {
     setColor(e.target.value);
   };
