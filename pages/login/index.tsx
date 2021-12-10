@@ -6,16 +6,12 @@ const Index = () => {
   return <Login />;
 };
 
-export const getServerSideProps = createGssp(
-  async (ctx, store, dispatch) => {
-    if (store.getState().auth.isAuth)
-      return { redirect: { destination: '/', permanent: false } };
+export const getServerSideProps = createGssp(async (ctx, store, dispatch) => {
+  if (store.getState().auth.isAuth)
+    return { redirect: { destination: '/', permanent: false } };
 
-    return { props: { initialReduxState: store.getState() } };
-  },
-  false,
-  true,
-);
+  return { props: { initialReduxState: store.getState() } };
+});
 
 Index.displayName = 'Login';
 export default Index;

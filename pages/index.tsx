@@ -6,13 +6,13 @@ import gql from 'graphql-tag';
 import { Meta } from '../componets/meta/Meta';
 import { addApolloState, initializeApollo } from '../apollo/client';
 import { RootState } from '../store/reducers/rootReducer';
-import { getPosts } from '../store/reducers/post/thunks';
 import { createGssp } from '../utils/gssp';
 
 const WhatsNew = dynamic(() => import('../componets/whatsNew/WhatsNew'));
 const Posts = dynamic(() => import('../componets/posts/Posts'));
 
-const Index: NextPage<RootState> = () => {
+const Index: NextPage<RootState> = ({ posts }) => {
+  console.log(posts);
   return (
     <div className={s.content}>
       <Meta />
@@ -29,23 +29,21 @@ const Index: NextPage<RootState> = () => {
 export const getServerSideProps = createGssp(async (ctx, store, dispatch) => {
   const apolloClient = initializeApollo();
   const query = gql`
-    query getAllPosts() {
-        getAllPosts(page:1) {
+    query getAllPosts {
+      getAllPosts(page: 1) {
+        posts {
           content
         }
+      }
     }
   `;
-
-  await apolloClient.query({
+  const abd = await apolloClient.query({
     query: query,
   });
 
   return addApolloState(apolloClient, {
-    props: {},
-    revalidate: 1,
+    props: { initialReduxState: store.getState(), posts: abd },
   });
-  await dispatch(await getPosts(1, true));
-  return { props: { initialReduxState: store.getState() }, revalidate: 1 };
 });
 
 export default Index;

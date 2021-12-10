@@ -10,6 +10,7 @@ import { useMutation } from '@apollo/client';
 import gql from 'graphql-tag';
 import { setLoginError, setUser } from '../../store/reducers/auth/reducer';
 import { setJwtToken } from '../../utils/setJwtToken';
+import { useRouter } from 'next/router';
 
 const validationSchema = yup.object({
   find: yup.string().min(6).max(64).required(),
@@ -31,13 +32,11 @@ const loginMutation = gql`
 const LoginForm = React.memo(() => {
   const dispatch = useAppDispatch();
   const [mutateFunction, { data, loading, error }] = useMutation(loginMutation);
+  const router = useRouter();
   const handleSubmit = async (values: { find: string; password: string }) => {
     await mutateFunction({
       variables: { find: values.find, password: values.password },
     });
-    dispatch(setJwtToken(data.login.access_token));
-    dispatch(setUser(data.login.user!));
-    dispatch(setLoginError(null));
   };
 
   return (
