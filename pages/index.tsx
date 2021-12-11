@@ -12,7 +12,6 @@ const WhatsNew = dynamic(() => import('../componets/whatsNew/WhatsNew'));
 const Posts = dynamic(() => import('../componets/posts/Posts'));
 
 const Index: NextPage<RootState> = ({ posts }) => {
-  console.log(posts);
   return (
     <div className={s.content}>
       <Meta />
@@ -27,7 +26,8 @@ const Index: NextPage<RootState> = ({ posts }) => {
 };
 
 export const getServerSideProps = createGssp(async (ctx, store, dispatch) => {
-  const apolloClient = initializeApollo();
+  const client = initializeApollo({ headers: ctx?.req?.headers });
+
   const query = gql`
     query getAllPosts {
       getAllPosts(page: 1) {
@@ -37,12 +37,12 @@ export const getServerSideProps = createGssp(async (ctx, store, dispatch) => {
       }
     }
   `;
-  const abd = await apolloClient.query({
-    query: query,
-  });
+  // const { data } = await client.query({
+  //   query: query,
+  // });
 
-  return addApolloState(apolloClient, {
-    props: { initialReduxState: store.getState(), posts: abd },
+  return addApolloState(client, {
+    props: { initialReduxState: store.getState() },
   });
 });
 
