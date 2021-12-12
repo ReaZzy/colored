@@ -28,7 +28,11 @@ export class AuthService {
     const candidate = await this.usersService.getUser(user.email);
     if (!candidate) return null;
     const { password, ...candidateData } = user;
-    const payload = { id: candidate.id, login: candidate.login };
+    const payload = {
+      id: candidate.id,
+      login: candidate.login,
+      avatar: candidate.avatar,
+    };
     return {
       access_token: this.jwtService.sign(payload),
       user: candidateData as Users,

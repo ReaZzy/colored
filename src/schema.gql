@@ -196,6 +196,7 @@ type Query {
 
 type Mutation {
   createPost(post: PostDataDto!): Posts!
+  updatePost(postData: PostUpdateDto!, postId: ID!): Posts!
   like(postId: ID!): Posts!
   unLike(postId: ID!): Posts!
   updateProfile(data: UserUpdateDto!): Users!
@@ -210,6 +211,11 @@ input PostDataDto {
   content: String!
   color: String!
   userId: String
+}
+
+input PostUpdateDto {
+  content: String!
+  color: String!
 }
 
 input UserUpdateDto {

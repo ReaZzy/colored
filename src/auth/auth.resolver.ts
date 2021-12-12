@@ -49,7 +49,7 @@ export class AuthResolver {
       return new UnauthorizedException();
     }
     ctx.res.cookie('auth', token.access_token, {
-      httpOnly: false,
+      httpOnly: true,
       maxAge: 86_400_000,
     });
     return token;
@@ -73,7 +73,7 @@ export class AuthResolver {
         await this.usersService.create(user),
       );
       ctx.res.cookie('auth', access_token, {
-        httpOnly: false,
+        httpOnly: true,
         maxAge: 86_400_000,
       });
       return { user, access_token };
