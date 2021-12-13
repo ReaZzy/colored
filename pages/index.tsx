@@ -40,6 +40,7 @@ export const getServerSideProps = createGssp(async (ctx, store, dispatch) => {
   // const { data } = await client.query({
   //   query: query,
   // });
+  console.log(ctx.req.user);
 
   return addApolloState(client, {
     props: { initialReduxState: store.getState() },

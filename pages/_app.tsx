@@ -27,7 +27,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   return (
     <ApolloProvider client={apolloClient}>
       <Provider store={store}>
-        <Meta title={pageProps.title} />
+        <Meta title={pageProps.title} image={pageProps.image} url={pageProps.url} description={pageProps.description}/>
         <Layout>
           {isLoading ? <Preloader /> : <Component {...pageProps} />}
         </Layout>
