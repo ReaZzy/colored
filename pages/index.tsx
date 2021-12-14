@@ -19,7 +19,7 @@ const Index: NextPage<RootState> = ({ posts }) => {
         <div className={s.center_block__whatsnew}>
           <WhatsNew />
         </div>
-        <Posts />
+        <Posts posts={posts} />
       </div>
     </div>
   );
@@ -33,17 +33,24 @@ export const getServerSideProps = createGssp(async (ctx, store, dispatch) => {
       getAllPosts(page: 1) {
         posts {
           content
+          color
+          createdDate
+          user {
+            avatar
+            login
+            createdDate
+          }
         }
+        total
       }
     }
   `;
-  // const { data } = await client.query({
-  //   query: query,
-  // });
-  console.log(ctx.req.user);
+  const { data } = await client.query({
+    query: query,
+  });
 
   return addApolloState(client, {
-    props: { initialReduxState: store.getState() },
+    props: { initialReduxState: store.getState(), posts: data },
   });
 });
 

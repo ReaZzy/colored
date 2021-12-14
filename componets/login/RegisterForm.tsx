@@ -5,7 +5,6 @@ import s from './login.module.css';
 import { register } from '../../store/reducers/auth/thunks';
 import { ValidatedInput } from '../validatedInput/ValidatedInput';
 import { useAppDispatch } from '../../hooks/redux';
-import { Meta } from '../meta/Meta';
 
 const validationSchemaRegistration = yup.object({
   email: yup.string().email().max(64).required(),

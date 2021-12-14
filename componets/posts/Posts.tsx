@@ -5,12 +5,12 @@ import { getPosts } from '../../store/reducers/post/thunks';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import SkeletonPreloader from '../skeletonPreloader/SkeletonPreloader';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+
 const Post = dynamic(() => import('../post/Post'));
 
-const Posts: React.FC<{}> = () => {
+const Posts: React.FC<{}> = ({ posts }) => {
   const dispatch = useAppDispatch();
   const [page, setPage] = useState<number>(1);
-  const { posts, total } = useAppSelector((state) => state.post);
 
   useEffect(() => {
     setPage(1);
@@ -18,16 +18,16 @@ const Posts: React.FC<{}> = () => {
   return (
     <InfiniteScroll
       className={s.center_block__posts}
-      dataLength={posts.length}
+      dataLength={posts.getAllPosts.posts.length}
       next={async () => {
         await setPage((prevState) => prevState + 1);
         await dispatch(await getPosts(page + 1));
       }}
-      hasMore={posts.length < total}
+      hasMore={posts.getAllPosts.posts.length < posts.getAllPosts.total}
       loader={<SkeletonPreloader rows={5} />}
       style={{ overflow: 'visible' }}
     >
-      {posts?.map((post) => (
+      {posts.getAllPosts.posts.map((post: any) => (
         <Post key={post.id} post={post} />
       ))}
     </InfiniteScroll>
