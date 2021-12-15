@@ -5,6 +5,8 @@ import s from './login.module.css';
 import { register } from '../../store/reducers/auth/thunks';
 import { ValidatedInput } from '../validatedInput/ValidatedInput';
 import { useAppDispatch } from '../../hooks/redux';
+import { gql, useMutation } from '@apollo/client';
+import { useRouter } from 'next/router';
 
 const validationSchemaRegistration = yup.object({
   email: yup.string().email().max(64).required(),
@@ -12,14 +14,36 @@ const validationSchemaRegistration = yup.object({
   password: yup.string().min(8).max(64).required(),
 });
 
+const registerMutation = gql`
+  mutation register($login: String!, $email: String!, $password: String!) {
+    register(login: $login, email: $email, password: $password) {
+      access_token
+      user {
+        id
+        login
+        avatar
+      }
+    }
+  }
+`;
+
 const RegisterForm = React.memo(() => {
-  const dispatch = useAppDispatch();
+  const router = useRouter();
+  const [mutateFunction, { data, loading, error }] =
+    useMutation(registerMutation);
   const handleRegistration = async (values: {
     login: string;
     email: string;
     password: string;
   }) => {
-    await dispatch(await register(values.login, values.email, values.password));
+    await mutateFunction({
+      variables: {
+        login: values.login,
+        email: values.email,
+        password: values.password,
+      },
+    });
+    await router.push('/');
   };
   return (
     <Formik
