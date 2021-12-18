@@ -46,7 +46,7 @@ const Post: React.FC<IProps> = ({ post }) => {
       <div className={s.post__main}>
         <div className={s.post__content}>
           {post.content}
-          <div className={s.post__images}></div>
+          <div className={s.post__images} />
         </div>
       </div>
       <div className={s.post__actions}>
