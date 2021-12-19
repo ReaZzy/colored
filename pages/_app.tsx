@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../styles/index.css';
-import { ApolloProvider, useQuery, gql } from '@apollo/client';
+import { ApolloProvider } from '@apollo/client';
 import { Provider } from 'react-redux';
 import { Router } from 'next/router';
 import { useStore } from '../store/store';

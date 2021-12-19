@@ -11,7 +11,7 @@ import { IPosts } from '../types/IPosts.types';
 const WhatsNew = dynamic(() => import('../componets/whatsNew/WhatsNew'));
 const Posts = dynamic(() => import('../componets/posts/Posts'));
 
-const Index: NextPage<any> = ({ posts }) => {
+const Index: NextPage<any> = () => {
   return (
     <div className={s.content}>
       <Meta />
@@ -20,7 +20,7 @@ const Index: NextPage<any> = ({ posts }) => {
           <WhatsNew />
         </div>
 
-        <Posts posts={posts} />
+        <Posts />
       </div>
     </div>
   );
@@ -28,32 +28,9 @@ const Index: NextPage<any> = ({ posts }) => {
 
 export const getServerSideProps = createGssp(
   async (ctx, store, client, dispatch) => {
-    const query = gql`
-      query getAllPosts {
-        getAllPosts(page: 1) {
-          posts {
-            content
-            color
-            createdDate
-            user {
-              avatar
-              login
-              createdDate
-            }
-          }
-          total
-        }
-      }
-    `;
-    type IGetAllPosts = { getAllPosts: { total: number; posts: IPosts } };
-    const { data } = await client!.query<IGetAllPosts>({
-      query: query,
-    });
-
     return addApolloState(client!, {
       props: {
         initialReduxState: store.getState(),
-        posts: data.getAllPosts,
       },
     });
   },

@@ -9,6 +9,7 @@ import { createUploadLink } from 'apollo-upload-client';
 import merge from 'deepmerge';
 import { IncomingHttpHeaders } from 'http';
 import fetch from 'isomorphic-unfetch';
+import { uniqBy } from 'lodash';
 import isEqual from 'lodash/isEqual';
 import type { AppProps } from 'next/app';
 import { useMemo } from 'react';
@@ -53,7 +54,26 @@ const createApolloClient = (headers: IncomingHttpHeaders | null = null) => {
         fetch: enhancedFetch,
       }),
     ]),
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache({
+      typePolicies: {
+        Query: {
+          fields: {
+            getAllPosts: {
+              keyArgs: [],
+              merge: (
+                existing = { __typename: 'PostReturnDto', posts: [], total: 0 },
+                incoming,
+              ) => {
+                return {
+                  posts: [...existing.posts, ...incoming.posts],
+                  total: incoming.total,
+                };
+              },
+            },
+          },
+        },
+      },
+    }),
   });
 };
 
