@@ -96,8 +96,20 @@ export class UsersResolver {
     @Param('imageName') imageName: string,
     @Res() res: Response,
   ): Promise<void> {
+    console.log(imageName);
     return res.sendFile(
       join(process.cwd(), `uploads/profileimages/${imageName}`),
+    );
+  }
+  @UseGuards(JwtAuthGuard)
+  @Get('profile-image/default/:imageName')
+  async getDefaultImage(
+    @Param('imageName') imageName: string,
+    @Res() res: Response,
+  ): Promise<void> {
+    console.log(imageName);
+    return res.sendFile(
+      join(process.cwd(), `uploads/profileimages/default/${imageName}`),
     );
   }
 }

@@ -12,7 +12,14 @@ node_modules/
 /node_modules
 
 # Uploads
-/uploads
+
+!uploads/
+
+uploads/*
+!uploads/profileimages/
+
+uploads/profileimages/*
+!uploads/profileimages/default/
 
 # Logs
 logs
