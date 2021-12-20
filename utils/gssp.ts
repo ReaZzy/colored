@@ -1,7 +1,7 @@
 import { GetServerSideProps } from 'next';
 import { initializeStore, AppStore, AppDispatch } from '../store/store';
 import { initializeApollo } from '../apollo/client';
-import { setUser } from '../store/reducers/auth/reducer';
+import { setIsAuth, setUser } from '../store/reducers/auth/reducer';
 import { ApolloClient, gql, NormalizedCacheObject } from '@apollo/client';
 
 type IGssp = (
@@ -30,5 +30,6 @@ export const createGssp =
     const { data } = await client.query({ query: getProfile });
     const { dispatch } = store;
     dispatch(setUser(data.getProfile));
+    dispatch(setIsAuth(true));
     return await gssp(ctx, store, client, dispatch);
   };

@@ -8,14 +8,24 @@ import ColoredButton from '../coloredButton/ColoredButton';
 import { logout } from '../../store/reducers/auth/thunks';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import Avatar from '../avatar/Avatar';
+import { useMutation, gql } from '@apollo/client';
+import router from 'next/router';
+import { setIsAuth } from '../../store/reducers/auth/reducer';
 
-interface IProps {}
+const logoutMutation = gql`
+  mutation logout {
+    logout
+  }
+`;
 
-const Navbar: React.FC<IProps> = React.memo(() => {
+const Navbar: React.FC = React.memo(() => {
   const dispatch = useAppDispatch();
+  const [logoutMutate] = useMutation(logoutMutation);
   const user = useAppSelector((state) => state.auth.user);
   const handleLogout = async () => {
-    await dispatch(await logout());
+    await logoutMutate();
+    await dispatch(setIsAuth(false));
+    await router.push('/login');
   };
 
   return (

@@ -12,6 +12,7 @@ const query = gql`
   query getAllPosts($page: Float!) {
     getAllPosts(page: $page) {
       posts {
+        id
         content
         color
         createdDate
