@@ -96,7 +96,6 @@ export class UsersResolver {
     @Param('imageName') imageName: string,
     @Res() res: Response,
   ): Promise<void> {
-    console.log(imageName);
     return res.sendFile(
       join(process.cwd(), `uploads/profileimages/${imageName}`),
     );
@@ -107,7 +106,6 @@ export class UsersResolver {
     @Param('imageName') imageName: string,
     @Res() res: Response,
   ): Promise<void> {
-    console.log(imageName);
     return res.sendFile(
       join(process.cwd(), `uploads/profileimages/default/${imageName}`),
     );

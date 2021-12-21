@@ -20,6 +20,7 @@ import {
 } from '@nestjs/graphql';
 import { LoginDto } from './dto/login.dto';
 import { GqgAuthGuard } from 'src/guards/gql-auth.guard';
+import { Void } from 'types/scalars/void';
 export { Request, Response } from 'express';
 
 export const CurrentUser = createParamDecorator(
@@ -56,7 +57,7 @@ export class AuthResolver {
   }
 
   @UseGuards(GqgAuthGuard)
-  @Mutation(() => Boolean)
+  @Mutation(() => Void)
   async logout(@Context() ctx: any) {
     ctx.res.clearCookie('auth');
     return ctx.res.status(HttpStatus.OK).send();

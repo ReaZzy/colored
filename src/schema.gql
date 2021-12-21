@@ -202,7 +202,7 @@ type Mutation {
   updateProfile(data: UserUpdateDto!): Users!
   uploadAvatar(file: Upload!): Avatar!
   login(password: String!, find: String!): LoginDto!
-  logout: Boolean!
+  logout: Void!
   register(userData: UsersDataDto!): LoginDto!
   createComment(commentsData: CommentsDataDto!, postId: ID!): Comments!
 }
@@ -226,6 +226,9 @@ input UserUpdateDto {
 
 """The `Upload` scalar type represents a file upload."""
 scalar Upload
+
+"""Represents NULL values"""
+scalar Void
 
 input UsersDataDto {
   email: String!
