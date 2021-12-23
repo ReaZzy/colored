@@ -5,7 +5,6 @@ import { IoChatboxEllipsesOutline } from '@react-icons/all-files/io5/IoChatboxEl
 import { IoSearchOutline } from '@react-icons/all-files/io5/IoSearchOutline';
 import { IoMdHeartEmpty } from '@react-icons/all-files/io/IoMdHeartEmpty';
 import ColoredButton from '../coloredButton/ColoredButton';
-import { logout } from '../../store/reducers/auth/thunks';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import Avatar from '../avatar/Avatar';
 import { useMutation, gql } from '@apollo/client';
@@ -20,8 +19,8 @@ const logoutMutation = gql`
 
 const Navbar: React.FC = React.memo(() => {
   const dispatch = useAppDispatch();
-  const [logoutMutate] = useMutation(logoutMutation);
   const user = useAppSelector((state) => state.auth.user);
+  const [logoutMutate] = useMutation(logoutMutation);
   const handleLogout = async () => {
     await logoutMutate();
     await dispatch(setIsAuth(false));

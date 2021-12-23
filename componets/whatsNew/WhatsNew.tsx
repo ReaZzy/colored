@@ -15,15 +15,31 @@ import { setPost } from '../../store/reducers/post/reducer';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import Avatar from '../avatar/Avatar';
 import { useRandomColor } from '../../hooks/useRandomColor';
+import { useMutation, gql } from '@apollo/client';
 
-interface IProps {}
-const WhatsNew: React.FC<IProps> = React.memo(() => {
+const CREATE_POST_MUTATION = gql`
+  mutation createPost($content: String!, $color: String!) {
+    createPost(post: { content: $content, color: $color }) {
+      id
+      color
+      createdDate
+      user {
+        id
+        login
+        avatar
+      }
+    }
+  }
+`;
+
+const WhatsNew: React.FC = React.memo(() => {
   const [text, setText] = useState('');
   const [color, setColor] = useState('#fff');
   const [showEmoji, setShowEmoji] = useState(false);
   const dispatch = useAppDispatch();
   const login = useAppSelector((state) => state.auth.user?.login);
   const avatar = useAppSelector((state) => state.auth.user?.avatar);
+  const [createPostMutation] = useMutation(CREATE_POST_MUTATION);
   const [randomColor] = useRandomColor();
   const handleChangeColor = (e: ChangeEvent<HTMLInputElement>) => {
     setColor(e.target.value);
@@ -32,8 +48,10 @@ const WhatsNew: React.FC<IProps> = React.memo(() => {
     setText(e.target.value);
   };
   const handlePost = async () => {
-    const res = await instance.post('/posts', { content: text, color });
-    await dispatch(setPost(res.data));
+    const res = await createPostMutation({
+      variables: { content: text, color },
+    });
+
     setText('');
     setColor('#fff');
   };
