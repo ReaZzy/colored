@@ -128,12 +128,16 @@
 =======
     "graphql": "^15.7.2",
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> a6d8cfa... refactor⚒: add graphql
 =======
     "graphql-passport": "^0.6.4",
 <<<<<<< HEAD
 >>>>>>> 9d1831b... feat🔨: add auth graphql
 =======
+=======
+    "graphql-subscriptions": "^2.0.0",
+>>>>>>> d1035d1... feat🔨: add subscriptions
     "graphql-upload": "^12.0.0",
 >>>>>>> 6d8e4fb... refactor🔃: upload avatar to graphql
     "passport": "^0.4.1",

@@ -15,11 +15,19 @@ import { join } from 'path';
     GraphQLModule.forRoot({
       debug: true,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      installSubscriptionHandlers: true,
       cors: {
         origin: 'http://localhost:3000',
         credentials: true,
       },
-      context: ({ req }) => ({ ...req }),
+      subscriptions: {
+        'subscriptions-transport-ws': {
+          onConnect: (context) => {
+            return { req: { headers: context } };
+          },
+        },
+      },
+      context: ({ req }) => ({ req }),
     }),
     TypeOrmModule.forRoot(connectionOptions),
     ConfigModule.forRoot(),

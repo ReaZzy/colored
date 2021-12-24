@@ -3,22 +3,32 @@ import { PostsService } from './posts.service';
 import Posts from './posts.entity';
 import { PostDataDto } from './dto/post-data.dto';
 import { GqgAuthGuard } from 'src/guards/gql-auth.guard';
-import { Args, Query, Resolver, Mutation, ID } from '@nestjs/graphql';
+import {
+  Args,
+  Query,
+  Resolver,
+  Mutation,
+  ID,
+  Subscription,
+} from '@nestjs/graphql';
 import { PostReturnDto } from './dto/post-return.dto';
 import { CurrentUser } from '../auth/auth.resolver';
 import { Users } from '../users/users.entity';
 import { PostUpdateDto } from './dto/post-update.dto';
+import { PubSub } from 'graphql-subscriptions';
 
 @UseGuards(GqgAuthGuard)
 @Resolver()
 export class PostsResolver {
-  constructor(private readonly postsService: PostsService) {}
-
-  @Query(() => PostReturnDto)
+  private pubSub: PubSub;
+  constructor(private readonly postsService: PostsService) {
+    this.pubSub = new PubSub();
+  }
+  @Subscription(() => PostReturnDto)
   async getAllPosts(
     @Args({ name: 'page', type: () => Number }) page: number,
   ): Promise<PostReturnDto> {
-    return this.postsService.getAll(page);
+    return this.pubSub.asyncIterator('getAllPosts') as any;
   }
 
   @Query(() => Posts)
@@ -35,7 +45,9 @@ export class PostsResolver {
     @CurrentUser() user: Users,
   ): Promise<Posts> {
     post.userId = user.id;
-    return this.postsService.create(post);
+    const postCreated = this.postsService.create(post);
+    await this.pubSub.publish('getAllPosts', { getAllPosts: post });
+    return postCreated;
   }
   @Mutation(() => Posts)
   async updatePost(

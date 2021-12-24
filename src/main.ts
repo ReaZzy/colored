@@ -21,6 +21,7 @@ async function bootstrap() {
   });
 
   await app.listen(process.env.PORT);
-  console.log(`App is starting http://localhost:${process.env.PORT}`);
 }
-bootstrap();
+bootstrap().then(() => {
+  console.log(`App is starting http://localhost:${process.env.PORT}`);
+});

@@ -99,7 +99,6 @@ type commentsOutput {
 
 <<<<<<< HEAD
 type Query {
-  getAllPosts(page: Float!): PostReturnDto!
   getPostById(postId: ID!): Posts!
   getAll: [Users!]!
   getUser(find: String!): Users
@@ -241,4 +240,8 @@ input CommentsDataDto {
   repliedTo: String
   postId: String
   userId: String
+}
+
+type Subscription {
+  getAllPosts(page: Float!): PostReturnDto!
 }
