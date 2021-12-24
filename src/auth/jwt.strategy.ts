@@ -4,6 +4,7 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { AuthService } from './auth.service';
 import { ConfigService } from '@nestjs/config';
 import { Request } from 'express';
+import { getCookie } from '../../utils/getCookie';
 
 export interface IJWT {
   id: string;
@@ -21,7 +22,9 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([
         (request: Request) => {
-          const token = request?.cookies.auth;
+          const token =
+            request?.cookies?.auth ??
+            getCookie(request?.headers?.cookie, 'auth');
           return token ?? null;
         },
       ]),

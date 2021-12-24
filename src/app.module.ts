@@ -9,6 +9,9 @@ import { ProfileModule } from './profile/profile.module';
 import connectionOptions from './ormconfig';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
+import * as passport from 'passport';
+
+const passportInit = passport.initialize();
 
 @Module({
   imports: [
@@ -22,8 +25,12 @@ import { join } from 'path';
       },
       subscriptions: {
         'subscriptions-transport-ws': {
-          onConnect: (context) => {
-            return { req: { headers: context } };
+          onConnect: (_, webSocket) => {
+            return new Promise((resolve) => {
+              passportInit(webSocket.upgradeReq, {} as any, () => {
+                resolve({ req: webSocket.upgradeReq });
+              });
+            });
           },
         },
       },
