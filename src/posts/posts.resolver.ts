@@ -24,11 +24,12 @@ export class PostsResolver {
   constructor(private readonly postsService: PostsService) {
     this.pubSub = new PubSub();
   }
-  @Subscription(() => PostReturnDto)
+
+  @Query(() => PostReturnDto)
   async getAllPosts(
     @Args({ name: 'page', type: () => Number }) page: number,
   ): Promise<PostReturnDto> {
-    return this.pubSub.asyncIterator('getAllPosts') as any;
+    return this.postsService.getAll(page);
   }
 
   @Query(() => Posts)
@@ -46,7 +47,9 @@ export class PostsResolver {
   ): Promise<Posts> {
     post.userId = user.id;
     const postCreated = this.postsService.create(post);
-    await this.pubSub.publish('getAllPosts', { getAllPosts: post });
+    await this.pubSub.publish('getPostSubscription', {
+      getPostSubscription: post,
+    });
     return postCreated;
   }
   @Mutation(() => Posts)
@@ -73,5 +76,10 @@ export class PostsResolver {
     @CurrentUser() user: Users,
   ): Promise<Posts> {
     return this.postsService.unLike(postId, user);
+  }
+
+  @Subscription(() => Posts)
+  async getPostSubscription(): Promise<AsyncIterator<Posts>> {
+    return this.pubSub.asyncIterator('getPostSubscription');
   }
 }

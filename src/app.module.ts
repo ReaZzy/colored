@@ -34,7 +34,7 @@ const passportInit = passport.initialize();
           },
         },
       },
-      context: ({ req }) => ({ req }),
+      context: ({ req }) => ({ ...req }),
     }),
     TypeOrmModule.forRoot(connectionOptions),
     ConfigModule.forRoot(),
