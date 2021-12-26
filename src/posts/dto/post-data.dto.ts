@@ -10,9 +10,7 @@ export class PostDataDto {
   readonly content: string;
 
   @Field()
-  @IsString()
-  @IsDefined()
-  @Matches(/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/gi, {
+  @Matches(new RegExp('^#(?:[0-9a-fA-F]{3}){1,2}$', 'i'), {
     message: 'invalid color',
   })
   color: string;

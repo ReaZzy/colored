@@ -25,9 +25,6 @@ export default class Posts {
   createdDate: Date;
 
   @Field(() => String)
-  @Matches(/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/gi, {
-    message: 'invalid color',
-  })
   @Column('varchar')
   color: string;
 
