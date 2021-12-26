@@ -34,7 +34,7 @@ const CREATE_POST_MUTATION = gql`
 
 const WhatsNew: React.FC = React.memo(() => {
   const [text, setText] = useState('');
-  const [color, setColor] = useState('#fff');
+  const [color, setColor] = useState('#ffffff');
   const [showEmoji, setShowEmoji] = useState(false);
   const dispatch = useAppDispatch();
   const login = useAppSelector((state) => state.auth.user?.login);
@@ -53,7 +53,7 @@ const WhatsNew: React.FC = React.memo(() => {
     });
 
     setText('');
-    setColor('#fff');
+    setColor('#ffffff');
   };
   return (
     <div className={s.whatsNew} style={{ backgroundColor: color }}>

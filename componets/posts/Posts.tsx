@@ -8,7 +8,7 @@ import gql from 'graphql-tag';
 
 const Post = dynamic(() => import('../post/Post'));
 
-const query = gql`
+const GET_ALL_POSTS = gql`
   query getAllPosts($page: Float!) {
     getAllPosts(page: $page) {
       posts {
@@ -26,21 +26,65 @@ const query = gql`
     }
   }
 `;
+
+const GET_POST_SUBSCRIPTION = gql`
+  subscription getPostSubscription {
+    getPostSubscription {
+      id
+      content
+      color
+      createdDate
+      user {
+        id
+        createdDate
+        avatar
+        login
+      }
+    }
+  }
+`;
+
 const Posts: React.FC = () => {
   const [page, setPage] = useState<number>(1);
-  const { data, fetchMore, loading } = useQuery(query, {
-    variables: { page: 1 },
-  });
+  const { data, fetchMore, loading, subscribeToMore } = useQuery(
+    GET_ALL_POSTS,
+
+    {
+      variables: { page: 1 },
+      fetchPolicy: 'network-only',
+    },
+  );
+
+  useEffect(() => {
+    const postsSubscription = subscribeToMore({
+      document: GET_POST_SUBSCRIPTION,
+      variables: {},
+      updateQuery: (prev, { subscriptionData }) => {
+        if (!subscriptionData.data) return prev;
+        const newPost = subscriptionData.data.getPostSubscription;
+
+        const newPrev = Object.assign({}, prev, {
+          getAllPosts: {
+            posts: [newPost, ...prev.getAllPosts.posts],
+            total: prev.getAllPosts.total + 1,
+          },
+        });
+
+        return newPrev;
+      },
+    });
+    return () => {
+      postsSubscription();
+    };
+  }, []);
+
   const handleNextPage = async () => {
     await setPage((prev) => prev + 1);
     await fetchMore({
-      variables: { page: page + 1 },
+      variables: { page: page + 1, isFetchMore: true },
     });
   };
 
-  useEffect(() => {
-    setPage(1);
-  }, []);
   return (
     <div>
       {loading ? (
