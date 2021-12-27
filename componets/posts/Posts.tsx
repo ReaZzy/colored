@@ -69,7 +69,6 @@ const Posts: React.FC = () => {
             total: prev.getAllPosts.total + 1,
           },
         };
-
       },
     });
     return () => {
