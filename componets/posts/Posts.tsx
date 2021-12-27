@@ -63,20 +63,19 @@ const Posts: React.FC = () => {
         if (!subscriptionData.data) return prev;
         const newPost = subscriptionData.data.getPostSubscription;
 
-        const newPrev = Object.assign({}, prev, {
+        return {
           getAllPosts: {
             posts: [newPost, ...prev.getAllPosts.posts],
             total: prev.getAllPosts.total + 1,
           },
-        });
+        };
 
-        return newPrev;
       },
     });
     return () => {
       postsSubscription();
     };
-  }, []);
+  }, [subscribeToMore]);
 
   const handleNextPage = async () => {
     await setPage((prev) => prev + 1);
