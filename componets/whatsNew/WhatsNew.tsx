@@ -10,33 +10,16 @@ import { HiOutlineEmojiHappy } from '@react-icons/all-files/hi/HiOutlineEmojiHap
 import { BiColorFill } from '@react-icons/all-files/bi/BiColorFill';
 import ColoredButton from '../coloredButton/ColoredButton';
 import { DebounceInput } from 'react-debounce-input';
-import { instance } from '../../store/reducers/api';
-import { setPost } from '../../store/reducers/post/reducer';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { useAppSelector } from '../../hooks/redux';
 import Avatar from '../avatar/Avatar';
 import { useRandomColor } from '../../hooks/useRandomColor';
-import { useMutation, gql } from '@apollo/client';
-
-const CREATE_POST_MUTATION = gql`
-  mutation createPost($content: String!, $color: String!) {
-    createPost(post: { content: $content, color: $color }) {
-      id
-      color
-      createdDate
-      user {
-        id
-        login
-        avatar
-      }
-    }
-  }
-`;
+import { useMutation } from '@apollo/client';
+import { CREATE_POST_MUTATION } from '../../apollo/mutations/createPost';
 
 const WhatsNew: React.FC = React.memo(() => {
   const [text, setText] = useState('');
   const [color, setColor] = useState('#ffffff');
   const [showEmoji, setShowEmoji] = useState(false);
-  const dispatch = useAppDispatch();
   const login = useAppSelector((state) => state.auth.user?.login);
   const avatar = useAppSelector((state) => state.auth.user?.avatar);
   const [createPostMutation] = useMutation(CREATE_POST_MUTATION);

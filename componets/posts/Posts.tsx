@@ -5,50 +5,15 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import SkeletonPreloader from '../skeletonPreloader/SkeletonPreloader';
 import { useQuery } from '@apollo/client';
 import gql from 'graphql-tag';
+import { GET_POST_SUBSCRIPTION } from '../../apollo/subscriptions/getPostSubsciption';
+import { GET_ALL_POSTS } from '../../apollo/queries/getAllPosts';
 
 const Post = dynamic(() => import('../post/Post'));
-
-const GET_ALL_POSTS = gql`
-  query getAllPosts($page: Float!) {
-    getAllPosts(page: $page) {
-      posts {
-        id
-        content
-        color
-        createdDate
-        user {
-          avatar
-          login
-          createdDate
-        }
-      }
-      total
-    }
-  }
-`;
-
-const GET_POST_SUBSCRIPTION = gql`
-  subscription getPostSubscription {
-    getPostSubscription {
-      id
-      content
-      color
-      createdDate
-      user {
-        id
-        createdDate
-        avatar
-        login
-      }
-    }
-  }
-`;
 
 const Posts: React.FC = () => {
   const [page, setPage] = useState<number>(1);
   const { data, fetchMore, loading, subscribeToMore } = useQuery(
     GET_ALL_POSTS,
-
     {
       variables: { page: 1 },
       fetchPolicy: 'network-only',

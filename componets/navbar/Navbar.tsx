@@ -7,20 +7,15 @@ import { IoMdHeartEmpty } from '@react-icons/all-files/io/IoMdHeartEmpty';
 import ColoredButton from '../coloredButton/ColoredButton';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import Avatar from '../avatar/Avatar';
-import { useMutation, gql } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import router from 'next/router';
 import { setIsAuth } from '../../store/reducers/auth/reducer';
-
-const logoutMutation = gql`
-  mutation logout {
-    logout
-  }
-`;
+import { LOGOUT } from '../../apollo/mutations/logout';
 
 const Navbar: React.FC = React.memo(() => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.user);
-  const [logoutMutate] = useMutation(logoutMutation);
+  const [logoutMutate] = useMutation(LOGOUT);
   const handleLogout = async () => {
     await logoutMutate();
     await dispatch(setIsAuth(false));
