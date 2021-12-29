@@ -4,7 +4,6 @@ import s from '../../pages/index.module.css';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import SkeletonPreloader from '../skeletonPreloader/SkeletonPreloader';
 import { useQuery } from '@apollo/client';
-import gql from 'graphql-tag';
 import { GET_POST_SUBSCRIPTION } from '../../apollo/subscriptions/getPostSubsciption';
 import { GET_ALL_POSTS } from '../../apollo/queries/getAllPosts';
 
@@ -16,7 +15,6 @@ const Posts: React.FC = () => {
     GET_ALL_POSTS,
     {
       variables: { page: 1 },
-      fetchPolicy: 'network-only',
     },
   );
 

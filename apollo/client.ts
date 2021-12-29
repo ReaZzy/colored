@@ -1,7 +1,6 @@
 import {
   ApolloClient,
   ApolloLink,
-  HttpLink,
   InMemoryCache,
   NormalizedCacheObject,
   split,
@@ -164,9 +163,5 @@ export const addApolloState = (
 
 export function useApollo(pageProps: AppProps['pageProps']) {
   const state = pageProps[APOLLO_STATE_PROP_NAME];
-  const store = useMemo(
-    () => initializeApollo({ initialState: state }),
-    [state],
-  );
-  return store;
+  return useMemo(() => initializeApollo({ initialState: state }), [state]);
 }

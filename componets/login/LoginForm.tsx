@@ -7,6 +7,7 @@ import { useAppDispatch } from '../../hooks/redux';
 import { useMutation } from '@apollo/client';
 import gql from 'graphql-tag';
 import { useRouter } from 'next/router';
+import Preloader from '../preloader/Preloader';
 
 const validationSchema = yup.object({
   find: yup.string().min(6).max(64).required(),
@@ -26,7 +27,7 @@ const loginMutation = gql`
   }
 `;
 const LoginForm = React.memo(() => {
-  const [mutateFunction, { data, loading, error }] = useMutation(loginMutation);
+  const [mutateFunction, { loading, error }] = useMutation(loginMutation);
   const router = useRouter();
   const handleSubmit = async (values: { find: string; password: string }) => {
     await mutateFunction({
@@ -63,8 +64,11 @@ const LoginForm = React.memo(() => {
         </div>
 
         <button className={s.login__button} type={'submit'}>
-          Login
+          {loading ? <Preloader /> : 'Login'}
         </button>
+        {!!error?.message && (
+          <div className={`${s.error} ${s.login__block}`}>{error.message}</div>
+        )}
       </Form>
     </Formik>
   );

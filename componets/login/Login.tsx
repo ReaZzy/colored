@@ -35,13 +35,8 @@ const Login: React.FC = () => {
 
       <div className={s.login}>
         {isRegistration ? <RegisterForm /> : <LoginForm />}
-        {loginError && !isRegistration && (
-          <div className={`${s.error} ${s.login__block}`}>{loginError}</div>
-        )}
-        {registrationError && isRegistration && (
-          <div className={`${s.error} ${s.login__block}`}>{loginError}</div>
-        )}
-        <div className={s.noAccaunt}>
+
+        <div className={s.noAccount}>
           <div className={s.loginVia}>
             Or login via
             <div className={s.social}>
@@ -53,7 +48,7 @@ const Login: React.FC = () => {
           <div>
             {isRegistration ? 'Already a member? ' : `Don\'t have an account? `}
             <span
-              className={s.noAccaunt__register}
+              className={s.noAccount__register}
               onClick={() => {
                 setIsRegistration(!isRegistration);
               }}

@@ -50,7 +50,7 @@
 .login__item input:focus {
   border-bottom: 2px solid #337633;
 }
-.noAccaunt {
+.noAccount {
   display: flex;
   flex-direction: column;
   align-self: center;
@@ -58,10 +58,10 @@
   font-size: 12px;
   gap: 20px;
 }
-.noAccaunt__register {
+.noAccount__register {
   color: #337633;
 }
-.noAccaunt__register:hover {
+.noAccount__register:hover {
   border-bottom: 1px solid #337633;
   cursor: pointer;
 }

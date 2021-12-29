@@ -3,8 +3,10 @@ import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
 import s from './login.module.css';
 import { ValidatedInput } from '../validatedInput/ValidatedInput';
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
+import { REGISTER } from '../../apollo/mutations/register';
+import Preloader from '../preloader/Preloader';
 
 const validationSchemaRegistration = yup.object({
   email: yup.string().email().max(64).required(),
@@ -12,22 +14,9 @@ const validationSchemaRegistration = yup.object({
   password: yup.string().min(8).max(64).required(),
 });
 
-const registerMutation = gql`
-  mutation register($login: String!, $email: String!, $password: String!) {
-    register(userData: { login: $login, email: $email, password: $password }) {
-      access_token
-      user {
-        id
-        login
-        avatar
-      }
-    }
-  }
-`;
-
 const RegisterForm = React.memo(() => {
   const router = useRouter();
-  const [mutateFunction] = useMutation(registerMutation);
+  const [mutateFunction, { error, loading }] = useMutation(REGISTER);
   const handleRegistration = async (values: {
     login: string;
     email: string;
@@ -83,8 +72,11 @@ const RegisterForm = React.memo(() => {
           />
         </div>
         <button className={s.login__button} type={'submit'}>
-          Register
+          {loading ? <Preloader /> : 'Register'}
         </button>
+        {!!error?.message && (
+          <div className={`${s.error} ${s.login__block}`}>{error.message}</div>
+        )}
       </Form>
     </Formik>
   );
