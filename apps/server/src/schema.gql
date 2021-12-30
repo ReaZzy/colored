@@ -1,0 +1,120 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Users {
+  id: ID!
+  createdDate: DateTime!
+  email: String!
+  avatar: String!
+  login: String!
+  password: String!
+  posts: [Posts!]!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Comments {
+  id: ID!
+  createdDate: DateTime!
+  post: Posts!
+  user: Users!
+  comments: Comments!
+  replies: [Comments!]!
+  userId: String!
+  postId: String!
+  content: String!
+  commentsId: String!
+}
+
+type Posts {
+  id: ID!
+  createdDate: DateTime!
+  color: String!
+  content: String!
+  user: Users!
+  likes: [Users!]!
+  comments: [Comments!]!
+  userId: String!
+}
+
+type PostReturnDto {
+  posts: [Posts!]!
+  total: Float!
+}
+
+type LoginDto {
+  access_token: String!
+  user: Users!
+}
+
+type Avatar {
+  avatar: String!
+}
+
+type commentsOutput {
+  comments: [Comments!]!
+  total: Int!
+}
+
+type Query {
+  getAllPosts(page: Float!): PostReturnDto!
+  getPostById(postId: ID!): Posts!
+  getAll: [Users!]!
+  getUser(find: String!): Users
+  getAllComments(postId: String!, page: Float!): commentsOutput!
+  getProfile(id: ID): Users!
+}
+
+type Mutation {
+  createPost(post: PostDataDto!): Posts!
+  updatePost(postData: PostUpdateDto!, postId: ID!): Posts!
+  like(postId: ID!): Posts!
+  unLike(postId: ID!): Posts!
+  updateProfile(data: UserUpdateDto!): Users!
+  uploadAvatar(file: Upload!): Avatar!
+  login(password: String!, find: String!): LoginDto!
+  logout: Boolean!
+  register(userData: UsersDataDto!): LoginDto!
+  createComment(commentsData: CommentsDataDto!, postId: ID!): Comments!
+}
+
+input PostDataDto {
+  content: String!
+  color: String!
+  userId: String
+}
+
+input PostUpdateDto {
+  content: String!
+  color: String!
+}
+
+input UserUpdateDto {
+  email: String
+  login: String
+  password: String
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
+input UsersDataDto {
+  email: String!
+  login: String!
+  password: String!
+}
+
+input CommentsDataDto {
+  content: String!
+  repliedTo: String
+  postId: String
+  userId: String
+}
+
+type Subscription {
+  getPostSubscription: Posts!
+}
