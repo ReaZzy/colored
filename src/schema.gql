@@ -41,63 +41,25 @@ type Posts {
   userId: String!
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-type PostReturnDto {
-  posts: [Posts!]!
-  total: Float!
-=======
-type Avatar {
-<<<<<<< HEAD
-  imagePath: String!
->>>>>>> 6d8e4fb... refactor🔃: upload avatar to graphql
-=======
-  avatar: String!
->>>>>>> 697f54b... fix🛠: profile uploads
-}
-
-=======
->>>>>>> 614316a... refactor🔃: profile to graphql
-type LoginDto {
-=======
-type Login {
->>>>>>> 9d1831b... feat🔨: add auth graphql
-=======
-=======
 type PostReturnDto {
   posts: [Posts!]!
   total: Float!
 }
 
->>>>>>> c22806b... refactor🔃: posts to graphql
 type LoginDto {
->>>>>>> 18db429... refactor⚒: logout and getuser graphql
   access_token: String!
   user: Users!
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 614316a... refactor🔃: profile to graphql
 type Avatar {
   avatar: String!
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 6b6a020... refactor🔃: comments to graphql
 type commentsOutput {
   comments: [Comments!]!
   total: Int!
 }
 
-<<<<<<< HEAD
 type Query {
   getAllPosts(page: Float!): PostReturnDto!
   getPostById(postId: ID!): Posts!
@@ -116,96 +78,6 @@ type Mutation {
   uploadAvatar(file: Upload!): Avatar!
   login(password: String!, find: String!): LoginDto!
   logout: Boolean!
-<<<<<<< HEAD
-  register(userData: UsersDataDto!): LoginDto!
-  createComment(commentsData: CommentsDataDto!, postId: ID!): Comments!
-}
-
-input PostDataDto {
-  content: String!
-  color: String!
-  userId: String
-}
-
-input PostUpdateDto {
-  content: String!
-  color: String!
-}
-
-input UserUpdateDto {
-  email: String
-  login: String
-  password: String
-}
-
-"""The `Upload` scalar type represents a file upload."""
-scalar Upload
-
-input UsersDataDto {
-  email: String!
-  login: String!
-  password: String!
-}
-
-input CommentsDataDto {
-  content: String!
-  repliedTo: String
-  postId: String
-  userId: String
-}
-
-type Subscription {
-  getPostSubscription: Posts!
-=======
-=======
->>>>>>> 9d1831b... feat🔨: add auth graphql
-=======
->>>>>>> 614316a... refactor🔃: profile to graphql
-type Query {
-  getAllPosts(page: Float!): PostReturnDto!
-  getPostById(postId: ID!): Posts!
-  getAll: [Users!]!
-<<<<<<< HEAD
->>>>>>> a6d8cfa... refactor⚒: add graphql
-=======
-=======
-type Query {
-  getAllPosts(page: Float!): PostReturnDto!
-  getPostById(postId: ID!): Posts!
-<<<<<<< HEAD
-  getAll(postId: String!, page: Float!): commentsOutput!
->>>>>>> 6b6a020... refactor🔃: comments to graphql
-  getUser(find: String!): Users
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 18db429... refactor⚒: logout and getuser graphql
-=======
-  getProfileImage(imagename: String!): Upload!
->>>>>>> 697f54b... fix🛠: profile uploads
-=======
->>>>>>> 98415e6... fix🛠: get image request
-=======
-=======
-  getAll: [Users!]!
-  getUser(find: String!): Users
-  getAllComments(postId: String!, page: Float!): commentsOutput!
->>>>>>> 7916a72... feat🔨: delete old avatar on change
-  getProfile(id: ID): Users!
->>>>>>> 614316a... refactor🔃: profile to graphql
-}
-
-type Mutation {
-  createPost(post: PostDataDto!): Posts!
-  updatePost(postData: PostUpdateDto!, postId: ID!): Posts!
-  like(postId: ID!): Posts!
-  unLike(postId: ID!): Posts!
-  updateProfile(data: UserUpdateDto!): Users!
-  uploadAvatar(file: Upload!): Avatar!
-  login(password: String!, find: String!): LoginDto!
-  logout: Void!
-=======
->>>>>>> e0e9218... fix🛠: logout
   register(userData: UsersDataDto!): LoginDto!
   createComment(commentsData: CommentsDataDto!, postId: ID!): Comments!
 }
