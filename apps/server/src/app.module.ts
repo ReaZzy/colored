@@ -10,6 +10,8 @@ import connectionOptions from './ormconfig';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 import * as passport from 'passport';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { LoggingInterceptor } from './middlewares/logging.interceptor';
 
 const passportInit = passport.initialize();
 
@@ -19,6 +21,7 @@ const passportInit = passport.initialize();
       debug: true,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       installSubscriptionHandlers: true,
+      fieldResolverEnhancers: ['interceptors'],
       cors: {
         origin: 'http://localhost:4200',
         credentials: true,
@@ -45,6 +48,9 @@ const passportInit = passport.initialize();
     ProfileModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [{
+    provide: APP_INTERCEPTOR,
+    useClass: LoggingInterceptor,
+  }],
 })
 export class AppModule {}

@@ -22,7 +22,7 @@ const connectionOptions = {
   database: config.database,
   migrationsRun: false,
   synchronize: true,
-  logging: true,
+  logging: false,
   autoReconnect: true,
   autoLoadEntities: true,
   reconnectTries: Number.MAX_VALUE,
