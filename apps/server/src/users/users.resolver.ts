@@ -69,7 +69,9 @@ export class UsersResolver {
 
     await new Promise(async (resolve, reject) =>
       createReadStream()
-        .pipe(createWriteStream(`./uploads/profileimages/${imagePath}`))
+        .pipe(
+          createWriteStream(`./apps/server/uploads/profileimages/${imagePath}`)
+        )
         .on('finish', () => resolve(true))
         .on('error', () => reject(false))
     );
@@ -81,7 +83,9 @@ export class UsersResolver {
     try {
       if (!prevAvatar.avatar.includes('profile-default'))
         fs.unlinkSync(
-          `./uploads/profileimages/${prevAvatar.avatar.split('/')[2]}`
+          `./apps/server/uploads/profileimages/${
+            prevAvatar.avatar.split('/')[2]
+          }`
         );
     } catch (e) {
       console.log(e);
