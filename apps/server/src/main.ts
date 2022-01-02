@@ -10,13 +10,14 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
   app.enableCors({ credentials: true, origin: 'http://localhost:4200' });
   app.use(cookieParser());
+
   app.use(graphqlUploadExpress());
   app.use(passport.initialize());
 
-  passport.serializeUser(function (user, done) {
+  passport.deserializeUser(function (user: any, done) {
     done(null, user);
   });
-  passport.deserializeUser(function (user: any, done) {
+  passport.serializeUser(function (user, done) {
     done(null, user);
   });
 

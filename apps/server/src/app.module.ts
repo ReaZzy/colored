@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { PostsModule } from './posts/posts.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -29,12 +29,16 @@ const passportInit = passport.initialize();
       subscriptions: {
         'subscriptions-transport-ws': {
           onConnect: (_, webSocket) => {
+            Logger.log("Online")
             return new Promise((resolve) => {
               passportInit(webSocket.upgradeReq, {} as any, () => {
                 resolve({ req: webSocket.upgradeReq });
               });
             });
           },
+          onDisconnect: () => {
+            Logger.log("Offline")
+          }
         },
       },
       context: ({ req }) => ({ ...req }),

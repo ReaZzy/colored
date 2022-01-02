@@ -1,4 +1,5 @@
 import gql from 'graphql-tag';
+import { IPosts } from '../../types/IPosts.types';
 
 export const GET_ALL_POSTS = gql`
   query getAllPosts($page: Float!) {
@@ -18,3 +19,10 @@ export const GET_ALL_POSTS = gql`
     }
   }
 `;
+
+export type IGET_ALL_POSTS = {
+  getAllPosts: {
+    posts: IPosts
+    total: number
+  }
+}

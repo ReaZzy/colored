@@ -1,14 +1,14 @@
 import React from 'react';
 import s from './post.module.css';
 import { createGssp } from '../../utils/gssp';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store/reducers/rootReducer';
-import { getPost } from '../../store/reducers/post/thunks';
 import Post from '../../componets/post/Post';
 import { Back } from '../../componets/back/Back';
+import { addApolloState } from '../../apollo/client';
+import { GET_POST_BY_ID, IGET_POST_BY_ID } from '../../apollo/queries/getPostById';
+import { NextPage } from 'next';
+import { IPosts } from '../../types/IPosts.types';
 
-const PostPage = () => {
-  const post = useSelector((state: RootState) => state.post.currentPost!);
+const PostPage:NextPage<{post:IPosts}> = ({post}) => {
   return (
     <div>
       <Back />
@@ -22,15 +22,16 @@ const PostPage = () => {
     </div>
   );
 };
-export const getServerSideProps = createGssp(async (ctx, store, dispatch) => {
-  await dispatch(await getPost(ctx.params.id as string));
-  if (store.getState().post.currentPost) {
-    return {
+export const getServerSideProps = createGssp(async (ctx, store,client, dispatch) => {
+  const post = await client?.query<IGET_POST_BY_ID>({query:GET_POST_BY_ID,variables:{postId: ctx.params.id}})
+  if (post?.data.getPostById) {
+    return addApolloState(client!, {
       props: {
         initialReduxState: store.getState(),
-        title: store.getState().post.currentPost.user.login,
+        title: post.data.getPostById.user.login,
+        post: post.data.getPostById
       },
-    };
+    });
   } else {
     return { notFound: true };
   }
