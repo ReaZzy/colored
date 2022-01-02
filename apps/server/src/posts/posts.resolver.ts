@@ -5,10 +5,10 @@ import { PostDataDto } from './dto/post-data.dto';
 import { GqgAuthGuard } from 'src/guards/gql-auth.guard';
 import {
   Args,
+  ID,
+  Mutation,
   Query,
   Resolver,
-  Mutation,
-  ID,
   Subscription,
 } from '@nestjs/graphql';
 import { PostReturnDto } from './dto/post-return.dto';
@@ -27,14 +27,14 @@ export class PostsResolver {
 
   @Query(() => PostReturnDto)
   async getAllPosts(
-    @Args({ name: 'page', type: () => Number }) page: number,
+    @Args({ name: 'page', type: () => Number }) page: number
   ): Promise<PostReturnDto> {
     return this.postsService.getAll(page);
   }
 
   @Query(() => Posts)
   async getPostById(
-    @Args({ name: 'postId', type: () => ID }) postId: string,
+    @Args({ name: 'postId', type: () => ID }) postId: string
   ): Promise<Posts> {
     return this.postsService.getById(postId);
   }
@@ -43,7 +43,7 @@ export class PostsResolver {
   async createPost(
     @Args({ name: 'post', type: () => PostDataDto })
     post: PostDataDto,
-    @CurrentUser() user: Users,
+    @CurrentUser() user: Users
   ): Promise<Posts> {
     post.userId = user.id;
     const postCreated = this.postsService.create(post);
@@ -57,7 +57,7 @@ export class PostsResolver {
     @Args({ name: 'postId', type: () => ID }) postId: string,
     @Args({ name: 'postData', type: () => PostUpdateDto })
     postData: PostUpdateDto,
-    @CurrentUser() user: Users,
+    @CurrentUser() user: Users
   ): Promise<Posts> {
     return this.postsService.update(postId, postData, user.id);
   }
@@ -65,7 +65,7 @@ export class PostsResolver {
   @Mutation(() => Posts)
   async like(
     @Args({ name: 'postId', type: () => ID }) postId: string,
-    @CurrentUser() user: Users,
+    @CurrentUser() user: Users
   ): Promise<Posts> {
     return this.postsService.like(postId, user);
   }
@@ -73,7 +73,7 @@ export class PostsResolver {
   @Mutation(() => Posts)
   async unLike(
     @Args({ name: 'postId', type: () => ID }) postId: string,
-    @CurrentUser() user: Users,
+    @CurrentUser() user: Users
   ): Promise<Posts> {
     return this.postsService.unLike(postId, user);
   }

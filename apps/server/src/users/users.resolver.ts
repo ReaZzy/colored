@@ -11,8 +11,6 @@ import { Users } from './users.entity';
 import { v4 as uuidv4 } from 'uuid';
 import { join } from 'path';
 import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
-import path = require('path');
-import fs = require('fs');
 import { GqgAuthGuard } from 'src/guards/gql-auth.guard';
 import { FileUpload, GraphQLUpload } from 'graphql-upload';
 import { createWriteStream } from 'fs';
@@ -21,6 +19,8 @@ import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { CurrentUser } from '../auth/auth.resolver';
 import { Avatar } from './dto/user-avatar.dto';
 import { UserUpdateDto } from './dto/user-update.dto';
+import path = require('path');
+import fs = require('fs');
 
 @Controller('users')
 @Resolver()

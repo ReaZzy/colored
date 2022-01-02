@@ -1,14 +1,14 @@
-import { Body, Param, Post, Req, UseGuards } from '@nestjs/common';
+import { UseGuards } from '@nestjs/common';
 import { GqgAuthGuard } from '../guards/gql-auth.guard';
 import {
-  Resolver,
-  Query,
-  ObjectType,
-  Field,
-  Int,
   Args,
-  Mutation,
+  Field,
   ID,
+  Int,
+  Mutation,
+  ObjectType,
+  Query,
+  Resolver,
 } from '@nestjs/graphql';
 import { CommentsService } from './comments.service';
 import { Comments } from './comments.entity';
@@ -33,7 +33,7 @@ export class CommentsResolver {
   @Query(() => commentsOutput)
   async getAllComments(
     @Args('page') page: number,
-    @Args('postId') postId: string,
+    @Args('postId') postId: string
   ): Promise<commentsOutput> {
     return this.commentsService.getAll(page, postId);
   }
@@ -42,7 +42,7 @@ export class CommentsResolver {
   async createComment(
     @Args({ name: 'postId', type: () => ID }) postId: string,
     @Args('commentsData') commentsData: CommentsDataDto,
-    @CurrentUser() user: Users,
+    @CurrentUser() user: Users
   ): Promise<Comments> {
     commentsData.postId = postId;
     commentsData.userId = user.id;

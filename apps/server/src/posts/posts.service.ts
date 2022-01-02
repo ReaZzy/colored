@@ -10,7 +10,7 @@ import { PostUpdateDto } from './dto/post-update.dto';
 export class PostsService {
   constructor(
     @InjectRepository(Posts)
-    private readonly postsRepository: Repository<Posts>,
+    private readonly postsRepository: Repository<Posts>
   ) {}
 
   async getAll(page?: number): Promise<{ posts: Posts[]; total: number }> {
@@ -50,7 +50,7 @@ export class PostsService {
   async update(
     postId: string,
     postData: PostUpdateDto,
-    userId: string,
+    userId: string
   ): Promise<Posts | null> {
     const post = await this.postsRepository.findOne({
       where: {

@@ -20,20 +20,21 @@ import {
 } from '@nestjs/graphql';
 import { LoginDto } from './dto/login.dto';
 import { GqgAuthGuard } from 'src/guards/gql-auth.guard';
+
 export { Request, Response } from 'express';
 
 export const CurrentUser = createParamDecorator(
   (data: unknown, context: ExecutionContext) => {
     const ctx = GqlExecutionContext.create(context);
     return ctx.getContext().req.user;
-  },
+  }
 );
 
 @Resolver()
 export class AuthResolver {
   constructor(
     private readonly authService: AuthService,
-    private readonly usersService: UsersService,
+    private readonly usersService: UsersService
   ) {}
 
   @UseGuards(LocalAuthGuard)
@@ -42,9 +43,10 @@ export class AuthResolver {
     @Args('find') find: string,
     @Args('password') password: string,
     @CurrentUser() user: Users,
-    @Context() ctx: any,
+    @Context() ctx: any
   ) {
     const token = await this.authService.login(user);
+
     if (!token) {
       throw new BadRequestException();
     }
@@ -66,7 +68,7 @@ export class AuthResolver {
   @Mutation(() => LoginDto)
   async register(
     @Args('userData') usersData: UsersDataDto,
-    @Context() ctx: any,
+    @Context() ctx: any
   ): Promise<LoginDto> {
     try {
       const user = await this.usersService.create(usersData);
@@ -79,7 +81,7 @@ export class AuthResolver {
     } catch (e) {
       throw new HttpException(
         'User already exists',
-        HttpStatus.INTERNAL_SERVER_ERROR,
+        HttpStatus.INTERNAL_SERVER_ERROR
       );
     }
   }

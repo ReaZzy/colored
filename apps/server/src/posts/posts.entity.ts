@@ -8,7 +8,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Length, Matches } from 'class-validator';
+import { Length } from 'class-validator';
 import { Users } from '../users/users.entity';
 import { Comments } from '../comments/comments.entity';
 import { Field, ID, ObjectType } from '@nestjs/graphql';

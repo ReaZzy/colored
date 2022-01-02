@@ -3,19 +3,17 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Comments } from './comments.entity';
 import { Repository } from 'typeorm';
 import { CommentsDataDto } from './dto/comments-data.dto';
-import { PostIdDto } from '../posts/dto/post-id.dto';
-import { PostPageDto } from '../posts/dto/post-page.dto';
 
 @Injectable()
 export class CommentsService {
   constructor(
     @InjectRepository(Comments)
-    private readonly commentsRepository: Repository<Comments>,
+    private readonly commentsRepository: Repository<Comments>
   ) {}
 
   async getAll(
     page: number,
-    postId: string,
+    postId: string
   ): Promise<{ comments: Comments[]; total: number }> {
     if (page < 1) page = 1;
     const take = 2;

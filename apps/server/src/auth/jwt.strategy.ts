@@ -17,7 +17,7 @@ export interface IJWT {
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
     private authService: AuthService,
-    private configService: ConfigService,
+    private configService: ConfigService
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([

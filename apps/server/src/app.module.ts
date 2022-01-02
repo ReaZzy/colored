@@ -29,7 +29,7 @@ const passportInit = passport.initialize();
       subscriptions: {
         'subscriptions-transport-ws': {
           onConnect: (_, webSocket) => {
-            Logger.log("Online")
+            Logger.log('Online');
             return new Promise((resolve) => {
               passportInit(webSocket.upgradeReq, {} as any, () => {
                 resolve({ req: webSocket.upgradeReq });
@@ -37,8 +37,8 @@ const passportInit = passport.initialize();
             });
           },
           onDisconnect: () => {
-            Logger.log("Offline")
-          }
+            Logger.log('Offline');
+          },
         },
       },
       context: ({ req }) => ({ ...req }),
@@ -52,9 +52,11 @@ const passportInit = passport.initialize();
     ProfileModule,
   ],
   controllers: [],
-  providers: [{
-    provide: APP_INTERCEPTOR,
-    useClass: LoggingInterceptor,
-  }],
+  providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: LoggingInterceptor,
+    },
+  ],
 })
 export class AppModule {}

@@ -8,15 +8,14 @@ import { ProfileDto } from './dto/profile.dto';
 export class ProfileService {
   constructor(
     @InjectRepository(Users)
-    private readonly profileRepository: Repository<Users>,
+    private readonly profileRepository: Repository<Users>
   ) {}
 
   async getProfile(profile: ProfileDto): Promise<Users> {
     const { id, user } = profile;
-    const candidate = id
+
+    return id
       ? await this.profileRepository.findOne(id)
       : await this.profileRepository.findOne(user.id);
-
-    return candidate;
   }
 }

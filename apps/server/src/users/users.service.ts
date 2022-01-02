@@ -10,7 +10,7 @@ import { UserUpdateDto } from './dto/user-update.dto';
 export class UsersService {
   constructor(
     @InjectRepository(Users)
-    private readonly usersRepository: Repository<Users>,
+    private readonly usersRepository: Repository<Users>
   ) {}
 
   async getAll(): Promise<Users[]> {
@@ -39,7 +39,7 @@ export class UsersService {
 
   async updateProfile(
     currentUser: Users,
-    userData: UserUpdateDto,
+    userData: UserUpdateDto
   ): Promise<Users> {
     const user = await this.usersRepository.findOneOrFail(currentUser.id);
     return this.usersRepository.save({

@@ -14,7 +14,7 @@ export class LoggingInterceptor implements NestInterceptor {
     const isGraphQl = !ctx.switchToHttp().getRequest();
     let method, url, operation, fieldName, variables;
 
-    if(isGraphQl) {
+    if (isGraphQl) {
       operation = ctx.getArgs()[3].operation?.operation;
       fieldName = ctx.getArgs()[3]?.fieldName;
       variables = ctx.getArgs()[3]?.variableValues;
@@ -29,10 +29,12 @@ export class LoggingInterceptor implements NestInterceptor {
       .pipe(
         tap(() =>
           Logger.log(
-            `${method || operation?.toUpperCase()} ${url || fieldName} ${variables ? JSON.stringify(variables) : ''} ${Date.now() - now}ms`,
-            ctx.getClass().name,
-          ),
-        ),
+            `${method || operation?.toUpperCase()} ${url || fieldName} ${
+              variables ? JSON.stringify(variables) : ''
+            } ${Date.now() - now}ms`,
+            ctx.getClass().name
+          )
+        )
       );
   }
 }

@@ -61,7 +61,7 @@ export class Users extends BaseEntity {
   async setAvatar() {
     if (!this.avatar)
       this.avatar = `users/profile-image/default/profile-default-${Math.ceil(
-        Math.random() * 16,
+        Math.random() * 16
       )}.png`;
   }
 }
