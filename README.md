@@ -9,15 +9,13 @@ and can't imagine their life without they 😊
 ## How to start ❔
 
 > 1. __clone this repository by__
-> ```git clone https://github.com/ReaZzy/nest-next.git```
-> 2. __clone backend repository by__
-> ```git clone https://github.com/ReaZzy/next-app-backend.git```
-> 3. __open frontend and backend directory, then install the required packages to each__
+> ```git clone https://github.com/ReaZzy/colored.git```
+> 2. __opencolored directory, then install the required packages__
 > ```npm install```
-> 4. __run server__
-> ```docker-compose up```
-> 5. __run client__
-> ```npm run dev```
+> 3. __start project__
+> ```npm run start:dev```
+> 4. __open http://localhost:4200 in your brorser__
+> 5. __have fun 🙃__
 
 ## Stack 🔨
 | Frontend 🧑    | Backend 💻   |
