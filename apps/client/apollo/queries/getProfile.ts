@@ -8,6 +8,8 @@ export const GET_PROFILE = gql`
       email
       id
       createdDate
+      updatedDate
+      online
     }
   }
 `;

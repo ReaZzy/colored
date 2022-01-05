@@ -58,4 +58,10 @@ export class UsersService {
       avatar: usersData.file,
     } as any);
   }
+
+  async setOnline(usersData: any, online: boolean): Promise<Users> {
+    const user = await this.usersRepository.findOne({ id: usersData.id });
+    const candidate = { ...user, online };
+    return this.usersRepository.save(candidate);
+  }
 }

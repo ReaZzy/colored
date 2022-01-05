@@ -12,6 +12,8 @@ export const GET_POST_SUBSCRIPTION = gql`
         createdDate
         avatar
         login
+        updatedDate
+        online
       }
     }
   }

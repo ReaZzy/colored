@@ -10,7 +10,15 @@ import { UsersService } from './users.service';
 import { Users } from './users.entity';
 import { v4 as uuidv4 } from 'uuid';
 import { join } from 'path';
-import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Context,
+  ID,
+  Mutation,
+  Query,
+  Resolver,
+  Subscription,
+} from '@nestjs/graphql';
 import { GqgAuthGuard } from 'src/guards/gql-auth.guard';
 import { FileUpload, GraphQLUpload } from 'graphql-upload';
 import { createWriteStream } from 'fs';
@@ -19,13 +27,17 @@ import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { CurrentUser } from '../auth/auth.resolver';
 import { Avatar } from './dto/user-avatar.dto';
 import { UserUpdateDto } from './dto/user-update.dto';
+import { PubSub } from 'graphql-subscriptions';
 import path = require('path');
 import fs = require('fs');
 
 @Controller('users')
 @Resolver()
 export class UsersResolver {
-  constructor(private readonly usersService: UsersService) {}
+  private pubSub: PubSub;
+  constructor(private readonly usersService: UsersService) {
+    this.pubSub = new PubSub();
+  }
 
   @UseGuards(GqgAuthGuard)
   @Query(() => [Users])
@@ -52,8 +64,20 @@ export class UsersResolver {
     @CurrentUser() user: Users,
     @Args({ name: 'data', type: () => UserUpdateDto }) data: UserUpdateDto
   ) {
-    await console.log(await this.usersService.updateProfile(user, data));
     return this.usersService.updateProfile(user, data);
+  }
+
+  @UseGuards(GqgAuthGuard)
+  @Mutation(() => Users)
+  async setOnline(
+    @CurrentUser() user: Users,
+    @Args({ name: 'online', type: () => Boolean }) online: boolean
+  ): Promise<Users> {
+    const candidate = await this.usersService.setOnline(user, online);
+    await this.pubSub.publish(`onOnline:${user.id}`, {
+      onOnline: online,
+    });
+    return candidate;
   }
 
   @UseGuards(GqgAuthGuard)
@@ -116,5 +140,11 @@ export class UsersResolver {
         `./apps/server/uploads/profileimages/default/${imageName}`
       )
     );
+  }
+
+  @UseGuards(GqgAuthGuard)
+  @Subscription(() => Boolean)
+  async onOnline(@Args({ name: 'id', type: () => ID }) id: string) {
+    return this.pubSub.asyncIterator(`onOnline:${id}`);
   }
 }

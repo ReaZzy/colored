@@ -10,6 +10,8 @@ export const CREATE_POST_MUTATION = gql`
         id
         login
         avatar
+        updatedDate
+        online
       }
     }
   }

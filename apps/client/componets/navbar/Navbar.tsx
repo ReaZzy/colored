@@ -33,6 +33,7 @@ const Navbar: React.FC = React.memo(() => {
         </ColoredButton>
         <Avatar
           url={user?.avatar}
+          id={user?.id}
           className={`${s.nav__img} ${s.nav__item}`}
           onClick={handleLogout}
         />

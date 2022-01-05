@@ -10,10 +10,11 @@ interface IProps {
   color?: any;
   avatar?: string;
   login?: string;
+  id?: string;
   [key: string]: any;
 }
 const Owner: NextPage<IProps> = React.memo(
-  ({ date, color, avatar, login, ...props }) => {
+  ({ date, color, avatar, login, id, ...props }) => {
     const postColor = Color(color);
     const fontColor = postColor.isDark() ? '#ffffff' : '#000000';
 
@@ -23,7 +24,7 @@ const Owner: NextPage<IProps> = React.memo(
         className={`${s.owner} ${props.className}`}
         {...props}
       >
-        <Avatar url={avatar} className={`shadow ${s.owner__photo}`} />
+        <Avatar url={avatar} id={id} className={`shadow ${s.owner__photo}`} />
 
         <div className={s.owner__login}>
           <div>{login}</div>

@@ -22,6 +22,7 @@ const WhatsNew: React.FC = React.memo(() => {
   const [showEmoji, setShowEmoji] = useState(false);
   const login = useAppSelector((state) => state.auth.user?.login);
   const avatar = useAppSelector((state) => state.auth.user?.avatar);
+  const userId = useAppSelector((state) => state.auth.user?.id);
   const [createPostMutation] = useMutation(CREATE_POST_MUTATION);
   const [randomColor] = useRandomColor();
   const handleChangeColor = (e: ChangeEvent<HTMLInputElement>) => {
@@ -31,7 +32,7 @@ const WhatsNew: React.FC = React.memo(() => {
     setText(e.target.value);
   };
   const handlePost = async () => {
-    const res = await createPostMutation({
+    await createPostMutation({
       variables: { content: text, color },
     });
 
@@ -42,7 +43,7 @@ const WhatsNew: React.FC = React.memo(() => {
     <div className={s.whatsNew} style={{ backgroundColor: color }}>
       <div>
         <div className={s.whatsNew__row}>
-          <Avatar url={avatar} className={s.whatsNew__img} />
+          <Avatar url={avatar} id={userId} className={s.whatsNew__img} />
           <div className={s.whatsNew__text}>
             <TextareaAutosize
               autoFocus

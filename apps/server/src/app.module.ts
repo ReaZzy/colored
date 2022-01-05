@@ -1,4 +1,4 @@
-import { Logger, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { PostsModule } from './posts/posts.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -12,37 +12,14 @@ import { join } from 'path';
 import * as passport from 'passport';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { LoggingInterceptor } from './middlewares/logging.interceptor';
+import { UsersService } from './users/users.service';
+import { getCookie } from '../utils/getCookie';
+import * as jwt from 'jsonwebtoken';
 
 const passportInit = passport.initialize();
 
 @Module({
   imports: [
-    GraphQLModule.forRoot({
-      debug: true,
-      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
-      installSubscriptionHandlers: true,
-      fieldResolverEnhancers: ['interceptors'],
-      cors: {
-        origin: 'http://localhost:4200',
-        credentials: true,
-      },
-      subscriptions: {
-        'subscriptions-transport-ws': {
-          onConnect: (_, webSocket) => {
-            Logger.log('Online');
-            return new Promise((resolve) => {
-              passportInit(webSocket.upgradeReq, {} as any, () => {
-                resolve({ req: webSocket.upgradeReq });
-              });
-            });
-          },
-          onDisconnect: () => {
-            Logger.log('Offline');
-          },
-        },
-      },
-      context: ({ req }) => ({ ...req }),
-    }),
     TypeOrmModule.forRoot(connectionOptions),
     ConfigModule.forRoot(),
     PostsModule,
@@ -50,6 +27,47 @@ const passportInit = passport.initialize();
     AuthModule,
     CommentsModule,
     ProfileModule,
+    GraphQLModule.forRootAsync({
+      imports: [UsersModule],
+      useFactory: async (usersService: UsersService) => ({
+        debug: true,
+        autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+        installSubscriptionHandlers: true,
+        fieldResolverEnhancers: ['interceptors'],
+        cors: {
+          origin: 'http://localhost:4200',
+          credentials: true,
+        },
+        subscriptions: {
+          'subscriptions-transport-ws': {
+            onConnect: async (_, webSocket) => {
+              const token = getCookie(
+                webSocket.upgradeReq.headers?.cookie,
+                'auth'
+              );
+              const jwtPayload = jwt.decode(token);
+              await usersService.setOnline(jwtPayload, true);
+
+              return new Promise((resolve) => {
+                passportInit(webSocket.upgradeReq, {} as any, () => {
+                  resolve({ req: webSocket.upgradeReq });
+                });
+              });
+            },
+            onDisconnect: async (webSocket) => {
+              const token = getCookie(
+                webSocket.upgradeReq.headers?.cookie,
+                'auth'
+              );
+              const jwtPayload = jwt.decode(token);
+              await usersService.setOnline(jwtPayload, false);
+            },
+          },
+        },
+        context: ({ req }) => ({ ...req }),
+      }),
+      inject: [UsersService],
+    }),
   ],
   controllers: [],
   providers: [

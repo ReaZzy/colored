@@ -8,6 +8,8 @@ export const REGISTER = gql`
         id
         login
         avatar
+        updatedDate
+        online
       }
     }
   }

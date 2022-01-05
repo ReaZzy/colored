@@ -10,9 +10,12 @@ export const GET_ALL_POSTS = gql`
         color
         createdDate
         user {
+          id
           avatar
           login
           createdDate
+          updatedDate
+          online
         }
       }
       total
@@ -22,7 +25,7 @@ export const GET_ALL_POSTS = gql`
 
 export type IGET_ALL_POSTS = {
   getAllPosts: {
-    posts: IPosts
-    total: number
-  }
-}
+    posts: IPosts;
+    total: number;
+  };
+};

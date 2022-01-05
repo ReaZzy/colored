@@ -5,9 +5,11 @@
 type Users {
   id: ID!
   createdDate: DateTime!
+  updatedDate: DateTime!
   email: String!
   avatar: String!
   login: String!
+  online: Boolean!
   password: String!
   posts: [Posts!]!
 }
@@ -75,6 +77,7 @@ type Mutation {
   like(postId: ID!): Posts!
   unLike(postId: ID!): Posts!
   updateProfile(data: UserUpdateDto!): Users!
+  setOnline(online: Boolean!): Users!
   uploadAvatar(file: Upload!): Avatar!
   login(password: String!, find: String!): LoginDto!
   logout: Boolean!
@@ -117,4 +120,5 @@ input CommentsDataDto {
 
 type Subscription {
   getPostSubscription: Posts!
+  onOnline(id: ID!): Boolean!
 }

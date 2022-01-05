@@ -7,7 +7,7 @@ import { IoMdHeartEmpty } from '@react-icons/all-files/io/IoMdHeartEmpty';
 import { IoMdHeart } from '@react-icons/all-files/io/IoMdHeart';
 import { GoComment } from '@react-icons/all-files/go/GoComment';
 import Link from 'next/link';
-import { like, dislike } from '../../store/reducers/post/thunks';
+import { dislike, like } from '../../store/reducers/post/thunks';
 import ReactTooltip from 'react-tooltip';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import Avatar from '../avatar/Avatar';
@@ -40,6 +40,7 @@ const Post: React.FC<IProps> = ({ post }) => {
           login={post?.user?.login}
           date={post?.createdDate}
           avatar={post?.user?.avatar}
+          id={post?.user?.id}
         />
       </div>
 
@@ -72,6 +73,7 @@ const Post: React.FC<IProps> = ({ post }) => {
                 return (
                   <Avatar
                     url={user.avatar}
+                    id={user?.id}
                     className={s.tooltip__item}
                     key={user.id}
                   />

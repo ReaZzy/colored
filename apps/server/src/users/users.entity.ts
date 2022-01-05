@@ -7,6 +7,7 @@ import {
   Entity,
   OneToMany,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { IsEmail, Length } from 'class-validator';
 import { hash } from 'bcryptjs';
@@ -25,6 +26,10 @@ export class Users extends BaseEntity {
   @CreateDateColumn()
   createdDate: Date;
 
+  @Field(() => Date)
+  @UpdateDateColumn()
+  updatedDate: Date;
+
   @Field(() => String)
   @Column({ unique: true })
   @IsEmail()
@@ -39,8 +44,12 @@ export class Users extends BaseEntity {
   @Length(3, 60)
   login: string;
 
-  @Field(() => String)
+  @Field(() => Boolean)
+  @Column('boolean', { default: false })
+  online: boolean;
+
   @Exclude()
+  @Field(() => String)
   @Column('varchar', { select: false })
   password: string;
 

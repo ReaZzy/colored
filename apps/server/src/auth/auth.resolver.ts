@@ -46,6 +46,7 @@ export class AuthResolver {
     @Context() ctx: any
   ) {
     const token = await this.authService.login(user);
+    await this.usersService.setOnline(user, true);
 
     if (!token) {
       throw new BadRequestException();
@@ -60,8 +61,9 @@ export class AuthResolver {
 
   @UseGuards(GqgAuthGuard)
   @Mutation(() => Boolean)
-  async logout(@Context() ctx: any) {
+  async logout(@Context() ctx: any, @CurrentUser() user: Users) {
     ctx.res.clearCookie('auth');
+    await this.usersService.setOnline(user, false);
     return true;
   }
 
@@ -73,6 +75,7 @@ export class AuthResolver {
     try {
       const user = await this.usersService.create(usersData);
       const { access_token } = await this.authService.login(user);
+      await this.usersService.setOnline(user, true);
       ctx.res.cookie('auth', access_token, {
         httpOnly: true,
         maxAge: 86_400_000,
