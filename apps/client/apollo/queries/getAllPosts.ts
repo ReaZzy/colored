@@ -11,11 +11,7 @@ export const GET_ALL_POSTS = gql`
         createdDate
         user {
           id
-          avatar
           login
-          createdDate
-          updatedDate
-          online
         }
       }
       total

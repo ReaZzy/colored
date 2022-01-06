@@ -63,27 +63,36 @@ type commentsOutput {
 }
 
 type Query {
-  getAllPosts(page: Float!): PostReturnDto!
-  getPostById(postId: ID!): Posts!
   getAll: [Users!]!
   getUser(find: String!): Users
+  getAllPosts(page: Float!): PostReturnDto!
+  getPostById(postId: ID!): Posts!
   getAllComments(postId: String!, page: Float!): commentsOutput!
   getProfile(id: ID): Users!
 }
 
 type Mutation {
+  updateProfile(data: UserUpdateDto!): Users!
+  setOnline(online: Boolean!): Users!
+  uploadAvatar(file: Upload!): Avatar!
   createPost(post: PostDataDto!): Posts!
   updatePost(postData: PostUpdateDto!, postId: ID!): Posts!
   like(postId: ID!): Posts!
   unLike(postId: ID!): Posts!
-  updateProfile(data: UserUpdateDto!): Users!
-  setOnline(online: Boolean!): Users!
-  uploadAvatar(file: Upload!): Avatar!
   login(password: String!, find: String!): LoginDto!
   logout: Boolean!
   register(userData: UsersDataDto!): LoginDto!
   createComment(commentsData: CommentsDataDto!, postId: ID!): Comments!
 }
+
+input UserUpdateDto {
+  email: String
+  login: String
+  password: String
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
 
 input PostDataDto {
   content: String!
@@ -95,15 +104,6 @@ input PostUpdateDto {
   content: String!
   color: String!
 }
-
-input UserUpdateDto {
-  email: String
-  login: String
-  password: String
-}
-
-"""The `Upload` scalar type represents a file upload."""
-scalar Upload
 
 input UsersDataDto {
   email: String!
@@ -119,6 +119,6 @@ input CommentsDataDto {
 }
 
 type Subscription {
-  getPostSubscription: Posts!
   onOnline(id: ID!): Boolean!
+  getPostSubscription: Posts!
 }

@@ -22,19 +22,21 @@
 }
 
 .status {
-  transition: 0.2s;
-  width: 0.8em;
-  height: 0.8em;
-  color: gray;
+  transition: 0.2s ease;
+  width: 0.85em;
+  height: 0.85em;
   bottom: 0;
   right: 0;
-  background-color: gray;
   border-radius: 50%;
   position: absolute;
-  border: 2px solid #e0e0e0;
+  border: 2px solid #fefefe;
+  padding: 2px;
 }
 .online {
-  background-color: #47db47;
+  background-color: #19c719;
+}
+.offline {
+  background-color: #9f9f9f;
 }
 @keyframes shine {
   from {

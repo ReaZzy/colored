@@ -39,8 +39,6 @@ const Post: React.FC<IProps> = ({ post }) => {
           color={post?.color}
           login={post?.user?.login}
           date={post?.createdDate}
-          avatar={post?.user?.avatar}
-          online={post?.user?.online}
           id={post?.user?.id}
         />
       </div>
@@ -73,9 +71,9 @@ const Post: React.FC<IProps> = ({ post }) => {
               {post.likes.map((user) => {
                 return (
                   <Avatar
-                    url={user.avatar}
                     id={user?.id}
-                    online={user?.online}
+                    url={post?.user?.avatar}
+                    online={post?.user?.online}
                     className={s.tooltip__item}
                     key={user.id}
                   />

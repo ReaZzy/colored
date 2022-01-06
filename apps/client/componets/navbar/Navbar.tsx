@@ -32,8 +32,8 @@ const Navbar: React.FC = React.memo(() => {
           <IoIosAddCircleOutline />
         </ColoredButton>
         <Avatar
-          url={user?.avatar}
           id={user?.id}
+          url={user?.avatar}
           online={user?.online}
           className={`${s.nav__img} ${s.nav__item}`}
           onClick={handleLogout}

@@ -8,14 +8,12 @@ import Avatar from '../../avatar/Avatar';
 interface IProps {
   date?: string;
   color?: any;
-  avatar?: string;
   login?: string;
   id?: string;
-  online?: boolean;
   [key: string]: any;
 }
 const Owner: NextPage<IProps> = React.memo(
-  ({ date, color, avatar, login, id, online, ...props }) => {
+  ({ date, color, login, id, ...props }) => {
     const postColor = Color(color);
     const fontColor = postColor.isDark() ? '#ffffff' : '#000000';
 
@@ -25,12 +23,7 @@ const Owner: NextPage<IProps> = React.memo(
         className={`${s.owner} ${props.className}`}
         {...props}
       >
-        <Avatar
-          url={avatar}
-          id={id}
-          online={online}
-          className={`shadow ${s.owner__photo}`}
-        />
+        <Avatar id={id} className={`shadow ${s.owner__photo}`} />
 
         <div className={s.owner__login}>
           <div>{login}</div>

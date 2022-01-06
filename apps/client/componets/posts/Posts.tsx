@@ -6,6 +6,7 @@ import SkeletonPreloader from '../skeletonPreloader/SkeletonPreloader';
 import { useQuery } from '@apollo/client';
 import { GET_POST_SUBSCRIPTION } from '../../apollo/subscriptions/getPostSubsciption';
 import { GET_ALL_POSTS } from '../../apollo/queries/getAllPosts';
+import { IPosts } from '../../types/IPosts.types';
 
 const Post = dynamic(() => import('../post/Post'));
 
@@ -59,7 +60,7 @@ const Posts: React.FC = () => {
           loader={<SkeletonPreloader />}
           style={{ overflow: 'visible' }}
         >
-          {data.getAllPosts.posts.map((post: any) => (
+          {data.getAllPosts.posts.map((post: IPosts) => (
             <Post key={post.id} post={post} />
           ))}
         </InfiniteScroll>

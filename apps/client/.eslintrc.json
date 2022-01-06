@@ -4,12 +4,7 @@
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-      "parserOptions": {
-        "project": ["apps/client/tsconfig.*?.json"]
-      },
-      "rules": {
-        "@typescript-eslint/await-thenable": "error"
-      }
+      "rules": {}
     },
     {
       "files": ["*.ts", "*.tsx"],

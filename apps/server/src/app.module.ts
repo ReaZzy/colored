@@ -22,13 +22,6 @@ export const pubSub = new PubSub();
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot(connectionOptions),
-    ConfigModule.forRoot(),
-    PostsModule,
-    UsersModule,
-    AuthModule,
-    CommentsModule,
-    ProfileModule,
     GraphQLModule.forRootAsync({
       imports: [UsersModule],
       useFactory: async (usersService: UsersService) => ({
@@ -72,6 +65,13 @@ export const pubSub = new PubSub();
       }),
       inject: [UsersService],
     }),
+    TypeOrmModule.forRoot(connectionOptions),
+    ConfigModule.forRoot(),
+    PostsModule,
+    UsersModule,
+    AuthModule,
+    CommentsModule,
+    ProfileModule,
   ],
   controllers: [],
   providers: [

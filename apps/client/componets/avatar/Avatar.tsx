@@ -3,21 +3,19 @@ import { NextPage } from 'next';
 import s from './avatar.module.css';
 import { useQuery } from '@apollo/client';
 import { ON_ONLINE } from '../../apollo/subscriptions/onOnline';
-import { GET_PROFILE } from '../../apollo/queries/getProfile';
+import { GET_AVATAR } from '../../apollo/queries/getAvatar';
 
 interface IProps {
-  url?: string;
   alt_img?: string;
   id?: string;
-  online?: boolean;
   [key: string]: any;
 }
 const Avatar: NextPage<IProps> = React.memo(
   ({ url, alt_img, id, online, ...props }) => {
-    const { data, loading, subscribeToMore } = useQuery(GET_PROFILE, {
+    const { data, loading, subscribeToMore } = useQuery(GET_AVATAR, {
       variables: { id },
+      fetchPolicy: 'cache-and-network',
     });
-
     useEffect(() => {
       const onOnline = subscribeToMore({
         document: ON_ONLINE,
@@ -37,7 +35,7 @@ const Avatar: NextPage<IProps> = React.memo(
       return () => {
         onOnline();
       };
-    }, [subscribeToMore]);
+    }, [id, subscribeToMore]);
 
     return (
       <div className={s.avatar__body}>
@@ -49,7 +47,7 @@ const Avatar: NextPage<IProps> = React.memo(
           {...props}
           className={`${s.avatar} ${props?.className}`}
         />
-        <circle
+        <span
           className={`${s.status} ${
             !loading && data.getProfile.online ? s.online : s.offline
           } `}
