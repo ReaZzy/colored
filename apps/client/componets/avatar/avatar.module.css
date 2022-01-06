@@ -1,21 +1,40 @@
+.avatar__body {
+  position: relative;
+}
+
 .avatar:empty {
   border-radius: 50%;
   display: block;
-  background: linear-gradient(
+  background-size: 50px 500px;
+  background: lightgray
+    linear-gradient(
       to right,
       rgba(255, 255, 255, 0),
       rgba(255, 255, 255, 0.5) 50%,
       rgba(255, 255, 255, 0) 80%
-    ),
-    lightgray;
-  background-repeat: repeat-y;
-  background-size: 50px 500px;
-  background-position: 0 0;
+    )
+    repeat-y 0 0;
   animation: shine 1s infinite;
   color: transparent;
 }
 .avatar:-moz-loading {
   visibility: hidden;
+}
+
+.status {
+  transition: 0.2s;
+  width: 0.8em;
+  height: 0.8em;
+  color: gray;
+  bottom: 0;
+  right: 0;
+  background-color: gray;
+  border-radius: 50%;
+  position: absolute;
+  border: 2px solid #e0e0e0;
+}
+.online {
+  background-color: #47db47;
 }
 @keyframes shine {
   from {

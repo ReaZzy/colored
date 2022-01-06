@@ -40,7 +40,7 @@ const Posts: React.FC = () => {
   }, [subscribeToMore]);
 
   const handleNextPage = async () => {
-    await setPage((prev) => prev + 1);
+    setPage((prev) => prev + 1);
     await fetchMore({
       variables: { page: page + 1, isFetchMore: true },
     });

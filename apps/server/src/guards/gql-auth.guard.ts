@@ -9,7 +9,7 @@ export class GqgAuthGuard extends AuthGuard('jwt') {
     context: ExecutionContext
   ): boolean | Promise<boolean> | Observable<boolean> {
     const ctx = GqlExecutionContext.create(context);
-    const { req } = ctx.getContext();
-    return super.canActivate(new ExecutionContextHost([req]));
+    const { req, pubSub } = ctx.getContext();
+    return super.canActivate(new ExecutionContextHost([req, pubSub]));
   }
 }

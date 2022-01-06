@@ -15,8 +15,10 @@ import { LoggingInterceptor } from './middlewares/logging.interceptor';
 import { UsersService } from './users/users.service';
 import { getCookie } from '../utils/getCookie';
 import * as jwt from 'jsonwebtoken';
+import { PubSub } from 'graphql-subscriptions';
 
 const passportInit = passport.initialize();
+export const pubSub = new PubSub();
 
 @Module({
   imports: [
@@ -46,7 +48,8 @@ const passportInit = passport.initialize();
                 'auth'
               );
               const jwtPayload = jwt.decode(token);
-              await usersService.setOnline(jwtPayload, true);
+              if (!jwtPayload) return;
+              await usersService.setOnline(pubSub, jwtPayload, true);
 
               return new Promise((resolve) => {
                 passportInit(webSocket.upgradeReq, {} as any, () => {
@@ -60,11 +63,12 @@ const passportInit = passport.initialize();
                 'auth'
               );
               const jwtPayload = jwt.decode(token);
-              await usersService.setOnline(jwtPayload, false);
+              if (!jwtPayload) return;
+              await usersService.setOnline(pubSub, jwtPayload, false);
             },
           },
         },
-        context: ({ req }) => ({ ...req }),
+        context: ({ req }) => ({ req, pubSub }),
       }),
       inject: [UsersService],
     }),

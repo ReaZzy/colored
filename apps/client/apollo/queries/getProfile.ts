@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 export const GET_PROFILE = gql`
-  query getProfile {
-    getProfile {
+  query getProfile($id: ID) {
+    getProfile(id: $id) {
       login
       avatar
       email

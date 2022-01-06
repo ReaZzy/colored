@@ -40,6 +40,7 @@ const Post: React.FC<IProps> = ({ post }) => {
           login={post?.user?.login}
           date={post?.createdDate}
           avatar={post?.user?.avatar}
+          online={post?.user?.online}
           id={post?.user?.id}
         />
       </div>
@@ -74,6 +75,7 @@ const Post: React.FC<IProps> = ({ post }) => {
                   <Avatar
                     url={user.avatar}
                     id={user?.id}
+                    online={user?.online}
                     className={s.tooltip__item}
                     key={user.id}
                   />

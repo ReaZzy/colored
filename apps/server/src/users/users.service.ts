@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { UsersDataDto } from './dto/users-data.dto';
 import { UserAvatarDto } from './dto/user-avatar.dto';
 import { UserUpdateDto } from './dto/user-update.dto';
+import { pubSub } from 'src/app.module';
 
 @Injectable()
 export class UsersService {
@@ -59,9 +60,16 @@ export class UsersService {
     } as any);
   }
 
-  async setOnline(usersData: any, online: boolean): Promise<Users> {
+  async setOnline(
+    pubSub1: any,
+    usersData: any,
+    online: boolean
+  ): Promise<Users> {
     const user = await this.usersRepository.findOne({ id: usersData.id });
     const candidate = { ...user, online };
+    await pubSub.publish(`onOnline:${user.id}`, {
+      onOnline: online,
+    });
     return this.usersRepository.save(candidate);
   }
 }

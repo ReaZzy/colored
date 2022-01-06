@@ -1,9 +1,8 @@
 import React from 'react';
-import { Formik, Form, Field } from 'formik';
+import { Field, Form, Formik } from 'formik';
 import * as yup from 'yup';
 import s from './login.module.css';
 import { ValidatedInput } from '../validatedInput/ValidatedInput';
-import { useAppDispatch } from '../../hooks/redux';
 import { useMutation } from '@apollo/client';
 import gql from 'graphql-tag';
 import { useRouter } from 'next/router';

@@ -34,6 +34,7 @@ const Navbar: React.FC = React.memo(() => {
         <Avatar
           url={user?.avatar}
           id={user?.id}
+          online={user?.online}
           className={`${s.nav__img} ${s.nav__item}`}
           onClick={handleLogout}
         />

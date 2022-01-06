@@ -27,17 +27,14 @@ import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { CurrentUser } from '../auth/auth.resolver';
 import { Avatar } from './dto/user-avatar.dto';
 import { UserUpdateDto } from './dto/user-update.dto';
-import { PubSub } from 'graphql-subscriptions';
+import { pubSub } from '../app.module';
 import path = require('path');
 import fs = require('fs');
 
 @Controller('users')
 @Resolver()
 export class UsersResolver {
-  private pubSub: PubSub;
-  constructor(private readonly usersService: UsersService) {
-    this.pubSub = new PubSub();
-  }
+  constructor(private readonly usersService: UsersService) {}
 
   @UseGuards(GqgAuthGuard)
   @Query(() => [Users])
@@ -49,7 +46,7 @@ export class UsersResolver {
   @Query(() => Users, { nullable: true })
   async getUser(
     @Args('find') find: string,
-    @Context() ctx: any
+    @Context('req') ctx: any
   ): Promise<Users> {
     const user = await this.usersService.getUser(find);
     if (user) return user;
@@ -70,13 +67,12 @@ export class UsersResolver {
   @UseGuards(GqgAuthGuard)
   @Mutation(() => Users)
   async setOnline(
+    @Context('pubSub') pubSub,
     @CurrentUser() user: Users,
     @Args({ name: 'online', type: () => Boolean }) online: boolean
   ): Promise<Users> {
-    const candidate = await this.usersService.setOnline(user, online);
-    await this.pubSub.publish(`onOnline:${user.id}`, {
-      onOnline: online,
-    });
+    console.log(user);
+    const candidate = await this.usersService.setOnline(pubSub, user, online);
     return candidate;
   }
 
@@ -145,6 +141,6 @@ export class UsersResolver {
   @UseGuards(GqgAuthGuard)
   @Subscription(() => Boolean)
   async onOnline(@Args({ name: 'id', type: () => ID }) id: string) {
-    return this.pubSub.asyncIterator(`onOnline:${id}`);
+    return pubSub.asyncIterator(`onOnline:${id}`);
   }
 }

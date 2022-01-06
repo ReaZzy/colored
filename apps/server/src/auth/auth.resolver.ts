@@ -40,13 +40,14 @@ export class AuthResolver {
   @UseGuards(LocalAuthGuard)
   @Mutation(() => LoginDto)
   async login(
+    @Context('pubSub') pubSub,
     @Args('find') find: string,
     @Args('password') password: string,
     @CurrentUser() user: Users,
-    @Context() ctx: any
+    @Context('req') ctx: any
   ) {
     const token = await this.authService.login(user);
-    await this.usersService.setOnline(user, true);
+    await this.usersService.setOnline(pubSub, user, true);
 
     if (!token) {
       throw new BadRequestException();
@@ -61,21 +62,26 @@ export class AuthResolver {
 
   @UseGuards(GqgAuthGuard)
   @Mutation(() => Boolean)
-  async logout(@Context() ctx: any, @CurrentUser() user: Users) {
+  async logout(
+    @Context('pubSub') pubSub,
+    @Context('req') ctx: any,
+    @CurrentUser() user: Users
+  ) {
     ctx.res.clearCookie('auth');
-    await this.usersService.setOnline(user, false);
+    await this.usersService.setOnline(pubSub, user, false);
     return true;
   }
 
   @Mutation(() => LoginDto)
   async register(
+    @Context('pubSub') pubSub,
     @Args('userData') usersData: UsersDataDto,
-    @Context() ctx: any
+    @Context('req') ctx: any
   ): Promise<LoginDto> {
     try {
       const user = await this.usersService.create(usersData);
       const { access_token } = await this.authService.login(user);
-      await this.usersService.setOnline(user, true);
+      await this.usersService.setOnline(pubSub, user, true);
       ctx.res.cookie('auth', access_token, {
         httpOnly: true,
         maxAge: 86_400_000,
