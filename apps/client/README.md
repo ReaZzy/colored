@@ -20,7 +20,7 @@ and can't imagine their life without they 😊
 > ```npm run dev```
 
 ## Stack 🔨
-| Frontend 🧑    | Backend 💻   |
+| Frontend 🧑    | Backend 💻 |
 |-------------|------------|
 | NextJS      | NestJS     |
 | ReactJS     | TypeScript |
@@ -28,5 +28,5 @@ and can't imagine their life without they 😊
 | Redux       | Typeorm    |
 | Redux-thunk | Postgres   |
 | Apollo      | JWT        |
-| HTML        |            |
+| HTML        | GraphQL    |
 | CSS         |            |
