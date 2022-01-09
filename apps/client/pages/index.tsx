@@ -17,21 +17,18 @@ const Index: NextPage<any> = () => {
         <div className={s.center_block__whatsnew}>
           <WhatsNew />
         </div>
-
         <Posts />
       </div>
     </div>
   );
 };
 
-export const getServerSideProps = createGssp(
-  async (ctx, store, client, dispatch) => {
-    return addApolloState(client!, {
-      props: {
-        initialReduxState: store.getState(),
-      },
-    });
-  },
-);
+export const getServerSideProps = createGssp(async (ctx, client, store) => {
+  return addApolloState(client, {
+    props: {
+      initialReduxState: store.getState(),
+    },
+  });
+});
 
 export default Index;

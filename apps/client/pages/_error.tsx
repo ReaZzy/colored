@@ -3,7 +3,11 @@ import Error from 'next/error';
 import { GetServerSideProps, NextPage } from 'next';
 import { Meta } from '../componets/meta/Meta';
 
-const ErrorPage: NextPage<any> = ({ statusCode }) => {
+interface IProps {
+  statusCode: number;
+}
+
+const ErrorPage: NextPage<IProps> = ({ statusCode }) => {
   return (
     <Error statusCode={statusCode}>
       <Meta title={'505 - Server error'} />

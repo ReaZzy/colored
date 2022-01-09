@@ -1,5 +1,5 @@
 import { GetServerSideProps } from 'next';
-import { initializeStore, AppStore, AppDispatch } from '../store/store';
+import { AppDispatch, AppStore, initializeStore } from '../store/store';
 import { initializeApollo } from '../apollo/client';
 import { setIsAuth, setUser } from '../store/reducers/auth/reducer';
 import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
@@ -7,8 +7,8 @@ import { GET_PROFILE } from '../apollo/queries/getProfile';
 
 type IGssp = (
   ctx: any,
+  client: ApolloClient<NormalizedCacheObject>,
   store?: AppStore,
-  client?: ApolloClient<NormalizedCacheObject>,
   dispatch?: AppDispatch,
 ) => Promise<any>;
 
